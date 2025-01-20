@@ -29,13 +29,39 @@
                 background-color: ghostwhite;
             }
 
+            @media screen and (max-width: 639.99px) {
+
+                body::after {
+                    content: "未做 RWD 設計，僅適合 640 以上尺寸";
+                    z-index: 1000;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    padding: 0 1rem;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    background-color: #ffffffcc;
+                    backdrop-filter: blur(1rem);
+                    -webkit-backdrop-filter: blur(1rem);
+                    box-sizing: border-box;
+                }
+            }
+
             section.split {
                 position: relative;
                 display: flex;
                 justify-content: center;
-                width: calc(100% - 32px);
-                max-width: 1024px;
-                height: calc(100% - 64px);
+                width: 100%;
+                height: 100%;
+                /* width: calc(100% - 32px); */
+                /* max-width: 1024px; */
+                /* height: calc(100% - 64px); */
                 border-radius: 1rem;
                 box-shadow: -4px 0 8px #0000000d;
                 overflow: hidden;
@@ -113,7 +139,7 @@
                     id: "JSON-editor",
                     title: "NanoJSON: JSON 編輯器",
                     // description: "",
-                    fill: 1
+                    // fill: 1
                 });
             });
 

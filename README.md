@@ -6,6 +6,37 @@
 [![download](https://img.shields.io/npm/dm/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
 [![jsdeliver](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)
 
+## Installation
+
+### Install via npm
+```bash
+npm i @pardnchiu/nanojson
+```
+
+### Include via CDN
+
+#### UMD version
+```html
+<script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.js"></script>
+```
+
+#### ES Module version
+```javascript
+import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.esm.js";
+```
+
+## How to use
+
+### Initialize `JSONEditor`
+```Javascript
+let dom = new JSONEditor({
+    id: "JSON-editor",      // Element to replace
+    // title: "",           // Editor Title 
+    // description: "",     // Editor Description 
+    // fill: 1              // Adjust size to parent element, default: 1 | true
+});
+``` 
+
 ## License
 
 Similar to MIT License but provides obfuscated code only:
