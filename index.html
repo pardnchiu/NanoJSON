@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <!-- 預連接到 cdn.jsdelivr.net -->
+        <link rel="preconnect" href="https://cdn.jsdelivr.net/">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
+
+        <!-- 預加載 Font Awesome 圖示 -->
+        <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" as="style" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous">
+
+        <script src="/dist/NanoJSON.js"></script>
+
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                background-color: ghostwhite;
+            }
+
+            @media screen and (max-width: 639.99px) {
+
+                body::after {
+                    content: "未做 RWD 設計，僅適合 640 以上尺寸";
+                    z-index: 1000;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    bottom: 0;
+                    right: 0;
+                    padding: 0 1rem;
+                    width: 100%;
+                    height: 100%;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    text-align: center;
+                    background-color: #ffffffcc;
+                    backdrop-filter: blur(1rem);
+                    -webkit-backdrop-filter: blur(1rem);
+                    box-sizing: border-box;
+                }
+            }
+
+            section.split {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                width: 100%;
+                height: 100%;
+                /* width: calc(100% - 32px); */
+                /* max-width: 1024px; */
+                /* height: calc(100% - 64px); */
+                border-radius: 1rem;
+                box-shadow: -4px 0 8px #0000000d;
+                overflow: hidden;
+            }
+
+            section.split>section {
+                position: relative;
+                display: block;
+                width: 50%;
+                height: 100%;
+                overflow: hidden;
+            }
+
+            section.split>button {
+                position: absolute;
+                right: 1.5rem;
+                bottom: 1.5rem;
+                padding: 0 1rem;
+                line-height: 2rem;
+                border: none;
+                background-color: #00000080;
+                color: #fff;
+                border-radius: 1rem;
+            }
+
+            .pd-json-editor {
+                padding: 1rem 1rem 5rem
+            }
+
+            section.split>section:first-child {
+                background-color: #fbfbfb;
+            }
+
+            section.split>section:nth-child(2) {
+                background-color: #fff;
+                box-shadow: -4px 0 8px #0000000d;
+            }
+
+            section.split>section:nth-child(2)>textarea {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                padding: 1rem 1rem 5rem;
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                resize: none;
+                border: none;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            section.split>section:nth-child(2)>textarea::-webkit-scrollbar {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body>
+        <section class="split">
+            <section>
+                <section id="JSON-editor"></section>
+            </section>
+            <section>
+                <textarea id="preview" disabled></textarea>
+            </section>
+            <button onclick="showPreview()">更新JSON預覽</button>
+        </section>
+        <script>
+            let editor;
+            document.addEventListener('DOMContentLoaded', _ => {
+                editor = new JSONEditor({
+                    id: "JSON-editor",
+                    title: "NanoJSON: JSON 編輯器",
+                    // description: "",
+                    // fill: 1
+                });
+            });
+
+            function showPreview() {
+                const dom = document.getElementById("preview");
+                dom.value = editor.json;
+            }
+        </script>
+    </body>
+
+</html>
