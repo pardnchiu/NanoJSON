@@ -33,6 +33,10 @@ let dom = new JSONEditor({
     id: "JSON-editor",      // Element to replace
     // title: "",           // Editor Title 
     // description: "",     // Editor Description 
+    // button: {
+    //     import: false,
+    //     export: false
+    // }                    // Default { import: true,  export: true }
     // fill: 1              // Adjust size to parent element, default: 1 | true
 });
 ``` 
