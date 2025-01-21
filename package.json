@@ -1,6 +1,6 @@
 {
     "name": "@pardnchiu/nanojson",
-    "version": "0.1.2",
+    "version": "0.1.4",
     "description": "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. Can be easily embedded into websites.",
     "main": "dist/NanoJSON.js",
     "module": "dist/NanoJSON.esm.js",

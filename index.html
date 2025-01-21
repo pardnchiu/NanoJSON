@@ -140,13 +140,24 @@
                     title: "NanoJSON: JSON 編輯器",
                     // description: "",
                     // fill: 1
+                    button: {
+                        import: true,
+                        export: true
+                    }
+                });
+
+                editor.import({
+                    "name": "NanoJSON",
+                    "version": "0.1.4",
+                    "description": "A simple JSON editor",
+                    "author": "Pardn Chiu",
                 });
             });
 
             function showPreview() {
                 const dom = document.getElementById("preview");
                 dom.value = editor.json;
-            }
+            };
         </script>
     </body>
 
