@@ -110,6 +110,10 @@
                 box-sizing: border-box;
                 width: 100%;
                 height: 100%;
+                line-height: 1.5rem;
+                font-style: monospace;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
                 resize: none;
                 border: none;
                 -ms-overflow-style: none;
@@ -125,32 +129,50 @@
     <body>
         <section class="split">
             <section>
-                <section id="JSON-editor"></section>
+                <section id="JSONEditor"></section>
             </section>
             <section>
                 <textarea id="preview" disabled></textarea>
             </section>
-            <button onclick="showPreview()">更新JSON預覽</button>
         </section>
         <script>
             let editor;
             document.addEventListener('DOMContentLoaded', _ => {
                 editor = new JSONEditor({
-                    id: "JSON-editor",
+                    id: "JSONEditor",
                     title: "NanoJSON: JSON 編輯器",
                     // description: "",
                     // fill: 1
                     button: {
                         import: true,
                         export: true
+                    },
+                    when: {
+                        rendered: _ => {
+                            showPreview()
+                        },
+                        updated: _ => {
+                            showPreview()
+                        }
                     }
                 });
 
                 editor.import({
-                    "name": "NanoJSON",
-                    "version": "0.1.4",
-                    "description": "A simple JSON editor",
-                    "author": "Pardn Chiu",
+                    name: "NanoJSON",
+                    version: "0.1.5",
+                    description: "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. Can be easily embedded into websites.",
+                    repository: "https://github.com/pardnchiu/NanoJSON.git",
+                    npm: "https://www.npmjs.com/package/@pardnchiu/nanojson",
+                    author: "邱敬幃 Pardn Chiu",
+                    license: "Proprietary",
+                    release: {
+                        "0.1.5": "Added Lifecycle feature. Replaced Google Icon with inline SVG.",
+                        "0.1.5": "Removed test logs.",
+                        "0.1.3": "Fixed import functionality.",
+                        "0.1.2": "Improved CSS structure for nested display.",
+                        "0.1.1": "Introduced .json() method to retrieve JSON data.",
+                        "0.1.0": "Initial release."
+                    }
                 });
             });
 
