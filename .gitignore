@@ -15,3 +15,4 @@ terser.cache.json
 
 # 保留編譯後的 dist
 !dist/
+dist/NanoJSON.debug.js
