@@ -1,22 +1,26 @@
 {
     "name": "@pardnchiu/nanojson",
-    "version": "0.3.0",
+    "version": "0.3.1",
     "description": "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. Can be easily embedded into websites.",
     "main": "dist/NanoJSON.js",
     "module": "dist/NanoJSON.esm.js",
     "types": "src/interface.ts",
     "scripts": {
-        "combine": "npx terser src/*.js src/function/*.js src/model/*.js -o dist/NanoJSON.origin.js",
-        "minify": "npx terser src/*.js src/function/*.js src/model/*.js -c -m -o dist/NanoJSON.js --config-file terser.config.json --name-cache terser.cache.json && npx terser src/*.js src/function/*.js src/model/*.js -c -m -o dist/NanoJSON.esm.js --config-file terser.config.json --name-cache terser.cache.json && echo 'export const JSONEditor = window.JSONEditor;' >> dist/NanoJSON.esm.js",
-        "minify-w": "chokidar src/*.js src/function/*.js src/model/*.js -c 'npm run minify'",
-        "sass": "sass src/sass:dist/ -w --style compressed --no-source-map",
-        "sass-index": "sass static/sass/:static/css/ -w --style compressed --no-source-map"
+        "build:origin": "npx terser src/*.js src/function/*.js src/model/*.js -o dist/NanoJSON.origin.js",
+        "build:min": "npx terser src/*.js src/function/*.js src/model/*.js -c -m -o dist/NanoJSON.js --config-file terser.config.json --name-cache terser.cache.json",
+        "build:esm": "npx terser src/*.js src/function/*.js src/model/*.js -c -m -o dist/NanoJSON.esm.js --config-file terser.config.json --name-cache terser.cache.json && echo 'export const JSONEditor = window.JSONEditor;' >> dist/NanoJSON.esm.js",
+        "build:once": "npm-run-all build:origin build:min build:esm",
+        "build": "chokidar src/*.js src/function/*.js src/model/*.js -c 'npm run build:once'",
+        "sass:library": "sass src/sass:dist/ -w --style compressed --no-source-map",
+        "sass:index": "sass static/sass/:static/css/ -w --style compressed --no-source-map",
+        "sass": "npm-run-all sass:library sass:index"
     },
     "publishConfig": {
         "access": "public"
     },
     "files": [
         "dist",
+        "!dist/NanoJSON.origin.js",
         "LICENSE",
         "README.md"
     ],
@@ -46,7 +50,8 @@
     "homepage": "https://github.com/pardnchiu/NanoJSON#readme",
     "devDependencies": {
         "chokidar-cli": "3.0.0",
-        "terser": "5.31.3",
-        "sass": "1.62.0"
+        "npm-run-all": "^4.1.5",
+        "sass": "1.62.0",
+        "terser": "5.31.3"
     }
 }
