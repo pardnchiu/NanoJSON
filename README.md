@@ -1,3 +1,5 @@
+<img src="https://nanojson.pardn.io/static/image/logo.png" width=80>
+
 # NanoJSON: Lightweight JSON Editor
 
 ![tag](https://img.shields.io/badge/tag-JavaScript%20Library-bb4444) 
