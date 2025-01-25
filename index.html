@@ -103,17 +103,20 @@
             }
 
             * {
+                flex-shrink: 0;
                 margin: 0;
                 padding: 0;
                 font-family: sans-serif;
-                text-decoration: none;
+                box-sizing: border-box;
             }
 
-            section>a {
+            body {
                 display: flex;
+                flex-flow: column;
                 justify-content: center;
                 align-items: center;
-                gap: 0.5rem;
+                width: 100%;
+                height: 100%;
             }
 
             header {
@@ -157,11 +160,28 @@
                 gap: 0.5rem;
             }
 
+            section>a {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                text-decoration: none;
+            }
+
             section>a:not(:has(img)) {
                 padding: 0 1rem;
                 line-height: 2.5rem;
-                border: 1px solid #000;
                 border-radius: 0.5rem;
+            }
+
+            footer {
+                display: flex;
+                flex-flow: column;
+                justify-content: center;
+                align-items: center;
+                gap: 0.5rem;
+                margin: 5rem 0 0;
+                color: #00000080;
             }
 
             @media screen and (min-width: 480px) {
@@ -198,25 +218,33 @@
                 <img src="https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson" alt="npm版本">
             </a>
         </section>
-        <section :margin="3rem 0 0" :gap="1rem">
+        <section :margin="2rem 0 0" :gap="1rem">
             <a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :background-color="#000" :color="#fff">
                 <i class="fa-brands fa-github"></i>
                 GitHub
             </a>
-            <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank" :color="#000">
+            <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank" :background-color="#BA311C" :color="#fff" :border="1px solid #BA311C">
                 <i class="fa-brands fa-npm"></i>
                 npm
             </a>
         </section>
-        <a href="/page/live.html" :margin-top="1rem" :color="#000">
-            <i class="fa-solid fa-table-columns"></i>
-            Online
-        </a>
-        <section :display="flex" :flex-flow="column" :justify-content="center" :align-items="center" :gap="0.5rem" :margin="5rem 0 0">
-            <p>Created by 邱敬幃</p>
+        <section>
+            <a href="/page/agreement.html" :margin-top="0.5rem" :color="#000">
+                <i class="fa-solid fa-scale-balanced"></i>
+                LICENSE
+            </a>
+        </section>
+        <section>
+            <a href="/page/live.html" :color="#000">
+                <i class="fa-solid fa-table-columns"></i>
+                Online
+            </a>
+        </section>
+        <footer>
+            <p>Created by <a href="mailto:dev@pardn.io" :color="#000">邱敬幃</a></p>
             <p><a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :color="#000" :text-decoration="underline">NanoJSON</a> on GitHub</p>
             <p>© 2025</p>
-        </section>
+        </footer>
         <script>
             document.addEventListener("DOMContentLoaded", _ => {
                 const app = "app".RJS();

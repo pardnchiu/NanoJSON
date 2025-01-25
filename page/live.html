@@ -116,13 +116,36 @@
 
         <style>
             * {
+                flex-shrink: 0;
                 padding: 0;
                 margin: 0;
-                flex-shrink: 0;
+                font-family: sans-serif;
+                box-sizing: border-box;
             }
 
             button * {
                 pointer-events: none;
+            }
+
+
+            section.split>section>header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 0 1rem;
+                width: 100%;
+                max-width: 800px;
+                height: 4rem;
+            }
+
+            section.split>section>header>img {
+                width: 4rem;
+                height: 4rem;
+            }
+
+            section.split>section>header i {
+                font-size: 1.25rem;
+                color: #000;
             }
 
             body {
@@ -133,7 +156,6 @@
                 height: 100vh;
                 background-color: ghostwhite;
             }
-
 
             body>button {
                 z-index: 1000;
@@ -173,7 +195,7 @@
                 display: block;
                 width: 100%;
                 height: 100%;
-                overflow: hidden;
+                overflow: scroll;
                 transition: 0.3s;
             }
 
@@ -254,6 +276,15 @@
     <body id="app">
         <section id="split-body" data-preview="0" class="split">
             <section>
+                <header>
+                    <a href="/">
+                        <i class="fa-solid fa-circle-chevron-left"></i>
+                    </a>
+                    <img src="/static/image/logo.svg" alt="">
+                    <a href="https://github.com/pardnchiu/NanoJSON" target="_blank">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                </header>
                 <section id="JSONEditor"></section>
             </section>
             <section>
@@ -286,7 +317,7 @@
                                 id: "JSONEditor",
                                 title: "NanoJSON: JSON Editor",
                                 description: "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. It can be easily embedded into websites.",
-                                // fill: 1
+                                fill: 0,
                                 // file: null, 
                                 // path: "/package.json",
                                 json: {
