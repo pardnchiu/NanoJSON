@@ -1,16 +1,16 @@
 {
     "name": "@pardnchiu/nanojson",
-    "version": "0.3.3",
+    "version": "0.3.4",
     "description": "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. Can be easily embedded into websites.",
     "main": "dist/NanoJSON.js",
     "module": "dist/NanoJSON.esm.js",
     "types": "src/interface.ts",
     "scripts": {
-        "build:debug": "npx terser src/*.js src/function/*.js src/model/*.js -o dist/NanoJSON.debug.js",
-        "build:min": "npx terser src/*.js src/function/*.js src/model/*.js -c -m -o dist/NanoJSON.js --config-file terser.config.json --name-cache terser.cache.json",
-        "build:esm": "npx terser src/*.js src/function/*.js src/model/*.js -c -m -o dist/NanoJSON.esm.js --config-file terser.config.json --name-cache terser.cache.json && echo 'export const JSONEditor = window.JSONEditor;' >> dist/NanoJSON.esm.js",
+        "build:debug": "npx terser src/*.js src/**/*.js -o dist/NanoJSON.debug.js",
+        "build:min": "npx terser src/*.js src/**/*.js -c -m -o dist/NanoJSON.js --config-file terser.config.json --name-cache terser.cache.json",
+        "build:esm": "npx terser src/*.js src/**/*.js -c -m -o dist/NanoJSON.esm.js --config-file terser.config.json --name-cache terser.cache.json && echo 'export const JSONEditor = window.JSONEditor;' >> dist/NanoJSON.esm.js",
         "build:once": "npm-run-all build:debug build:min build:esm",
-        "build": "chokidar src/*.js src/function/*.js src/model/*.js -c 'npm run build:once'",
+        "build": "chokidar src/*.js src/**/*.js src/**/**/*.js -c 'npm run build:once'",
         "sass:library": "sass src/sass:dist/ -w --style compressed --no-source-map",
         "sass:index": "sass static/sass/:static/css/ -w --style compressed --no-source-map",
         "sass": "npm-run-all sass:library sass:index"
