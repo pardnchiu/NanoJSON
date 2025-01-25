@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+        <meta name="theme-color" content="#ffffff">
+        <meta name="robots" content="index, follow">
+
+        <!-- SEO 標題與描述 -->
+        <title>NanoJSON 線上編輯器 - JSON 編輯器 - 邱敬幃 Pardn Chiu</title>
+        <meta name="title" content="NanoJSON 線上編輯器 - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+        <meta name="description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+        <meta name="keywords" content="NanoJSON, json, json-editor, javascript-library, JSON 編輯器, JSON 工具, JSON 免費工具, 邱敬幃">
+        <meta name="author" content="邱敬幃 Pardn Chiu Pardn Chiu">
+        <link rel="author" href="https://pardn.io/">
+        <link rel="canonical" href="https://nanojson.pardn.io/">
+
+        <!-- Favicon -->
+        <link rel="icon" href="https://nanojson.pardn.io/static/image/logo.png" type="image/x-icon">
+
+        <!-- Open Graph -->
+        <meta property="og:title" content="NanoJSON 線上編輯器 - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+        <meta property="og:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+        <meta property="og:image" content="https://nanojson.pardn.io/static/image/website.jpg">
+        <meta property="og:url" content="https://nanojson.pardn.io/">
+        <meta property="og:site_name" content="NanoJSON">
+        <meta property="og:type" content="website">
+        <meta property="og:locale" content="zh_TW">
+
+        <!-- Twitter -->
+        <meta name="twitter:card" content="summary_large_image">
+        <meta property="twitter:title" content="NanoJSON 線上編輯器 - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+        <meta property="twitter:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+        <meta property="twitter:image" content="https://nanojson.pardn.io/static/image/website.jpg">
+        <meta property="twitter:url" content="https://nanojson.pardn.io/">
+
+        <!-- Google Verification -->
+        <meta name="google-site-verification" content="example-verification-token">
+
+        <!-- Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag() { dataLayer.push(arguments); }
+            gtag('js', new Date());
+            gtag('config', 'G-EXAMPLE');
+        </script>
+
+        <!-- Preload and Preconnect -->
+        <link rel="preconnect" href="https://cdn.jsdelivr.net/">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+        <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" as="style">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+
+        <link rel="preload" href="https://cdn.jsdelivr.net/npm/@pardnchiu/quickui@0.6.5/dist/QuickUI.js" as="script">
+        <script src="https://cdn.jsdelivr.net/npm/@pardnchiu/quickui@0.6.5/dist/QuickUI.js"></script>
+
+        <link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Noto+Sans+TC:wght@400&display=swap" as="style">
+        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
+
+        <!-- Local Resources -->
+        <script src="/dist/NanoJSON.js"></script>
+
+        <!-- JSON-LD Schema -->
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebPage",
+                "datePublished": "2025-01-25",
+                "dateModified": "2025-01-25",
+                "inLanguage": "zh-TW",
+                "name": {
+                    "@language": "zh-TW",
+                    "@value": "NanoJSON 線上編輯器 - JSON 編輯器 - 邱敬幃 Pardn Chiu"
+                },
+                "alternateName": {
+                    "@language": "en",
+                    "@value": "NanoJSON live - JSON Editor - Pardn Chiu"
+                },
+                "description": {
+                    "@language": "zh-TW",
+                    "@value": "NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。"
+                },
+                "alternateDescription": {
+                    "@language": "en",
+                    "@value": "NanoJSON is a JSON Markdown editor based on pure JavaScript and native APIs. Can be easily embedded into websites."
+                },
+                "url": [
+                    "https://nanojson.pardn.io/page/live.html"
+                ],
+                "creator": {
+                    "@type": "Person",
+                    "name": [
+                        {
+                            "@language": "zh-TW",
+                            "@value": "邱敬幃"
+                        },
+                        {
+                            "@language": "en",
+                            "@value": "Pardn Chiu"
+                        }
+                    ],
+                    "url": "https://pardn.io/",
+                    "sameAs": [
+                        "https://github.com/pardnchiu"
+                    ],
+                    "email": "dev@pardn.io"
+                },
+                "image": "https://nanojson.pardn.io/static/image/website.jpg",
+            }
+            </script>
+
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                flex-shrink: 0;
+            }
+
+            button * {
+                pointer-events: none;
+            }
+
+            body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100vw;
+                height: 100vh;
+                background-color: ghostwhite;
+            }
+
+
+            body>button {
+                z-index: 1000;
+                position: fixed;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                right: 1rem;
+                bottom: 1rem;
+                width: 3rem;
+                height: 3rem;
+                background-color: #fff;
+                box-shadow: 0 4px 8px #00000034;
+                outline: 0;
+                border: 0;
+                border-radius: 50%;
+            }
+
+            body>button>i {
+                font-size: 1.25rem;
+            }
+
+            section.split {
+                position: relative;
+                display: flex;
+                justify-content: flex-start;
+                width: 100%;
+                height: 100%;
+                border-radius: 1rem;
+                box-shadow: -4px 0 8px #0000000d;
+                overflow: hidden;
+            }
+
+            section.split>section {
+                position: relative;
+                left: 0;
+                display: block;
+                width: 100%;
+                height: 100%;
+                overflow: hidden;
+                transition: 0.3s;
+            }
+
+            section.split>button {
+                position: absolute;
+                right: 1.5rem;
+                bottom: 1.5rem;
+                padding: 0 1rem;
+                line-height: 2rem;
+                border: none;
+                background-color: #00000080;
+                color: #fff;
+                border-radius: 1rem;
+            }
+
+            section.split[data-preview="1"]>section:nth-child(2) {
+                left: -100%;
+            }
+
+            @media screen and (min-width: 640px) {
+
+                body>button {
+                    display: none;
+                }
+
+                section.split {
+                    justify-content: center;
+                }
+
+                section.split>section {
+                    width: 50%;
+                }
+
+                section.split[data-preview="1"]>section:nth-child(2) {
+                    left: 0;
+                }
+            }
+
+            .pd-json-editor {
+                padding: 1rem 1rem 5rem
+            }
+
+            section.split>section:first-child {
+                background-color: #fbfbfb;
+            }
+
+            section.split>section:nth-child(2) {
+                background-color: #fff;
+                box-shadow: -4px 0 8px #0000000d;
+            }
+
+            section.split>section:nth-child(2)>textarea {
+                position: absolute;
+                top: 0;
+                left: 0;
+                bottom: 0;
+                right: 0;
+                padding: 1rem 1rem 5rem;
+                box-sizing: border-box;
+                width: 100%;
+                height: 100%;
+                line-height: 1.5rem;
+                font-style: monospace;
+                font-size: 0.75rem;
+                letter-spacing: 0.5px;
+                resize: none;
+                border: none;
+                -ms-overflow-style: none;
+                scrollbar-width: none;
+            }
+
+            section.split>section:nth-child(2)>textarea::-webkit-scrollbar {
+                display: none;
+            }
+        </style>
+    </head>
+
+    <body id="app">
+        <section id="split-body" data-preview="0" class="split">
+            <section>
+                <section id="JSONEditor"></section>
+            </section>
+            <section>
+                <textarea id="preview-body" disabled></textarea>
+            </section>
+        </section>
+        <button @click="previewSwitch">
+            <i class="fa-solid fa-eye"></i>
+        </button>
+        <script>
+            document.addEventListener('DOMContentLoaded', _ => {
+                let editor;
+                const app = new QUI({
+                    id: "app",
+                    event: {
+                        previewSwitch: e => {
+                            const _this = e.target;
+                            const preview = parseInt(_this.previousElementSibling.dataset.preview);
+                            _this.previousElementSibling.dataset.preview = Math.abs(preview - 1);
+                            _this.children[0].className = preview ? "fa-solid fa-eye" : "fa-solid fa-eye-slash"
+                        },
+                        showPreview: _ => {
+                            const dom = document.getElementById("preview-body");
+                            dom.value = editor.json;
+                        }
+                    },
+                    when: {
+                        rendered: _ => {
+                            editor = new JSONEditor({
+                                id: "JSONEditor",
+                                title: "NanoJSON: JSON Editor",
+                                description: "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. It can be easily embedded into websites.",
+                                // fill: 1
+                                // file: null, 
+                                // path: "/package.json",
+                                json: {
+                                    "name": "NanoJSON",
+                                    "version": "0.3.4",
+                                    "description": "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. It can be easily embedded into websites.",
+                                    "repository": "https://github.com/pardnchiu/NanoJSON.git",
+                                    "npm": "https://www.npmjs.com/package/@pardnchiu/nanojson",
+                                    "author": "邱敬幃 Pardn Chiu",
+                                    "license": {
+                                        "type": "Proprietary",
+                                        "url": "https://github.com/pardnchiu/NanoJSON/blob/main/LICENSE"
+                                    },
+                                    "dependencies": {
+                                        "Google Icons": {
+                                            "description": "A collection of icons provided by Google for intuitive and visually appealing UI designs.",
+                                            "url": "https://fonts.google.com/icons"
+                                        }
+                                    },
+                                    "release": {
+                                        "0.3.4": "Fixed bugs.",
+                                        "0.3.2-0.3.3": "Switched to block-based child node rendering.",
+                                        "0.3.1": "Added initialization settings and fixed the issue of the Boolean selection box disappearing.",
+                                        "0.3.0": "Minified the Icons. Added `reset` Function.",
+                                        "0.1.5": "Added Lifecycle feature. Replaced Google Icon with inline SVG.",
+                                        "0.1.4": "Removed test logs.",
+                                        "0.1.3": "Fixed import functionality.",
+                                        "0.1.2": "Improved CSS structure for nested display.",
+                                        "0.1.1": "Introduced .json() method to retrieve JSON data.",
+                                        "0.1.0": "Initial release."
+                                    }
+                                },
+                                button: {
+                                    import: true,
+                                    export: true,
+                                    reset: true
+                                },
+                                when: {
+                                    rendered: _ => {
+                                        app.event.showPreview()
+                                    },
+                                    updated: _ => {
+                                        app.event.showPreview()
+                                    }
+                                }
+                            });
+                        }
+                    }
+                });
+            });
+        </script>
+    </body>
+
+</html>
