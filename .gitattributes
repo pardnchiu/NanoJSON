@@ -1,6 +1,3 @@
-src/** filter=git-crypt diff=git-crypt
-src/interface.ts filter=git-crypt diff=git-crypt !filter !diff
-
 # 指定文件的語言
 *.ts linguist-language=TypeScript
 *.js linguist-language=JavaScript

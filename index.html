@@ -1,203 +1,248 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-Hans-TW">
 
-    <head>
-        <!-- 預連接到 cdn.jsdelivr.net -->
-        <link rel="preconnect" href="https://cdn.jsdelivr.net/">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="robots" content="index, follow">
 
-        <!-- 預加載 Font Awesome 圖示 -->
-        <!-- <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" as="style" crossorigin="anonymous"> -->
-        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" crossorigin="anonymous"> -->
+    <!-- SEO 標題與描述 -->
+    <title>NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu</title>
+    <meta name="title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+    <meta name="description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+    <meta name="keywords" content="NanoJSON, json, json-editor, javascript-library, JSON 編輯器, JSON 工具, JSON 免費工具, 邱敬幃">
+    <meta name="author" content="邱敬幃 Pardn Chiu Pardn Chiu">
+    <link rel="author" href="https://pardn.io/">
+    <link rel="canonical" href="https://nanojson.pardn.io/">
 
-        <!-- <script src="https://cdn.jsdelivr.net/gh/google/code-prettify@master/loader/run_prettify.js"></script> -->
+    <!-- Favicon -->
+    <link rel="icon" href="https://nanojson.pardn.io/static/image/logo.png" type="image/x-icon">
 
-        <script src="/dist/NanoJSON.js"></script>
+    <!-- Open Graph -->
+    <meta property="og:title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+    <meta property="og:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+    <meta property="og:image" content="https://nanojson.pardn.io/static/image/website.jpg">
+    <meta property="og:url" content="https://nanojson.pardn.io/">
+    <meta property="og:site_name" content="NanoJSON">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_TW">
 
-        <style>
-            * {
-                padding: 0;
-                margin: 0;
-            }
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+    <meta property="twitter:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+    <meta property="twitter:image" content="https://nanojson.pardn.io/static/image/website.jpg">
+    <meta property="twitter:url" content="https://nanojson.pardn.io/">
 
-            body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                width: 100vw;
-                height: 100vh;
-                background-color: ghostwhite;
-            }
+    <!-- Google Verification -->
+    <meta name="google-site-verification" content="example-verification-token">
 
-            @media screen and (max-width: 639.99px) {
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-EXAMPLE');
+    </script>
 
-                body::after {
-                    content: "未做 RWD 設計，僅適合 640 以上尺寸";
-                    z-index: 1000;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    right: 0;
-                    padding: 0 1rem;
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    text-align: center;
-                    background-color: #ffffffcc;
-                    backdrop-filter: blur(1rem);
-                    -webkit-backdrop-filter: blur(1rem);
-                    box-sizing: border-box;
-                }
-            }
+    <!-- Preload and Preconnect -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-            section.split {
-                position: relative;
-                display: flex;
-                justify-content: center;
-                width: 100%;
-                height: 100%;
-                /* width: calc(100% - 32px); */
-                /* max-width: 1024px; */
-                /* height: calc(100% - 64px); */
-                border-radius: 1rem;
-                box-shadow: -4px 0 8px #0000000d;
-                overflow: hidden;
-            }
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
 
-            section.split>section {
-                position: relative;
-                display: block;
-                width: 50%;
-                height: 100%;
-                overflow: hidden;
-            }
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@pardnchiu/renderjs@2.0.1/dist/RenderJS.js" as="script">
+    <script src="https://cdn.jsdelivr.net/npm/@pardnchiu/renderjs@2.0.1/dist/RenderJS.js" copyright="Pardn Ltd"></script>
 
-            section.split>button {
-                position: absolute;
-                right: 1.5rem;
-                bottom: 1.5rem;
-                padding: 0 1rem;
-                line-height: 2rem;
-                border: none;
-                background-color: #00000080;
-                color: #fff;
-                border-radius: 1rem;
-            }
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu",
+      "description": "NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。",
+      "url": [
+      "https://nanojson.pardn.io/page/live.html"
+    ],
+      "creator": {
+        "@type": "Person",
+        "name": [
+          {
+            "@language": "zh-TW",
+            "@value": "邱敬幃"
+          },
+          {
+            "@language": "en",
+            "@value": "Pardn Chiu"
+          }
+        ],
+        "url": "https://pardn.io/",
+        "sameAs": [
+          "https://github.com/pardnchiu"
+        ],
+        "email": "dev@pardn.io"
+      },
+      "image": "https://nanojson.pardn.io/static/image/website.jpg"
+    }
+    </script>
 
-            .pd-json-editor {
-                padding: 1rem 1rem 5rem
-            }
+    <style>
+      html {
+        width: 100vw;
+        height: 100vh;
+      }
 
-            section.split>section:first-child {
-                background-color: #fbfbfb;
-            }
+      * {
+        flex-shrink: 0;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        box-sizing: border-box;
+      }
 
-            section.split>section:nth-child(2) {
-                background-color: #fff;
-                box-shadow: -4px 0 8px #0000000d;
-            }
+      body {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
 
-            section.split>section:nth-child(2)>textarea {
-                position: absolute;
-                top: 0;
-                left: 0;
-                bottom: 0;
-                right: 0;
-                padding: 1rem 1rem 5rem;
-                box-sizing: border-box;
-                width: 100%;
-                height: 100%;
-                line-height: 1.5rem;
-                font-style: monospace;
-                font-size: 0.75rem;
-                letter-spacing: 0.5px;
-                resize: none;
-                border: none;
-                -ms-overflow-style: none;
-                scrollbar-width: none;
-            }
+      header {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0rem 1rem;
+      }
 
-            section.split>section:nth-child(2)>textarea::-webkit-scrollbar {
-                display: none;
-            }
-        </style>
-    </head>
+      header>section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+      }
 
-    <body>
-        <section class="split">
-            <section>
-                <section id="JSONEditor"></section>
-            </section>
-            <section>
-                <textarea id="preview" disabled></textarea>
-            </section>
-        </section>
-        <script>
-            let editor;
-            document.addEventListener('DOMContentLoaded', _ => {
-                editor = new JSONEditor({
-                    id: "JSONEditor",
-                    title: "NanoJSON: JSON Editor",
-                    description: "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. It can be easily embedded into websites.",
-                    // fill: 1
-                    // file: null, 
-                    // path: "/package.json",
-                    json: {
-                        "name": "NanoJSON",
-                        "version": "0.3.4",
-                        "description": "NanoJSON is a lightweight JSON editing library built on pure JavaScript and native APIs. It can be easily embedded into websites.",
-                        "repository": "https://github.com/pardnchiu/NanoJSON.git",
-                        "npm": "https://www.npmjs.com/package/@pardnchiu/nanojson",
-                        "author": "邱敬幃 Pardn Chiu",
-                        "license": {
-                            "type": "Proprietary",
-                            "url": "https://github.com/pardnchiu/NanoJSON/blob/main/LICENSE"
-                        },
-                        "dependencies": {
-                            "Google Icons": {
-                                "description": "A collection of icons provided by Google for intuitive and visually appealing UI designs.",
-                                "url": "https://fonts.google.com/icons"
-                            }
-                        },
-                        "release": {
-                            "0.3.4": "Fixed bugs.",
-                            "0.3.2-0.3.3": "Switched to block-based child node rendering.",
-                            "0.3.1": "Added initialization settings and fixed the issue of the Boolean selection box disappearing.",
-                            "0.3.0": "Minified the Icons. Added `reset` Function.",
-                            "0.1.5": "Added Lifecycle feature. Replaced Google Icon with inline SVG.",
-                            "0.1.4": "Removed test logs.",
-                            "0.1.3": "Fixed import functionality.",
-                            "0.1.2": "Improved CSS structure for nested display.",
-                            "0.1.1": "Introduced .json() method to retrieve JSON data.",
-                            "0.1.0": "Initial release."
-                        }
-                    },
-                    button: {
-                        import: true,
-                        export: true,
-                        reset: true
-                    },
-                    when: {
-                        rendered: _ => {
-                            showPreview()
-                        },
-                        updated: _ => {
-                            showPreview()
-                        }
-                    }
-                });
-            });
+      header>section>h1 {
+        width: 100%;
+        line-height: 3.5rem;
+        text-align: center;
+        font-size: 3rem;
+      }
 
-            function showPreview() {
-                const dom = document.getElementById("preview");
-                dom.value = editor.json;
-            };
-        </script>
-    </body>
+      header>section>h2 {
+        width: 100%;
+        line-height: 2rem;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      header>img {
+        width: 128px;
+        height: 128px;
+      }
+
+      section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      section>a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      section>a:not(:has(img)) {
+        padding: 0 1rem;
+        line-height: 2.5rem;
+        border-radius: 0.5rem;
+      }
+
+      footer {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 5rem 0 0;
+        color: #00000080;
+      }
+
+      @media screen and (min-width: 480px) {
+
+        header {
+          flex-flow: row;
+        }
+
+        header>section>h1,
+        header>section>h2 {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
+
+  <body id="app" class="md" data-md="1" :display="flex" :flex-flow="column" :justify-content="center" :align-items="center" :width="100%" :height="100%">
+    <header>
+      <img src="/static/image/logo.svg" alt="">
+      <section>
+        <h1>NanoJSON</h1>
+        <h2>輕量化 JSON 編輯器</h2>
+      </section>
+    </header>
+    <section :margin="1rem 0 0">
+      <img src="https://img.shields.io/badge/tag-JavaScript%20Library-bb4444" alt="">
+      <img src="https://img.shields.io/github/size/pardnchiu/NanoJSON/dist%2FNanoJSON.js" alt="">
+    </section>
+    <section :margin="0.5rem 0 0">
+      <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank">
+        <img src="https://img.shields.io/npm/v/@pardnchiu/nanojson" alt="npm版本">
+      </a>
+      <a href="https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson" target="_blank">
+        <img src="https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson" alt="npm版本">
+      </a>
+    </section>
+    <section :margin="2rem 0 0" :gap="1rem">
+      <a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :background-color="#000" :color="#fff">
+        <i class="fa-brands fa-github"></i>
+        GitHub
+      </a>
+      <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank" :background-color="#BA311C" :color="#fff" :border="1px solid #BA311C">
+        <i class="fa-brands fa-npm"></i>
+        npm
+      </a>
+    </section>
+    <section>
+      <a href="/page/agreement.html" :margin-top="0.5rem" :color="#000">
+        <i class="fa-solid fa-scale-balanced"></i>
+        LICENSE
+      </a>
+    </section>
+    <section>
+      <a href="/page/live.html" :color="#000">
+        <i class="fa-solid fa-table-columns"></i>
+        Online
+      </a>
+    </section>
+    <footer>
+      <p>Created by <a href="mailto:dev@pardn.io" :color="#000">邱敬幃</a></p>
+      <p><a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :color="#000" :text-decoration="underline">NanoJSON</a> on GitHub</p>
+      <p>© 2025</p>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", _ => {
+        const app = "app".RJS();
+      });
+    </script>
+  </body>
 
 </html>
