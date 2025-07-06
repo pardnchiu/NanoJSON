@@ -8,248 +8,248 @@
 <!DOCTYPE html>
 <html lang="zh-Hans-TW">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-        <meta name="theme-color" content="#ffffff">
-        <meta name="robots" content="index, follow">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#ffffff">
+    <meta name="robots" content="index, follow">
 
-        <!-- SEO 標題與描述 -->
-        <title>NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu</title>
-        <meta name="title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
-        <meta name="description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
-        <meta name="keywords" content="NanoJSON, json, json-editor, javascript-library, JSON 編輯器, JSON 工具, JSON 免費工具, 邱敬幃">
-        <meta name="author" content="邱敬幃 Pardn Chiu Pardn Chiu">
-        <link rel="author" href="https://pardn.io/">
-        <link rel="canonical" href="https://nanojson.pardn.io/">
+    <!-- SEO 標題與描述 -->
+    <title>NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu</title>
+    <meta name="title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+    <meta name="description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+    <meta name="keywords" content="NanoJSON, json, json-editor, javascript-library, JSON 編輯器, JSON 工具, JSON 免費工具, 邱敬幃">
+    <meta name="author" content="邱敬幃 Pardn Chiu Pardn Chiu">
+    <link rel="author" href="https://pardn.io/">
+    <link rel="canonical" href="https://nanojson.pardn.io/">
 
-        <!-- Favicon -->
-        <link rel="icon" href="https://nanojson.pardn.io/static/image/logo.png" type="image/x-icon">
+    <!-- Favicon -->
+    <link rel="icon" href="https://nanojson.pardn.io/static/image/logo.png" type="image/x-icon">
 
-        <!-- Open Graph -->
-        <meta property="og:title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
-        <meta property="og:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
-        <meta property="og:image" content="https://nanojson.pardn.io/static/image/website.jpg">
-        <meta property="og:url" content="https://nanojson.pardn.io/">
-        <meta property="og:site_name" content="NanoJSON">
-        <meta property="og:type" content="website">
-        <meta property="og:locale" content="zh_TW">
+    <!-- Open Graph -->
+    <meta property="og:title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+    <meta property="og:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+    <meta property="og:image" content="https://nanojson.pardn.io/static/image/website.jpg">
+    <meta property="og:url" content="https://nanojson.pardn.io/">
+    <meta property="og:site_name" content="NanoJSON">
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="zh_TW">
 
-        <!-- Twitter -->
-        <meta name="twitter:card" content="summary_large_image">
-        <meta property="twitter:title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
-        <meta property="twitter:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
-        <meta property="twitter:image" content="https://nanojson.pardn.io/static/image/website.jpg">
-        <meta property="twitter:url" content="https://nanojson.pardn.io/">
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu">
+    <meta property="twitter:description" content="NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。">
+    <meta property="twitter:image" content="https://nanojson.pardn.io/static/image/website.jpg">
+    <meta property="twitter:url" content="https://nanojson.pardn.io/">
 
-        <!-- Google Verification -->
-        <meta name="google-site-verification" content="example-verification-token">
+    <!-- Google Verification -->
+    <meta name="google-site-verification" content="example-verification-token">
 
-        <!-- Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() { dataLayer.push(arguments); }
-            gtag('js', new Date());
-            gtag('config', 'G-EXAMPLE');
-        </script>
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EXAMPLE"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'G-EXAMPLE');
+    </script>
 
-        <!-- Preload and Preconnect -->
-        <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <!-- Preload and Preconnect -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
-        <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" as="style">
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css" as="style">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.5.2/css/all.min.css">
 
-        <link rel="preload" href="https://cdn.jsdelivr.net/npm/@pardnchiu/renderjs@2.0.1/dist/RenderJS.js" as="script">
-        <script src="https://cdn.jsdelivr.net/npm/@pardnchiu/renderjs@2.0.1/dist/RenderJS.js" copyright="Pardn Ltd"></script>
+    <link rel="preload" href="https://cdn.jsdelivr.net/npm/@pardnchiu/renderjs@2.0.1/dist/RenderJS.js" as="script">
+    <script src="https://cdn.jsdelivr.net/npm/@pardnchiu/renderjs@2.0.1/dist/RenderJS.js" copyright="Pardn Ltd"></script>
 
-        <!-- JSON-LD Schema -->
-        <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "WebPage",
-            "name": "NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu",
-            "description": "NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。",
-            "url": [
-            "https://nanojson.pardn.io/page/live.html"
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      "name": "NanoJSON - JSON 編輯器 - 邱敬幃 Pardn Chiu",
+      "description": "NanoJSON 是一款基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，便於嵌入網站中做使用。",
+      "url": [
+      "https://nanojson.pardn.io/page/live.html"
+    ],
+      "creator": {
+        "@type": "Person",
+        "name": [
+          {
+            "@language": "zh-TW",
+            "@value": "邱敬幃"
+          },
+          {
+            "@language": "en",
+            "@value": "Pardn Chiu"
+          }
         ],
-            "creator": {
-                "@type": "Person",
-                "name": [
-                    {
-                        "@language": "zh-TW",
-                        "@value": "邱敬幃"
-                    },
-                    {
-                        "@language": "en",
-                        "@value": "Pardn Chiu"
-                    }
-                ],
-                "url": "https://pardn.io/",
-                "sameAs": [
-                    "https://github.com/pardnchiu"
-                ],
-                "email": "dev@pardn.io"
-            },
-            "image": "https://nanojson.pardn.io/static/image/website.jpg"
+        "url": "https://pardn.io/",
+        "sameAs": [
+          "https://github.com/pardnchiu"
+        ],
+        "email": "dev@pardn.io"
+      },
+      "image": "https://nanojson.pardn.io/static/image/website.jpg"
+    }
+    </script>
+
+    <style>
+      html {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      * {
+        flex-shrink: 0;
+        margin: 0;
+        padding: 0;
+        font-family: sans-serif;
+        box-sizing: border-box;
+      }
+
+      body {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+      }
+
+      header {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0rem 1rem;
+      }
+
+      header>section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-flow: column;
+      }
+
+      header>section>h1 {
+        width: 100%;
+        line-height: 3.5rem;
+        text-align: center;
+        font-size: 3rem;
+      }
+
+      header>section>h2 {
+        width: 100%;
+        line-height: 2rem;
+        text-align: center;
+        font-size: 1.5rem;
+      }
+
+      header>img {
+        width: 128px;
+        height: 128px;
+      }
+
+      section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      section>a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        text-decoration: none;
+      }
+
+      section>a:not(:has(img)) {
+        padding: 0 1rem;
+        line-height: 2.5rem;
+        border-radius: 0.5rem;
+      }
+
+      footer {
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+        align-items: center;
+        gap: 0.5rem;
+        margin: 5rem 0 0;
+        color: #00000080;
+      }
+
+      @media screen and (min-width: 480px) {
+
+        header {
+          flex-flow: row;
         }
-        </script>
 
-        <style>
-            html {
-                width: 100vw;
-                height: 100vh;
-            }
+        header>section>h1,
+        header>section>h2 {
+          text-align: left;
+        }
+      }
+    </style>
+  </head>
 
-            * {
-                flex-shrink: 0;
-                margin: 0;
-                padding: 0;
-                font-family: sans-serif;
-                box-sizing: border-box;
-            }
-
-            body {
-                display: flex;
-                flex-flow: column;
-                justify-content: center;
-                align-items: center;
-                width: 100%;
-                height: 100%;
-            }
-
-            header {
-                display: flex;
-                flex-flow: column;
-                justify-content: center;
-                align-items: center;
-                gap: 0rem 1rem;
-            }
-
-            header>section {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                flex-flow: column;
-            }
-
-            header>section>h1 {
-                width: 100%;
-                line-height: 3.5rem;
-                text-align: center;
-                font-size: 3rem;
-            }
-
-            header>section>h2 {
-                width: 100%;
-                line-height: 2rem;
-                text-align: center;
-                font-size: 1.5rem;
-            }
-
-            header>img {
-                width: 128px;
-                height: 128px;
-            }
-
-            section {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-            }
-
-            section>a {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                text-decoration: none;
-            }
-
-            section>a:not(:has(img)) {
-                padding: 0 1rem;
-                line-height: 2.5rem;
-                border-radius: 0.5rem;
-            }
-
-            footer {
-                display: flex;
-                flex-flow: column;
-                justify-content: center;
-                align-items: center;
-                gap: 0.5rem;
-                margin: 5rem 0 0;
-                color: #00000080;
-            }
-
-            @media screen and (min-width: 480px) {
-
-                header {
-                    flex-flow: row;
-                }
-
-                header>section>h1,
-                header>section>h2 {
-                    text-align: left;
-                }
-            }
-        </style>
-    </head>
-
-    <body id="app" class="md" data-md="1" :display="flex" :flex-flow="column" :justify-content="center" :align-items="center" :width="100%" :height="100%">
-        <header>
-            <img src="/static/image/logo.svg" alt="">
-            <section>
-                <h1>NanoJSON</h1>
-                <h2>輕量化 JSON 編輯器</h2>
-            </section>
-        </header>
-        <section :margin="1rem 0 0">
-            <img src="https://img.shields.io/badge/tag-JavaScript%20Library-bb4444" alt="">
-            <img src="https://img.shields.io/github/size/pardnchiu/NanoJSON/dist%2FNanoJSON.js" alt="">
-        </section>
-        <section :margin="0.5rem 0 0">
-            <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank">
-                <img src="https://img.shields.io/npm/v/@pardnchiu/nanojson" alt="npm版本">
-            </a>
-            <a href="https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson" target="_blank">
-                <img src="https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson" alt="npm版本">
-            </a>
-        </section>
-        <section :margin="2rem 0 0" :gap="1rem">
-            <a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :background-color="#000" :color="#fff">
-                <i class="fa-brands fa-github"></i>
-                GitHub
-            </a>
-            <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank" :background-color="#BA311C" :color="#fff" :border="1px solid #BA311C">
-                <i class="fa-brands fa-npm"></i>
-                npm
-            </a>
-        </section>
-        <section>
-            <a href="/page/agreement.html" :margin-top="0.5rem" :color="#000">
-                <i class="fa-solid fa-scale-balanced"></i>
-                LICENSE
-            </a>
-        </section>
-        <section>
-            <a href="/page/live.html" :color="#000">
-                <i class="fa-solid fa-table-columns"></i>
-                Online
-            </a>
-        </section>
-        <footer>
-            <p>Created by <a href="mailto:dev@pardn.io" :color="#000">邱敬幃</a></p>
-            <p><a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :color="#000" :text-decoration="underline">NanoJSON</a> on GitHub</p>
-            <p>© 2025</p>
-        </footer>
-        <script>
-            document.addEventListener("DOMContentLoaded", _ => {
-                const app = "app".RJS();
-            });
-        </script>
-    </body>
+  <body id="app" class="md" data-md="1" :display="flex" :flex-flow="column" :justify-content="center" :align-items="center" :width="100%" :height="100%">
+    <header>
+      <img src="/static/image/logo.svg" alt="">
+      <section>
+        <h1>NanoJSON</h1>
+        <h2>輕量化 JSON 編輯器</h2>
+      </section>
+    </header>
+    <section :margin="1rem 0 0">
+      <img src="https://img.shields.io/badge/tag-JavaScript%20Library-bb4444" alt="">
+      <img src="https://img.shields.io/github/size/pardnchiu/NanoJSON/dist%2FNanoJSON.js" alt="">
+    </section>
+    <section :margin="0.5rem 0 0">
+      <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank">
+        <img src="https://img.shields.io/npm/v/@pardnchiu/nanojson" alt="npm版本">
+      </a>
+      <a href="https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson" target="_blank">
+        <img src="https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson" alt="npm版本">
+      </a>
+    </section>
+    <section :margin="2rem 0 0" :gap="1rem">
+      <a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :background-color="#000" :color="#fff">
+        <i class="fa-brands fa-github"></i>
+        GitHub
+      </a>
+      <a href="https://www.npmjs.com/package/@pardnchiu/nanojson" target="_blank" :background-color="#BA311C" :color="#fff" :border="1px solid #BA311C">
+        <i class="fa-brands fa-npm"></i>
+        npm
+      </a>
+    </section>
+    <section>
+      <a href="/page/agreement.html" :margin-top="0.5rem" :color="#000">
+        <i class="fa-solid fa-scale-balanced"></i>
+        LICENSE
+      </a>
+    </section>
+    <section>
+      <a href="/page/live.html" :color="#000">
+        <i class="fa-solid fa-table-columns"></i>
+        Online
+      </a>
+    </section>
+    <footer>
+      <p>Created by <a href="mailto:dev@pardn.io" :color="#000">邱敬幃</a></p>
+      <p><a href="https://github.com/pardnchiu/NanoJSON" target="_blank" :color="#000" :text-decoration="underline">NanoJSON</a> on GitHub</p>
+      <p>© 2025</p>
+    </footer>
+    <script>
+      document.addEventListener("DOMContentLoaded", _ => {
+        const app = "app".RJS();
+      });
+    </script>
+  </body>
 
 </html>
