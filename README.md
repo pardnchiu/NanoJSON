@@ -10,7 +10,7 @@
 
 [![license](https://img.shields.io/github/license/pardnchiu/nanojson)](LICENSE)
 [![version](https://img.shields.io/npm/v/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
-[![download](https://img.shields.io/npm/dm/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
+[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)
 
 ## 三大主軸 / Three Core Features
 
