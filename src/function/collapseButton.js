@@ -1,16 +1,17 @@
 function collapseButton(node) {
   const isObject = {
-    [_object]: 1,
-    [_array]: 1
-  }[node[_type][_toLowerCase]()];
+    object: 1,
+    array: 1
+  }[node.type.toLowerCase()];
+
   const dom = addEvent({
-    [_dom]: createElement(_button, {
-      [_dataset]: {
-        [_collapseable]: isObject ? 1 : 0,
-        [_collapsed]: node[_collapsed] ? 1 : 0
+    dom: createElement("button", {
+      dataset: {
+        collapsible: isObject ? 1 : 0,
+        collapsed: node.collapsed ? 1 : 0
       }
     }, isObject ? icon.right : null),
-    [_onclick]: isObject ? _ => node.setCollapsed() : _ => void 0
+    onclick: isObject ? _ => node.setCollapsed() : _ => void 0
   });
 
   return dom;

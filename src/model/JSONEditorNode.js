@@ -16,47 +16,47 @@ class JSONEditorNode {
       return;
     };
 
-    this.id = UUID();
-    this[_key] = config[_key] ?? this[_key];
-    this[_type] = config[_type] ?? this[_type];
-    this[_value] = config[_value] ?? this[_value];
-    this[_parent] = config[_parent] ?? this[_parent];
-    this[_children] = config[_children] ?? this[_children];
-    this[_collapsed] = config[_collapsed] ?? this[_collapsed];
+    this.id = randomKey();
+    this.key = config.key ?? this.key;
+    this.type = config.type ?? this.type;
+    this.value = config.value ?? this.value;
+    this.parent = config.parent ?? this.parent;
+    this.children = config.children ?? this.children;
+    this.collapsed = config.collapsed ?? this.collapsed;
     this.#editor = config.editor;
     this.#lifecycle = config.lifecycle;
   };
 
   render() {
-    return this.#create();
+    return this.create();
   };
   addChild() {
     this.#add();
   };
   updateChild() {
-    this.#create();
+    this.create();
     this.#update();
   };
   setCollapsed() {
-    this[_collapsed] = !this[_collapsed];
-    this.#create();
+    this.collapsed = !this.collapsed;
+    this.create();
   };
   get json() {
     return this.#json();
   };
 
   #update() {
-    this.#lifecycle[_update](_ => void 0);
+    this.#lifecycle.update(_ => void 0);
   }
 
-  #create() {
+  create() {
     let newDom = createElement("section.pd-json-editor-child", [
       createElement("section.pair-wrapper", [
-        createElement(_section + "#" + this.id + ".input-group", [
+        createElement("section" + "#" + this.id + ".input-group", [
           // 折疊按鈕
           collapseButton(this),
           // 鍵輸入框
-          keyInput(this, this.parent.children.indexOf(this), this.parent.type === _array, this.#lifecycle),
+          keyInput(this, this.parent.children.indexOf(this), this.parent.type === "array", this.#lifecycle),
           createElement("span", ":"),
           // 類型選擇器
           typeSelect(this),
@@ -64,8 +64,8 @@ class JSONEditorNode {
           valueInput(this, this.#lifecycle),
           // 移除按鈕
           addEvent({
-            [_dom]: createElement(_button, icon[_add]),
-            [_onclick]: _ => {
+            dom: createElement("button", icon.add),
+            onclick: _ => {
               // * 再次確認
               if (!$confirm(`Remove?`)) {
                 return;
@@ -79,8 +79,8 @@ class JSONEditorNode {
           this,
           // 子節點渲染
           (e, i) => {
-            let dom = e.#create();
-            dom[_dataset].last = i === this.children.length - 1 ? 1 : 0;
+            let dom = e.create();
+            dom.dataset.last = i === this.children.length - 1 ? 1 : 0;
             return dom;
           },
           // 按鈕點擊處理
@@ -102,11 +102,11 @@ class JSONEditorNode {
 
   #add() {
     const childNode = new JSONEditorNode({
-      [_parent]: this,
-      [_editor]: this.#editor,
+      parent: this,
+      editor: this.#editor,
       lifecycle: this.#lifecycle
     });
-    this[_children][_push](childNode);
+    this.children.push(childNode);
 
     const container = this.#dom.querySelector("section.pd-json-editor-nested-child");
     if (container != null) {
@@ -116,7 +116,7 @@ class JSONEditorNode {
         e.dataset.last = 0;
       };
 
-      const newNode = childNode.#create();
+      const newNode = childNode.create();
       newNode.dataset.last = 1;
 
       // * 更新畫面並觸發更新
@@ -126,11 +126,11 @@ class JSONEditorNode {
   };
 
   #remove() {
-    if (!this[_parent]) {
+    if (!this.parent) {
       return;
     };
 
-    const index = this[_parent][_children][_indexOf](this);
+    const index = this.parent.children.indexOf(this);
 
     if (index === -1) {
       return;
@@ -142,39 +142,39 @@ class JSONEditorNode {
     }
 
     // * 更新畫面並觸發更新
-    this[_parent][_children][_splice](index, 1);
-    this.#dom[_remove]();
+    this.parent.children.splice(index, 1);
+    this.#dom.remove();
     this.#update();
   };
 
   #json() {
-    if (!this[_parent]) {
+    if (!this.parent) {
       return
     };
 
-    if (this[_type] === _array) {
-      return this[_children][_map](e => e.#json())
+    if (this.type === "array") {
+      return this.children.map(e => e.#json())
     };
 
-    if (this[_type] === _object) {
+    if (this.type === "object") {
       const obj = {};
 
-      for (let e of this[_children]) {
-        if (!e[_key] && this[_parent][_type] !== _array) {
+      for (let e of this.children) {
+        if (!e.key && this.parent.type !== "array") {
           continue;
         };
-        obj[e[_key] || $Object[_keys](obj)[_length]] = e.#json();
+        obj[e.key || $Object.keys(obj).length] = e.#json();
       };
 
       return obj
     };
 
-    let value = this[_value];
+    let value = this.value;
 
-    if (this[_type] === _boolean) {
-      value = value[_toLowerCase]() === 'true';
+    if (this.type === "boolean") {
+      value = value.toLowerCase() === 'true';
     }
-    else if (this[_type] === _number) {
+    else if (this.type === "number") {
       value = $Number(value);
     };
 

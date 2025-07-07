@@ -1,29 +1,29 @@
 
 function keyInput(node, index, isArray, lifecycle) {
   function newValue(value) {
-    return value[_replace](/\n/g, "");
+    return value.replace(/\n/g, "");
   };
   function updateValue(event) {
-    const _this = event[_target];
-    _this[_value] = _this[_nextElementSibling][_innerHTML] = newValue(_this[_value]);
+    const _this = event.target;
+    _this.value = _this.nextElementSibling.innerHTML = newValue(_this.value);
 
-    node[_key] = newValue(_this[_value])[_trim]();
+    node.key = newValue(_this.value).trim();
   };
   return isArray
     ? createElement("span.array-index", index)
-    : createElement(_label, [
+    : createElement("label", [
       addEvent({
-        [_dom]: createElement("textarea#key-" + node.id, {
-          [_placeholder]: "KEY"
-        }, node[_key][_replace](/\n/g, "")),
-        [_oninput]: e => {
+        dom: createElement("textarea#key-" + node.id, {
+          placeholder: "KEY"
+        }, node.key.replace(/\n/g, "")),
+        oninput: e => {
           updateValue(e);
-          lifecycle[_update](() => void 0);
+          lifecycle.update(() => void 0);
         },
-        [_onchange]: e => {
+        onchange: e => {
           updateValue(e);
         }
       }),
-      createElement("pre", newValue(node[_key]))
+      createElement("pre", newValue(node.key))
     ]);
 };

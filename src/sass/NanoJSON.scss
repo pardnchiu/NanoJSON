@@ -30,11 +30,11 @@
       pointer-events: none;
     }
 
-    &[data-collapseable="1"][data-collapsed="0"] {
+    &[data-collapsible="1"][data-collapsed="0"] {
       transform: rotate(90deg);
     }
 
-    &[data-collapseable="0"] {
+    &[data-collapsible="0"] {
       padding-left: 1px;
 
       &::before {
@@ -277,7 +277,7 @@
   }
 
 
-  .pd-json-editor-child[data-last="1"]>section.pair-wrapper>section.input-group>button[data-collapseable="0"]::before {
+  .pd-json-editor-child[data-last="1"]>section.pair-wrapper>section.input-group>button[data-collapsible="0"]::before {
     height: 50%;
   }
 }

@@ -25,137 +25,137 @@ const regexCssID = /\#([\w_-]+)?/i;
 const regexCssTag = /^\w+(?=[\#\.]*)/i;
 const htmlBr = "<br>";
 
-const _name = "name";
-const _text = "text";
-const _catch = "catch";
-const _then = "then";
-const _readAsText = "readAsText";
-const _createObjectURL = "createObjectURL";
-const _revokeObjectURL = "revokeObjectURL";
-const _removeChild = "removeChild";
-const _click = "click";
-const _onload = "onload";
-const _parse = "parse";
-const _true = "true";
-const _false = "false";
-const _add = "add";
-const _appendChild = "appendChild";
-const _class = "class";
-const _section = "section";
-const _focus = "focus";
-const _key = "key";
-const _stringify = "stringify";
-const _label = "label";
-const _Color = "Color";
-const _target = "target";
-const _color = "color";
-const _fill = "fill";
-const _entries = "entries";
-const _insert = "insert";
-const _collapseable = "collapseable";
-const _createDocumentFragment = "createDocumentFragment"
-const _contentEditable = "contentEditable";
-const _replaceChildren = "replaceChildren";
-const _toLowerCase = "toLowerCase";
-const _beforeRender = "beforeRender";
-const _beforeUpdate = "beforeUpdate";
-const _beforeDestroy = "beforeDestroy";
-const _rendered = "rendered";
-const _updated = "updated";
-const _button = "button";
-const _destroyed = "destroyed";
-const _type = "type";
-const _script = "script"
-const _createTextNode = "createTextNode";
-const _console = "console"
-const _onchange = "onchange";
-const _oninput = "oninput";
-const _log = "log";
-const _body = "body";
-const _apply = "apply"
-const _src = "src";
-const _void = "void"
-const _title = "title";
-const _description = "description";
-const _error = "error";
-const _now = "now";
-const _render = "render";
-const _when = "when";
-const _remove = "remove"
-const _random = "random";
-const _create = "create";
-const _dataset = "dataset";
-const _display = "display";
-const _float = "float";
-const _has = "has";
-const _dom = "dom";
-const _floor = "floor"
-const _input = "input";
-const _charAt = "charAt";
-const _textarea = "textarea";
-const _height = "height";
-const _img = "img";
-const _parent = "parent";
-const _onclick = "onclick";
-const _index = "index";
-const _inner = "inner";
-const _isArray = "isArray";
-const _length = "length";
-const _map = "map";
-const _match = "match";
-const _number = "number";
-const _object = "object";
-const _replace = "replace";
-const _keys = "keys";
-const _placeholder = "placeholder";
-const _set = "set";
-const _source = "source";
-const _style = "style";
-const _string = "string";
-const _select = "select";
-const _selected = "selected";
-const _checked = "checked";
-const _background = "background";
-const _option = "option";
-const _temp = "temp";
-const _test = "test";
-const _textContent = "textContent";
-const _trim = "trim";
-const _update = "update";
-const _value = "value";
-const _width = "width";
-const _collapsed = "collapsed";
-const _array = "array";
-const _boolean = "boolean";
-const _reset = "reset";
-const _import = "import";
-const _export = "export";
-const _children = "children";
-const _splice = "splice";
-const _push = "push";
-const _editor = "editor";
-const _getElementById = "getElementById";
-const _nextElementSibling = "nextElementSibling";
-const _link = "link"
-const _rel = "rel"
-const _preconnect = "preconnect"
-const _href = "href"
-const _crossOrigin = "crossOrigin"
-const _preload = "preload"
-const _as = "as"
-const _anonymous = "anonymous"
-const _head = "head"
+// const _name = "name";
+// const _text = "text";
+// const _catch = "catch";
+// const _then = "then";
+// const _readAsText = "readAsText";
+// const _createObjectURL = "createObjectURL";
+// const _revokeObjectURL = "revokeObjectURL";
+// const _removeChild = "removeChild";
+// const _click = "click";
+// const _onload = "onload";
+// const _parse = "parse";
+// const "true" = "true";
+// const "false" = "false";
+// const _add = "add";
+// const _appendChild = "appendChild";
+// const _class = "class";
+// const "section" = "section";
+// const _focus = "focus";
+// const _key = "key";
+// const "string"ify = "stringify";
+// const "label" = "label";
+// const _Color = "Color";
+// const _target = "target";
+// const _color = "color";
+// const _fill = "fill";
+// const _entries = "entries";
+// const _insert = "insert";
+// const _collapsible = "collapsible";
+// const _createDocumentFragment = "createDocumentFragment"
+// const _contentEditable = "contentEditable";
+// const _replaceChildren = "replaceChildren";
+// const _toLowerCase = "toLowerCase";
+// const _beforeRender = "beforeRender";
+// const _beforeUpdate = "beforeUpdate";
+// const _beforeDestroy = "beforeDestroy";
+// const _rendered = "rendered";
+// const _updated = "updated";
+// const "button" = "button";
+// const _destroyed = "destroyed";
+// const _type = "type";
+// const "script" = "script"
+// const _createTextNode = "createTextNode";
+// const "console" = "console"
+// const _onchange = "onchange";
+// const _oninput = "oninput";
+// const "log" = "log";
+// const _body = "body";
+// const "apply" = "apply"
+// const _src = "src";
+// const "void" = "void"
+// const _title = "title";
+// const _description = "description";
+// const "error" = "error";
+// const _now = "now";
+// const _render = "render";
+// const _when = "when";
+// const _remove = "remove"
+// const _random = "random";
+// const _create = "create";
+// const "dataset" = "dataset";
+// const _display = "display";
+// const _float = "float";
+// const _has = "has";
+// const "dom" = "dom";
+// const _floor = "floor"
+// const "input" = "input";
+// const _charAt = "charAt";
+// const "textarea" = "textarea";
+// const _height = "height";
+// const "img" = "img";
+// const _parent = "parent";
+// const _onclick = "onclick";
+// const _index = "index";
+// const _inner = "inner";
+// const _isArray = "isArray";
+// const _length = "length";
+// const _map = "map";
+// const _match = "match";
+// const "number" = "number";
+// const "object" = "object";
+// const _replace = "replace";
+// const _keys = "keys";
+// const _placeholder = "placeholder";
+// const _set = "set";
+// const "source" = "source";
+// const _style = "style";
+// const "string" = "string";
+// const "select" = "select";
+// const "select"ed = "selected";
+// const _checked = "checked";
+// const _background = "background";
+// const "option" = "option";
+// const "temp" = "temp";
+// const _test = "test";
+// const _textContent = "textContent";
+// const _trim = "trim";
+// const _update = "update";
+// const _value = "value";
+// const _width = "width";
+// const _collapsed = "collapsed";
+// const "array" = "array";
+// const "boolean" = "boolean";
+// const _reset = "reset";
+// const _import = "import";
+// const _export = "export";
+// const _children = "children";
+// const _splice = "splice";
+// const _push = "push";
+// const _editor = "editor";
+// const _getElementById = "getElementById";
+// const _nextElementSibling = "nextElementSibling";
+// const "link" = "link"
+// const _rel = "rel"
+// const _preconnect = "preconnect"
+// const _href = "href"
+// const _crossOrigin = "crossOrigin"
+// const _preload = "preload"
+// const _as = "as"
+// const _anonymous = "anonymous"
+// const _head = "head"
 
-const _backgroundColor = "background" + _Color;
-const _classList = _class + "List";
-const _createElement = _create + "Element";
-const _hasOwnProperty = _has + "OwnProperty";
-const _indexOf = _index + "Of";
-const _innerHTML = _inner + "HTML";
-const _innerText = _inner + "Text";
-const _setAttribute = _set + "Attribute";
+// const _backgroundColor = "background" + _Color;
+// const _classList = _class + "List";
+// const _createElement = _create + "Element";
+// const _hasOwnProperty = _has + "OwnProperty";
+// const _indexOf = _index + "Of";
+// const _innerHTML = _inner + "HTML";
+// const _innerText = _inner + "Text";
+// const _setAttribute = _set + "Attribute";
 
-const types = [_string, _number, _boolean, _array, _object];
+const types = ["string", "number", "boolean", "array", "object"];
 
 const css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@0.3.4/dist/NanoJSON.css";
 // 開發測試用
@@ -163,30 +163,30 @@ const css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@0.3.4/dist/NanoJSO
 const copyright = `NanoJSON\nGitHub: https://github.com/pardnchiu/NanoJSON\nCreator: Pardn Chiu\nLicense: Proprietary`;
 const copyright_style = `line-height: 1.75rem; font-size: 0.875rem;`;
 const lifecycleAction = {
-  [_beforeRender]: _beforeRender,
-  [_beforeUpdate]: _beforeUpdate,
-  [_beforeDestroy]: _beforeDestroy,
-  [_rendered]: _rendered,
-  [_updated]: _updated,
-  [_destroyed]: _destroyed
+  beforeRender: "beforeRender",
+  beforeUpdate: "beforeUpdate",
+  beforeDestroy: "beforeDestroy",
+  rendered: "rendered",
+  updated: "updated",
+  destroyed: "destroyed"
 };
 
 for (let e of [
-  createElement(_link, {
-    [_rel]: "preconnect",
-    [_href]: "https://cdn.jsdelivr.net",
+  createElement("link", {
+    rel: "preconnect",
+    href: "https://cdn.jsdelivr.net",
   }),
-  createElement(_link, {
-    [_rel]: _preload,
-    [_href]: css,
-    [_as]: _style
+  createElement("link", {
+    rel: "preload",
+    href: css,
+    as: "style"
   }),
-  createElement(_link, {
-    [_rel]: "stylesheet",
-    [_href]: css,
+  createElement("link", {
+    rel: "stylesheet",
+    href: css,
   })
 ]) {
-  $document[_head][_appendChild](e);
+  $document.head.appendChild(e);
 };
 
 document.addEventListener("DOMContentLoaded", _ => {

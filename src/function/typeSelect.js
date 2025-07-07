@@ -1,57 +1,57 @@
 function typeSelect(node) {
-  return createElement(_label, [
+  return createElement("label", [
     (_ => {
-      if (node[_type][_toLowerCase]() === _number) {
-        return icon[_number]
+      if (node.type.toLowerCase() === "number") {
+        return icon["number"]
       }
-      else if (node[_type][_toLowerCase]() === _boolean) {
-        return icon[_boolean]
+      else if (node.type.toLowerCase() === "boolean") {
+        return icon["boolean"]
       }
-      else if (node[_type][_toLowerCase]() === _array) {
-        return icon[_array]
+      else if (node.type.toLowerCase() === "array") {
+        return icon.array
       }
-      else if (node[_type][_toLowerCase]() === _object) {
-        return icon[_object]
+      else if (node.type.toLowerCase() === "object") {
+        return icon.object
       }
       else {
-        return icon[_string]
+        return icon["string"]
       }
     })(),
     addEvent({
-      [_dom]: createElement(_select, [
-        ...types[_map](e => createElement(_option, {
-          [_value]: e,
-          [_selected]: e === node[_type]
+      dom: createElement("select", [
+        ...types.map(e => createElement("option", {
+          value: e,
+          selected: e === node.type
         }, e))
       ]),
-      [_onchange]: e => {
-        node[_type] = e[_target][_value];
+      onchange: e => {
+        node.type = e.target.value;
 
         const isObject = {
-          [_object]: 1,
-          [_array]: 1
-        }[e[_target][_value][_toLowerCase]()];
+          object: 1,
+          array: 1
+        }[e.target.value.toLowerCase()];
 
         if (isObject) {
-          node[_value] = "";
+          node.value = "";
 
-          if (node[_children][_length] === 0) {
+          if (node.children.length === 0) {
             node.addChild();
           };
         }
-        else if (e[_target][_value][_toLowerCase]() === _number) {
-          const value = $parseFloat(node[_value]);
-          node[_value] = $isNaN(value) ? "" : value;
+        else if (e.target.value.toLowerCase() === "number") {
+          const value = $parseFloat(node.value);
+          node.value = $isNaN(value) ? "" : value;
         }
         else {
-          node[_value] = '';
-          node[_children] = [];
+          node.value = '';
+          node.children = [];
         };
 
         // * 更新畫面並觸發更新
         node.updateChild();
 
-        $document[_getElementById]("value-" + node.id)[_focus]();
+        $document.getElementById("value-" + node.id).focus();
       }
     })
   ])

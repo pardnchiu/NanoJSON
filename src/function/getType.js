@@ -1,15 +1,15 @@
 function getType(value) {
-  if ($Array[_isArray](value)) {
-    return _array;
+  if ($Array.isArray(value)) {
+    return "array";
   }
-  else if (typeof value === _object) {
-    return _object;
+  else if (typeof value === "object") {
+    return "object";
   }
-  else if (typeof value === _boolean) {
-    return _boolean;
+  else if (typeof value === "boolean") {
+    return "boolean";
   }
-  else if (typeof value === _number) {
-    return _number;
+  else if (typeof value === "number") {
+    return "number";
   };
-  return _string;
+  return "string";
 };

@@ -22,85 +22,85 @@ class JSONEditor {
   }
 
   async #init(config = {}) {
-    this[_editor] = createElement("section");
+    this.editor = createElement("section");
 
-    const when = config[_when] ?? {};
-    const title = config[_title] ?? "";
-    const description = config[_description] ?? "";
-    const fill = $Boolean(config[_fill] == null ? 1 : config[_fill]) ? 1 : 0;
+    const when = config.when ?? {};
+    const title = config.title ?? "";
+    const description = config.description ?? "";
+    const fill = $Boolean(config.fill == null ? 1 : config.fill) ? 1 : 0;
 
-    let button = config[_button] != null && typeof config[_button] === _object
-      ? config[_button]
-      : { [_import]: 1, [_export]: 1, [_reset]: 1 };
-    button[_reset] = button[_reset] ?? 1;
-    button[_import] = button[_import] ?? 1;
-    button[_export] = button[_export] ?? 1;
+    let button = config.button != null && typeof config.button === "object"
+      ? config.button
+      : { import: 1, export: 1, reset: 1 };
+    button.reset = button.reset ?? 1;
+    button.import = button.import ?? 1;
+    button.export = button.export ?? 1;
 
     this.#lifecycle = new Lifecycle({
-      [_beforeRender]: when[lifecycleAction[_beforeRender]],
-      [_rendered]: when[lifecycleAction[_rendered]],
-      [_beforeUpdate]: when[lifecycleAction[_beforeUpdate]],
-      [_updated]: when[lifecycleAction[_updated]],
-      [_beforeDestroy]: when[lifecycleAction[_beforeDestroy]],
-      [_destroyed]: when[lifecycleAction[_destroyed]],
+      beforeRender: when[lifecycleAction.beforeRender],
+      rendered: when[lifecycleAction.rendered],
+      beforeUpdate: when[lifecycleAction.beforeUpdate],
+      updated: when[lifecycleAction.updated],
+      beforeDestroy: when[lifecycleAction.beforeDestroy],
+      destroyed: when[lifecycleAction.destroyed],
     });
 
     let json = await getJSON(config.file ?? config.json ?? config.path);
     this.children = this.#jsonToChildren(json);
 
     let dom = createElement("temp", [
-      Math.max(title[_length], description[_length]) > 0
+      Math.max(title.length, description.length) > 0
         ? createElement("header", [
-          title[_length] > 0
+          title.length > 0
             ? createElement("strong", title)
             : null,
-          description[_length] > 0
+          description.length > 0
             ? createElement("p", description)
             : null
         ])
         : null,
-      this[_editor],
+      this.editor,
       createElement("footer", [
         addEvent({
-          [_dom]: createElement(_button, {
-            [_title]: "Add row"
-          }, icon[_add]),
-          [_onclick]: e => this[_insert]()
+          dom: createElement("button", {
+            title: "Add row"
+          }, icon.add),
+          onclick: e => this.insert()
         }),
-        $Boolean(button[_import]) ? addEvent({
-          [_dom]: createElement(_button, {
-            [_title]: "Open file"
+        $Boolean(button.import) ? addEvent({
+          dom: createElement("button", {
+            title: "Open file"
           }, icon.folder),
-          [_onclick]: e => e[_target][_nextElementSibling][_click]()
+          onclick: e => e.target.nextElementSibling.click()
         }) : null,
-        $Boolean(button[_import]) ? addEvent({
-          [_dom]: createElement(_input, {
-            [_type]: "file",
+        $Boolean(button.import) ? addEvent({
+          dom: createElement("input", {
+            type: "file",
             accept: ".json",
-            [_display]: "none"
+            display: "none"
           }),
-          [_onchange]: e => this[_import](e[_target].files[0])
+          onchange: e => this.import(e.target.files[0])
         }) : null,
-        $Boolean(button[_export]) ? addEvent({
-          [_dom]: createElement(_button, {
-            [_title]: "Download file"
+        $Boolean(button.export) ? addEvent({
+          dom: createElement("button", {
+            title: "Download file"
           }, icon.download),
-          [_onclick]: e => {
+          onclick: e => {
             if (!$confirm("Download?")) {
               return;
             };
-            this[_export]()
+            this.export()
           }
         }) : null,
-        $Boolean(button[_reset]) ? addEvent({
-          [_dom]: createElement(_button, {
-            [_title]: "清空"
+        $Boolean(button.reset) ? addEvent({
+          dom: createElement("button", {
+            title: "清空"
           }, icon.clear),
-          [_onclick]: e => {
+          onclick: e => {
             if (!$confirm("Reset?")) {
               return;
             };
-            this[_import]({});
+            this.import({});
           }
         }) : null,
       ])
@@ -109,24 +109,24 @@ class JSONEditor {
     const className = "pd-json-editor";
 
     if (config.id == null) {
-      this[_body] = createElement(_section + "." + className);
-      this[_body][_appendChild](dom)
+      this.body = createElement("section" + "." + className);
+      this.body.appendChild(dom)
     }
     else {
-      this[_body] = $document[_getElementById](config.id);
-      this[_body][_classList][_add](className)
-      this[_body][_replaceChildren](...dom[_children]);
+      this.body = $document.getElementById(config.id);
+      this.body.classList.add(className)
+      this.body.replaceChildren(...dom.children);
     };
 
-    this[_body][_dataset][_fill] = fill;
+    this.body.dataset.fill = fill;
 
-    if (this[_children][_length] < 1) {
-      this[_insert]();
+    if (this.children.length < 1) {
+      this.insert();
     };
 
     // * 執行初始渲染
-    this.#lifecycle[_render](async () => {
-      this[_render]();
+    this.#lifecycle.render(async () => {
+      this.render();
       this.#isInit = true;
     });
   };
@@ -138,120 +138,120 @@ class JSONEditor {
   #jsonToChildren(data, parent = null) {
     const result = [];
 
-    if ($Array[_isArray](data)) {
+    if ($Array.isArray(data)) {
       for (let e of data) {
         const type = getType(e);
         const node = new JSONEditorNode({
-          [_type]: type,
-          [_parent]: parent ?? this,
-          [_editor]: this,
+          type: type,
+          parent: parent ?? this,
+          editor: this,
           lifecycle: this.#lifecycle
         });
 
         // * 子物件的 type 為開頭大寫;
-        if ((type === _object && e != null) || type === _array) {
-          node[_children] = this.#jsonToChildren(e, node);
+        if ((type === "object" && e != null) || type === "array") {
+          node.children = this.#jsonToChildren(e, node);
         }
         else {
-          node[_value] = $String(e);
+          node.value = $String(e);
         };
 
-        result[_push](node);
+        result.push(node);
       };
     }
     else {
-      for (const [key, value] of $Object[_entries](data)) {
+      for (const [key, value] of $Object.entries(data)) {
         const type = getType(value);
         const node = new JSONEditorNode({
-          [_key]: key,
-          [_type]: type,
-          [_parent]: parent ?? this,
-          [_editor]: this,
+          key: key,
+          type: type,
+          parent: parent ?? this,
+          editor: this,
           lifecycle: this.#lifecycle
         });
 
         // * 子物件的 type 為開頭大寫;
-        if ((type === _object && value != null) || type === _array) {
-          node[_children] = this.#jsonToChildren(value, node);
+        if ((type === "object" && value != null) || type === "array") {
+          node.children = this.#jsonToChildren(value, node);
         }
         else if (value == null) {
-          node[_value] = "";
+          node.value = "";
         }
         else {
-          node[_value] = $String(value);
+          node.value = $String(value);
         };
 
-        result[_push](node);
+        result.push(node);
       }
     }
     return result;
   };
 
   render(isUpdate = false) {
-    let temp = createElement("temp", this[_children].map(e => this.#create(e)))
+    let temp = createElement("temp", this.children.map(e => this.#create(e)))
 
-    this[_editor][_replaceChildren](...temp[_children]);
+    this.editor.replaceChildren(...temp.children);
 
     if (!this.#isInit || !isUpdate) {
       return;
     };
 
-    this.#lifecycle[_update](() => void 0);
+    this.#lifecycle.update(() => void 0);
   };
 
   insert() {
-    this[_children][_push](new JSONEditorNode({
-      [_parent]: this,
-      [_editor]: this,
+    this.children.push(new JSONEditorNode({
+      parent: this,
+      editor: this,
       lifecycle: this.#lifecycle
     }));
-    this[_render]()
+    this.render()
   };
 
   get json() {
     const result = {};
 
-    for (let e of this[_children]) {
-      if (e[_key]) {
-        result[e[_key] || 0] = e.json;
+    for (let e of this.children) {
+      if (e.key) {
+        result[e.key || 0] = e.json;
       };
     };
 
-    return $JSON[_stringify](result, null, 4);
+    return $JSON.stringify(result, null, 4);
   };
 
   async import(file) {
 
     let json = await getJSON(file);
     this.children = this.#jsonToChildren(json);
-    this[_render](true);
+    this.render(true);
   };
 
   reset() {
-    this[_import]({});
+    this.import({});
   };
 
   export() {
     const result = {};
 
-    for (let e of this[_children]) {
-      if (e.key || this[_children][_length] === 1) {
+    for (let e of this.children) {
+      if (e.key || this.children.length === 1) {
         result[e.key || 0] = e.json;
       }
     };
 
-    const blob = new $Blob([$JSON[_stringify](result, null, 4)], {
-      [_type]: 'application/json'
+    const blob = new $Blob([$JSON.stringify(result, null, 4)], {
+      type: 'application/json'
     });
-    const url = $URL[_createObjectURL](blob);
+    const url = $URL.createObjectURL(blob);
     const a = createElement("a", {
       href: url,
-      download: `JSONEditor-${$Date[_now]()}.json`
+      download: `JSONEditor-${$Date.now()}.json`
     });
-    $document[_body][_appendChild](a);
-    a[_click]();
-    $document[_body][_removeChild](a);
-    $URL[_revokeObjectURL](url);
+    $document.body.appendChild(a);
+    a.click();
+    $document.body.removeChild(a);
+    $URL.revokeObjectURL(url);
   };
 };
 
