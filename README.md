@@ -1,64 +1,63 @@
+> [!Note]
+> This content is translated by LLM. Original text can be found [here](README.zh.md)
+
 <img src="https://nanojson.pardn.io/static/image/logo.png" width=80>
 
 # NanoJSON
 
-> 基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，具備可視化編輯、動態類型切換和檔案導入導出功能。適用於網站嵌入與 JSON 資料編輯。<br>
-> A lightweight JSON editor based on Vanilla JS and native APIs, provide visual editing, dynamic type switching, and file import/export. Suitable for website integration and JSON data editing.<br>
+> A lightweight JSON editor built with pure JavaScript and native APIs. It features visual editing, dynamic type switching, and file import/export capabilities. Suitable for website embedding and JSON data editing.<br>
 >
-> 此專案於 2025/07/06 起改為 MIT 授權，並完整移除 `.git-crypt` 加密。
-> This project has been licensed under MIT since 2025/07/06, and complete removal of `.git-crypt` encryption.
+> This project transitioned to MIT license on 2025/07/06, with `.git-crypt` encryption fully removed.
 
+![lang](https://img.shields.io/badge/lang-JS-yellow)
 [![license](https://img.shields.io/github/license/pardnchiu/nanojson)](LICENSE)
 [![version](https://img.shields.io/npm/v/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
-[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)
+[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)<br>
+[![readme](https://img.shields.io/badge/readme-EN-white)](README.md)
+[![readme](https://img.shields.io/badge/readme-ZH-white)](README.zh.md) 
 
-## 三大主軸 / Three Core Features
+## Key Features
 
-### 無需第三方依賴 / Zero Dependencies
-基於原生 DOM APIs 開發，無任何第三方依賴，可輕鬆嵌入任何網站專案。<br>
-Built with native DOM APIs without any third-party dependencies, easily embeddable in any web project.
+### No Third-Party Dependencies
+Developed using native DOM APIs without any third-party dependencies, making it easy to integrate into any web project.
 
-### 視覺化 JSON 編輯體驗 / Visual JSON Editing
-採用樹狀結構顯示 JSON 資料，支援摺疊展開、動態新增刪除節點，提供直觀的編輯介面。<br>
-Tree-structured JSON data display with collapsible/expandable nodes, dynamic add/remove operations, and intuitive editing interface.
+### Visual JSON Editing Experience
+Displays JSON data in a tree structure, supporting folding/unfolding, dynamic node addition/removal, and providing an intuitive editing interface.
 
-### 完整類型支援 / Complete Type Support
-支援 5 種 JSON 資料類型（`string`、`number`、`boolean`、`array`、`object`），可即時切換類型並保持資料完整性。<br>
-Supports all 5 JSON data types (`string`, `number`, `boolean`, `array`, `object`) with real-time type switching while maintaining data integrity.
+### Comprehensive Type Support
+Supports five JSON data types (`string`, `number`, `boolean`, `array`, `object`) with real-time type switching while maintaining data integrity.
 
-## 使用方法 / How to use
+## Installation
 
-### 安裝 / Installation
-
-#### 透過 npm 安裝 / Install via npm
+### Install via npm
 ```bash
 npm install @pardnchiu/nanojson
 ```
 
-#### 透過 CDN 引入 / Include via CDN
+### Include via CDN
 
-##### UMD 版本 / UMD Version
+#### UMD Version
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.js"></script>
 ```
 
-##### ES Module 版本 / ES Module Version
+#### ES Module Version
 ```javascript
 import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.esm.js";
 ```
 
-### 初始化 / Initialization
+## Initialization
 ```javascript
 // Basic initialization
 const editor = new JSONEditor({
-  id: "json-editor-container",    // Element ID to replace
+  id: "json-editor-container",    // Element ID
   title: "JSON Editor",           // Editor title
   description: "Edit your JSON",  // Editor description
   fill: true,                     // Fill parent container
   json: {                         // Initial JSON data
     name: "NanoJSON",
     version: "0.3.4",
-    features: ["lightweight", "pure-js", "visual-editing"]
+    features: ["Lightweight", "Pure JS", "Visual Editing"]
   }
 });
 
@@ -68,7 +67,7 @@ const advancedEditor = new JSONEditor({
   title: "Advanced JSON Editor",
   description: "Full-featured JSON editor",
   fill: 1,                        // Fill container (1 = true, 0 = false)
-  button: {                       // Function button configuration
+  button: {                       // Button configuration
     import: true,                 // File import
     export: true,                 // File export
     reset: true                   // Reset editor
@@ -87,11 +86,11 @@ const advancedEditor = new JSONEditor({
 const fileEditor = new JSONEditor({
   id: "file-editor",
   path: "/data/sample.json",      // Load from URL
-  // file: fileInput.files[0],    // Load from File object
+  // file: fileInput.files[0],    // Load from file object
 });
 ```
 
-## 配置介紹 / Configuration
+## Configuration Overview
 ```javascript
 const config = {
   id: "container-id",       // Target container element ID
@@ -101,7 +100,7 @@ const config = {
   json: {},                 // Initial JSON data object
   file: null,               // File object (for file upload)
   path: "",                 // JSON file URL path
-  button: {                 // Function button toggles
+  button: {                 // Button toggles
     import: true,           // File import button (default: true)
     export: true,           // File export button (default: true)
     reset: true             // Reset button (default: true)
@@ -117,46 +116,46 @@ const config = {
 };
 ```
 
-## 編輯器功能 / Editor
+## Editor Features
 
-### 資料類型 / Data Type 
+### Data Types 
 
-#### String 字串
+#### String
 ```javascript
-// Text input field editing
+// Text input editing
 "Hello World"
 ```
 
-#### Number 數字
+#### Number
 ```javascript
-// Number input field with automatic non-numeric character filtering
+// Numeric input, automatically filters non-numeric characters
 42
 3.14159
 -123
 ```
 
-#### Boolean 布林值
+#### Boolean
 ```javascript
 // Dropdown selection
 true
 false
 ```
 
-#### Array 陣列
+#### Array
 ```javascript
 // Supports nested structures, add/remove elements
 [
   "item1",
   "item2", 
-  123,
-  true,
-  {
-    "nested": "object"
-  }
+ 123,
+ true,
+ {
+   "nested": "object"
+ }
 ]
 ```
 
-#### Object 物件
+#### Object
 ```javascript
 // Supports nested structures, add/remove properties
 {
@@ -168,15 +167,15 @@ false
 }
 ```
 
-## 可用函式 / Methods
+## Available Functions
 
-- **獲取 JSON 資料 / Get JSON Data**
+- **Get JSON Data**
   ```javascript
   const jsonString = editor.json;  // Get formatted JSON string
   console.log(jsonString);
   ```
 
-- **匯入資料 / Import Data**
+- **Import Data**
   ```javascript
   // Import from object
   await editor.import({
@@ -192,27 +191,27 @@ false
   await editor.import('/path/to/data.json');
   ```
 
-- **匯出檔案 / Export File**
+- **Export File**
   ```javascript
   editor.export();  // Automatically download JSON file
   ```
 
-- **重置編輯器 / Reset Editor**
+- **Reset Editor**
   ```javascript
   editor.reset();   // Clear all content
   ```
 
-- **新增根節點 / Add Root Node**
+- **Add Root Node**
   ```javascript
   editor.insert();  // Add an empty root node
   ```
 
-- **重新渲染 / Re-render***
+- **Re-render**
   ```javascript
   editor.render();  // Force re-render the editor
   ```
 
-## 生命週期 / Lifecycle
+## Lifecycle
 ```javascript
 const editor = new JSONEditor({
   id: "editor",
@@ -222,7 +221,7 @@ const editor = new JSONEditor({
       // Return false to prevent rendering
     },
     rendered: () => {
-      console.log("Render completed");
+      console.log("Render complete");
       // Post-initialization handling
     },
     beforeUpdate: () => {
@@ -243,26 +242,21 @@ const editor = new JSONEditor({
 });
 ```
 
-### 檔案處理機制 / File Handling
+### File Handling Mechanism
 
-#### 支援格式 / Supported Type
-- 僅支援 `.json` 檔案格式<br>
-  Only supports `.json` file
-- 自動驗證 JSON 語法正確性<br>
-  Automatic JSON syntax validation
+#### Supported Formats
+- Only `.json` file format supported
+- Automatically validates JSON syntax correctness
 
-#### 匯出功能 / Export
-- 自動格式化 JSON（4 空格縮排）<br>
-  Automatic JSON formatting (4-space indentation)
-- 檔案命名格式：`JSONEditor-{timestamp}.json`<br>
-  File naming format: `JSONEditor-{timestamp}.json`
+#### Export Functionality
+- Automatically formats JSON (4-space indentation)
+- File naming format: `JSONEditor-{timestamp}.json`
 
-## 授權條款 / License
+## License
 
-此專案採用 [MIT](LICENSE) 授權條款。<br>
-This project is licensed under the [MIT](LICENSE) License.
+This project is licensed under [MIT](LICENSE).
 
-## 作者 / Author
+## Author
 
 <img src="https://avatars.githubusercontent.com/u/25631760" align="left" width="96" height="96" style="margin-right: 0.5rem;">
 
