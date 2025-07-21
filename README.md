@@ -256,6 +256,10 @@ const editor = new JSONEditor({
 
 This project is licensed under [MIT](LICENSE).
 
+## Star
+
+[![Star](https://api.star-history.com/svg?repos=pardnchiu/NanoJSON&type=Date)](https://www.star-history.com/#pardnchiu/NanoJSON&Date)
+
 ## Author
 
 <img src="https://avatars.githubusercontent.com/u/25631760" align="left" width="96" height="96" style="margin-right: 0.5rem;">

@@ -1,7 +1,7 @@
 {
   "name": "@pardnchiu/nanojson",
-  "version": "0.4.0",
-  "description": "A lightweight JSON editor based on Vanilla JS and native APIs, provide visual editing, dynamic type switching, and file import/export. Suitable for website integration and JSON data editing.",
+  "version": "1.0.0",
+  "description": "A lightweight JSON editor built with pure JavaScript and native APIs. It features visual editing, dynamic type switching, and file import/export capabilities. Suitable for website embedding and JSON data editing.",
   "main": "dist/NanoJSON.js",
   "module": "dist/NanoJSON.esm.js",
   "types": "src/interface.ts",
@@ -34,6 +34,7 @@
     "javascript-library",
     "pure-javascript",
     "native-api",
+    "vanilla-js",
     "邱敬幃",
     "pardnchiu"
   ],
@@ -42,7 +43,7 @@
     "email": "dev@pardn.io",
     "url": "https://github.com/pardnchiu"
   },
-  "license": "Proprietary",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/pardnchiu/NanoJSON/issues",
     "email": "dev@pardn.io"
