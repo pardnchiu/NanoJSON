@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  nginx:
+    image: nginx:stable-alpine3.21
+    ports:
+      - "8083:80"
+    volumes:
+      - ./index.html:/usr/share/nginx/html/index.html:ro
+      - ./static:/usr/share/nginx/html/static:ro
+      - ./page:/usr/share/nginx/html/page:ro
+      - ./dist:/usr/share/nginx/html/dist:ro
+    restart: unless-stopped
