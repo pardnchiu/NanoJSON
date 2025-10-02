@@ -1,4 +1,4 @@
-function typeSelect(node) {
+function typeSelect(node, isReadonly) {
   return createElement(_label, [
     (_ => {
       if (node[_type][_toLowerCase]() === _number) {
@@ -18,7 +18,9 @@ function typeSelect(node) {
       }
     })(),
     addEvent({
-      [_dom]: createElement(_select, [
+      [_dom]: createElement(_select, {
+        "disabled": isReadonly ? "" : null,
+      }, [
         ...types[_map](e => createElement(_option, {
           [_value]: e,
           [_selected]: e === node[_type]

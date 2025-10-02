@@ -56,10 +56,10 @@ class JSONEditorNode {
           // 折疊按鈕
           collapseButton(this),
           // 鍵輸入框
-          keyInput(this, this.parent.children.indexOf(this), this.parent.type === _array, this.#lifecycle),
+          keyInput(this, this.parent.children.indexOf(this), this.parent.type === _array, this.#editor[_body][_dataset]["readonly"] === "1", this.#lifecycle),
           createElement("span", ":"),
           // 類型選擇器
-          typeSelect(this),
+          typeSelect(this, this.#editor[_body][_dataset]["readonly"] === "1"),
           // 值輸入框
           valueInput(this, this.#lifecycle),
           // 移除按鈕
