@@ -157,7 +157,7 @@ const _setAttribute = _set + "Attribute";
 
 const types = [_string, _number, _boolean, _array, _object];
 
-const css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.0/dist/NanoJSON.css";
+const css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.2/dist/NanoJSON.css";
 // 開發測試用
 // const css = "/dist/NanoJSON.css";
 const copyright = `NanoJSON\nGitHub: https://github.com/pardnchiu/NanoJSON\nCreator: Pardn Chiu\nLicense: Proprietary`;
