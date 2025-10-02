@@ -63,7 +63,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Noto+Sans+TC:wght@400&display=swap" rel="stylesheet">
 
     <!-- Local Resources -->
-    <script src="/dist/NanoJSON.debug.js"></script>
+    <script src="/dist/NanoJSON.js"></script>
 
     <!-- JSON-LD Schema -->
     <script type="application/ld+json">
@@ -146,6 +146,22 @@
       section.split>section>header i {
         font-size: 1.25rem;
         color: #000;
+      }
+
+      section.split>section>header>section {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      section.split>section>header a,
+      section.split>section>header button {
+        color: inherit;
+        text-decoration: none;
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
       }
 
       body {
@@ -281,9 +297,14 @@
             <i class="fa-solid fa-circle-chevron-left"></i>
           </a>
           <img src="/static/image/logo.svg" alt="">
-          <a href="https://github.com/pardnchiu/NanoJSON" target="_blank">
-            <i class="fa-brands fa-github"></i>
-          </a>
+          <section>
+            <button @click="changeState" title="切換編輯器狀態" data-enable="1">
+              <i class="fa-solid fa-lock-open"></i>
+            </button>
+            <a href="https://github.com/pardnchiu/NanoJSON" target="_blank">
+              <i class="fa-brands fa-github"></i>
+            </a>
+          </section>
         </header>
         <section id="JSONEditor"></section>
       </section>
@@ -300,6 +321,19 @@
         const app = new QUI({
           id: "app",
           event: {
+            changeState: e => {
+              const _this = e.target;
+              const enable = parseInt(_this.dataset.enable);
+              if (enable) {
+                alert("disable editor");
+                editor.disable();
+              } else {
+                alert("enable editor");
+                editor.enable();
+              }
+              _this.dataset.enable = Math.abs(enable - 1);
+              _this.children[0].className = enable ? "fa-solid fa-lock" : "fa-solid fa-lock-open"
+            },
             previewSwitch: e => {
               const _this = e.target;
               const preview = parseInt(_this.previousElementSibling.dataset.preview);
@@ -318,11 +352,12 @@
                 title: "NanoJSON: JSON Editor",
                 description: "A lightweight JSON editor based on Vanilla JS and native APIs, provide visual editing, dynamic type switching, and file import/export. Suitable for website integration and JSON data editing.",
                 fill: 0,
+                // readonly: 1,
                 // file: null, 
                 // path: "/package.json",
                 json: {
                   "name": "NanoJSON",
-                  "version": "0.4.0",
+                  "version": "1.1.0",
                   "description": "A lightweight JSON editor based on Vanilla JS and native APIs, provide visual editing, dynamic type switching, and file import/export. Suitable for website integration and JSON data editing.",
                   "repository": "https://github.com/pardnchiu/NanoJSON.git",
                   "npm": "https://www.npmjs.com/package/@pardnchiu/nanojson",
@@ -338,7 +373,8 @@
                     }
                   },
                   "release": {
-                    "0.4.0": "Refactored without obfuscated code, license changed to MIT",
+                    "1.1.0": "Added readonly mode and enable()/disable() methods.",
+                    "1.0.0": "Refactored without obfuscated code, license changed to MIT",
                     "0.3.4": "Fixed bugs.",
                     "0.3.2-0.3.3": "Switched to block-based child node rendering.",
                     "0.3.1": "Added initialization settings and fixed the issue of the Boolean selection box disappearing.",

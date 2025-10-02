@@ -1,22 +1,22 @@
 function childAddButton(node, childNode, onclick) {
-    const isObject = {
-        [_object]: 1,
-        [_array]: 1
-    }[node[_type][_toLowerCase]()];
+  const isObject = {
+    [_object]: 1,
+    [_array]: 1
+  }[node[_type][_toLowerCase]()];
 
-    if (!isObject || node[_collapsed]) {
-        return;
-    };
-    
-    return createElement(_section, {
-        [_class]: "pd-json-editor-nested-child"
-    }, [
-        ...node[_children][_map]((e, i) => childNode(e, i)),
-        addEvent({
-            [_dom]: createElement(_button + ".child-add", icon[_add]),
-            [_onclick]: onclick
-        })
-    ]);
+  if (!isObject || node[_collapsed]) {
+    return;
+  };
+
+  return createElement(_section, {
+    [_class]: "pd-json-editor-nested-child"
+  }, [
+    ...node[_children][_map]((e, i) => childNode(e, i)),
+    addEvent({
+      [_dom]: createElement(_button + ".child-add", icon[_add]),
+      [_onclick]: onclick
+    })
+  ]);
 };
 function childAddButton(node, childNode, onclick) {
   const isObject = {

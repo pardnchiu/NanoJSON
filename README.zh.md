@@ -96,6 +96,7 @@ const config = {
   title: "",                // 編輯器標題 (預設: "")
   description: "",          // 編輯器描述 (預設: "")
   fill: 1,                  // 填滿父容器 (預設: 1)
+  readonly: 0,              // 只讀模式（預設: 0)）
   json: {},                 // 初始 JSON 資料物件
   file: null,               // 檔案物件 (用於檔案上傳)
   path: "",                 // JSON 檔案 URL 路徑
@@ -209,6 +210,17 @@ false
   ```javascript
   editor.render();  // 強制重新渲染編輯器
   ```
+
+- **編輯模式**
+  ```javascript
+  editor.enable();
+  ```
+
+- **只讀模式**
+  ```javascript
+  editor.disable();
+  ```
+
 
 ## 生命週期
 ```javascript

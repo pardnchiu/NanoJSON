@@ -1,283 +1,330 @@
 @import "./init";
 
 .pd-json-editor {
+  position: relative;
+  display: flex;
+  flex-flow: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  touch-action: manipulation;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  overflow: scroll;
+
+  &[data-readonly="1"] {
+
+    button:not(.collapse) {
+      display: none !important;
+    }
+
+    select,
+    textarea {
+      border: none !important;
+    }
+
+    select {
+      cursor: default !important;
+    }
+
+    textarea {
+      cursor: text !important;
+    }
+
+    // @media (hover: hover) {
+    //   label:has(textarea):hover {
+    //     background-color: #ddd !important;
+    //   }
+    // }
+
+    // textarea {
+    //   cursor: pointer !important;
+    // }
+  }
+
+  button {
     position: relative;
     display: flex;
-    flex-flow: column;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-    box-sizing: border-box;
-    -webkit-overflow-scrolling: touch;
-    touch-action: manipulation;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-    overflow: scroll;
-
-    button {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: none;
-        border: none;
-        min-width: $_32;
-        height: $_32;
-        line-height: $_32;
-        cursor: pointer;
-
-        * {
-            pointer-events: none;
-        }
-
-        &[data-collapseable="1"][data-collapsed="0"] {
-            transform: rotate(90deg);
-        }
-
-        &[data-collapseable="0"] {
-            padding-left: 1px;
-
-            &::before {
-                content: "";
-                position: absolute;
-                top: 0;
-                left: 15px;
-                width: 2px;
-                background-color: #ddd;
-                height: 100%;
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                top: calc(50% - 1px);
-                left: 50%;
-                width: $_12;
-                height: 2px;
-                background-color: #ddd;
-            }
-        }
-    }
-
-    &::-webkit-scrollbar {
-        display: none;
-    }
-
-    &[data-fill="1"] {
-        position: absolute;
-        top: 0;
-        left: 0;
-        bottom: 0;
-        right: 0;
-        width: 100%;
-        height: 100%;
-        overflow: scroll;
-    }
+    justify-content: center;
+    align-items: center;
+    background: none;
+    border: none;
+    min-width: $_32;
+    height: $_32;
+    line-height: $_32;
+    cursor: pointer;
 
     * {
-        flex-shrink: 0;
-        margin: 0;
-        padding: 0;
-        border: none;
-        outline: none;
-        box-sizing: border-box;
-        font-family: monospace, sans-serif;
-        border: none;
-        outline: none;
-        object-fit: cover;
-        appearance: unset;
-        -webkit-appearance: unset;
-        -moz-appearance: unset;
+      pointer-events: none;
     }
 
-    >header {
-        display: flex;
-        flex-flow: column;
-        gap: $_8;
-        margin-bottom: $_8;
-
-        strong {
-            font-size: $_20;
-        }
-
-        p {
-            line-height: $_24;
-            font-size: $_14;
-            letter-spacing: 1px;
-            color: #000000cc;
-        }
+    &[data-collapseable="1"][data-collapsed="0"] {
+      transform: rotate(90deg);
     }
 
-    >footer {
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        gap: $_8;
+    &[data-collapseable="0"] {
+      padding-left: 1px;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: calc(1rem + 0.5px);
+        width: 2px;
+        background-color: #ddd;
+        height: 100%;
+      }
+
+      &::after {
+        content: "";
+        position: absolute;
+        top: calc(1rem - 0.5px);
+        left: calc(50% + 0.5px);
+        width: $_12;
+        height: 2px;
+        background-color: #ddd;
+      }
+    }
+  }
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  &[data-fill="1"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: scroll;
+  }
+
+  * {
+    flex-shrink: 0;
+    margin: 0;
+    padding: 0;
+    border: none;
+    outline: none;
+    box-sizing: border-box;
+    font-family: monospace, sans-serif;
+    border: none;
+    outline: none;
+    object-fit: cover;
+    appearance: unset;
+    -webkit-appearance: unset;
+    -moz-appearance: unset;
+  }
+
+  >header {
+    display: flex;
+    flex-flow: column;
+    gap: $_8;
+    margin-bottom: $_8;
+
+    strong {
+      font-size: $_20;
     }
 
-    section.pd-json-editor-child {
+    p {
+      line-height: $_24;
+      font-size: $_14;
+      letter-spacing: 1px;
+      color: #000000cc;
+    }
+  }
+
+  >footer {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: $_8;
+  }
+
+  section.pd-json-editor-child {
+    display: flex;
+    align-items: flex-start;
+    gap: $_8;
+
+    &:last-child section.pd-json-editor-nested-child {
+      border-left: none;
+    }
+
+    section.pair-wrapper {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+
+      section.input-group {
+        position: relative;
         display: flex;
         align-items: flex-start;
-        gap: $_8;
+        padding: $_2 0;
+        padding-left: 2rem;
 
-        section.pair-wrapper {
-            display: flex;
-            flex-direction: column;
-            width: 100%;
+        button.collapse {
+          position: absolute;
+          left: 0;
+          width: $_32;
+          height: 100%;
+        }
 
-            section.input-group {
-                display: flex;
-                align-items: flex-start;
-                padding: $_2 0;
+        &:has(select:focus),
+        &:has(textarea:focus) {
 
-                &:has(select:focus),
-                &:has(textarea:focus) {
+          select,
+          textarea {
+            border: 1px solid #00000080;
+          }
 
-                    select,
-                    textarea {
-                        border: 1px solid #00000080;
-                    }
+          button:last-child {
+            opacity: 1;
+          }
+        }
 
-                    button:last-child {
-                        opacity: 1;
-                    }
-                }
+        &:hover {
 
-                &:hover {
+          select,
+          textarea {
+            border: 1px dashed #00000034;
+          }
 
-                    select,
-                    textarea {
-                        border: 1px dashed #00000034;
-                    }
+          button:last-child {
+            opacity: 1;
+          }
+        }
 
-                    button:last-child {
-                        opacity: 1;
-                    }
-                }
+        >span {
+          height: $_32;
+          line-height: $_32;
+        }
 
-                >span {
-                    height: $_32;
-                    line-height: $_32;
-                }
+        label {
+          position: relative;
+          display: flex;
+          flex-flow: column;
+          justify-content: center;
+          align-items: center;
+          gap: $_4;
+          margin: 0;
+          padding: 0;
+          min-height: $_32;
+          max-width: $_480;
+          border-radius: $_4;
+          transition: 0.3s;
 
-                label {
-                    position: relative;
-                    display: flex;
-                    flex-flow: column;
-                    justify-content: center;
-                    align-items: center;
-                    gap: $_4;
-                    margin: 0;
-                    padding: 0;
-                    min-height: $_32;
+          &:has(textarea) {
+            min-width: $_44;
+            background-color: #fff;
+          }
 
-                    &:has(textarea) {
-                        min-width: $_44;
-                        background-color: #fff;
-                    }
+          &:has(svg) {
+            margin: 0 $_4;
+            background-color: #fff;
+          }
 
-                    &:has(svg) {
-                        margin: 0 $_4;
-                        background-color: #fff;
-                    }
+          @media (hover: hover) {
 
-                    @media (hover: hover) {
-
-                        &:has(svg):hover {
-                            cursor: pointer;
-                        }
-                    }
-
-                    >svg {
-                        fill: #fff;
-                        width: $_32;
-                        height: $_32;
-
-                        path {
-                            fill: #0000ff80;
-                        }
-                    }
-
-                    >select {
-                        position: absolute;
-                        top: 0;
-                        left: 0;
-                        bottom: 0;
-                        right: 0;
-                        width: 100%;
-                        height: 100%;
-                        background-color: transparent;
-                        color: transparent;
-                    }
-                }
-
-                pre {
-                    position: relative;
-                    z-index: 0;
-                    padding: 0 $_8;
-                    line-height: $_32;
-                    min-height: $_32;
-                    font-size: $_14;
-                    border-radius: $_8;
-                    text-align: left;
-                }
-
-                select {
-                    padding: 0 $_8;
-                    font-size: $_14;
-                    line-height: $_32 - $_2;
-                    min-height: $_32 - $_2;
-                    box-sizing: border-box;
-                    border: 1px dashed #00000000;
-                    border-radius: $_4;
-                    cursor: pointer;
-                }
-
-                textarea {
-                    z-index: 1;
-                    position: absolute;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    right: 0;
-                    padding: 0 $_6;
-                    width: 100%;
-                    line-height: $_32;
-                    min-height: $_32;
-                    color: transparent;
-                    caret-color: red;
-                    background-color: transparent;
-                    resize: none;
-                    font-size: $_14;
-                    border-radius: $_4;
-                    border: 1px solid #00000000;
-                    overflow: hidden;
-                }
-
-                span.array-index {
-                    min-width: $_32;
-                    height: $_32;
-                    line-height: $_32;
-                    color: #000000cc;
-                    text-align: center;
-                }
-
-                button:last-child {
-                    opacity: 0;
-                    transform: rotate(45deg);
-                }
+            &:has(svg):hover {
+              cursor: pointer;
             }
+          }
+
+          >svg {
+            fill: #fff;
+            width: $_32;
+            height: $_32;
+
+            path {
+              fill: #0000ff80;
+            }
+          }
+
+          >select {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            background-color: transparent;
+            color: transparent;
+          }
         }
 
-        section.pd-json-editor-nested-child {
-            margin-left: calc($_14 + 1px);
-            border-left: $_2 solid #ddd;
-            padding-left: $_24;
+        pre {
+          position: relative;
+          z-index: 0;
+          padding: 0 $_8;
+          line-height: $_32;
+          min-height: $_32;
+          max-width: $_480;
+          font-size: $_14;
+          border-radius: $_8;
+          text-align: left;
+          white-space: pre-wrap;
         }
+
+        select {
+          padding: 0 $_8;
+          font-size: $_14;
+          line-height: $_32 - $_2;
+          min-height: $_32 - $_2;
+          box-sizing: border-box;
+          border-radius: $_4;
+          cursor: pointer;
+        }
+
+        textarea {
+          z-index: 1;
+          position: absolute;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          right: 0;
+          padding: 0 $_6;
+          width: 100%;
+          line-height: $_32;
+          min-height: $_32;
+          color: transparent;
+          caret-color: #7F7FFA;
+          background-color: transparent;
+          resize: none;
+          font-size: $_14;
+          border-radius: $_4;
+          border: 1px solid #00000000;
+          overflow: hidden;
+        }
+
+        span.array-index {
+          min-width: $_32;
+          height: $_32;
+          line-height: $_32;
+          color: #000000cc;
+          text-align: center;
+        }
+
+        button:last-child {
+          opacity: 0;
+          transform: rotate(45deg);
+        }
+      }
     }
 
-
-    .pd-json-editor-child[data-last="1"]>section.pair-wrapper>section.input-group>button[data-collapseable="0"]::before {
-        height: 50%;
+    section.pd-json-editor-nested-child {
+      margin-left: calc($_14 + 1px);
+      border-left: $_2 solid #ddd;
+      padding-left: $_24;
     }
+  }
+
+
+  .pd-json-editor-child[data-last="1"]>section.pair-wrapper>section.input-group>button[data-collapseable="0"]::before {
+    height: 50%;
+  }
 }

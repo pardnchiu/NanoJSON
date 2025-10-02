@@ -1,19 +1,19 @@
 function addEvent(config = {}) {
-    let dom;
+  let dom;
 
-    if (typeof config !== _object || !config[_hasOwnProperty](_dom)) {
-        return;
+  if (typeof config !== _object || !config[_hasOwnProperty](_dom)) {
+    return;
+  };
+
+  dom = config[_dom];
+
+  for (const key of $Object[_keys](config)) {
+    if (key === _dom) {
+      continue;
     };
 
-    dom = config[_dom];
+    dom[key] = e => config[key](e);
+  };
 
-    for (const key of $Object[_keys](config)) {
-        if (key === _dom) {
-            continue;
-        };
-
-        dom[key] = e => config[key](e);
-    };
-
-    return dom;
+  return dom;
 };

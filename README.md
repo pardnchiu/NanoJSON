@@ -96,6 +96,7 @@ const config = {
   id: "container-id",       // Target container element ID
   title: "",                // Editor title (default: "")
   description: "",          // Editor description (default: "")
+  readonly: 0,              // Read-only mode (default: 0)
   fill: 1,                  // Fill parent container (default: 1)
   json: {},                 // Initial JSON data object
   file: null,               // File object (for file upload)
@@ -209,6 +210,16 @@ false
 - **Re-render**
   ```javascript
   editor.render();  // Force re-render the editor
+  ```
+
+- **Enable Editing Mode**
+  ```javascript
+  editor.enable();
+  ```
+
+- **Set Read-Only Mode**
+  ```javascript
+  editor.disable();
   ```
 
 ## Lifecycle
