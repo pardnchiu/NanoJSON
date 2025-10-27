@@ -18,6 +18,16 @@ class JSONEditor {
       return;
     };
 
+    let css = config[_css];
+    console.log(1, css);
+    if (css == null || typeof css !== _string || css.length < 1) {
+      css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.3/dist/NanoJSON.css";
+    };
+
+    console.log(2, css);
+
+    loadCSS(css);
+
     this.#init(config);
   }
 
@@ -29,8 +39,6 @@ class JSONEditor {
     const description = config[_description] ?? "";
     const fill = $Boolean(config[_fill] == null ? 1 : config[_fill]) ? 1 : 0;
     const readonly = config["readonly"] ?? false;
-
-    console.log(readonly);
 
     let button = config[_button] != null && typeof config[_button] === _object
       ? config[_button]

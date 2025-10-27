@@ -25,6 +25,7 @@ const regexCssID = /\#([\w_-]+)?/i;
 const regexCssTag = /^\w+(?=[\#\.]*)/i;
 const htmlBr = "<br>";
 
+const _css = "css";
 const _name = "name";
 const _text = "text";
 const _catch = "catch";
@@ -157,7 +158,7 @@ const _setAttribute = _set + "Attribute";
 
 const types = [_string, _number, _boolean, _array, _object];
 
-const css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.2/dist/NanoJSON.css";
+const css = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.3/dist/NanoJSON.css";
 // 開發測試用
 // const css = "/dist/NanoJSON.css";
 const copyright = `NanoJSON\nGitHub: https://github.com/pardnchiu/NanoJSON\nCreator: Pardn Chiu\nLicense: Proprietary`;
@@ -171,23 +172,25 @@ const lifecycleAction = {
   [_destroyed]: _destroyed
 };
 
-for (let e of [
-  createElement(_link, {
-    [_rel]: "preconnect",
-    [_href]: "https://cdn.jsdelivr.net",
-  }),
-  createElement(_link, {
-    [_rel]: _preload,
-    [_href]: css,
-    [_as]: _style
-  }),
-  createElement(_link, {
-    [_rel]: "stylesheet",
-    [_href]: css,
-  })
-]) {
-  $document[_head][_appendChild](e);
-};
+function loadCSS(url) {
+  for (let e of [
+    // createElement(_link, {
+    //   [_rel]: "preconnect",
+    //   [_href]: "https://cdn.jsdelivr.net",
+    // }),
+    createElement(_link, {
+      [_rel]: _preload,
+      [_href]: url,
+      [_as]: _style
+    }),
+    createElement(_link, {
+      [_rel]: "stylesheet",
+      [_href]: url,
+    })
+  ]) {
+    $document[_head][_appendChild](e);
+  };
+}
 
 document.addEventListener("DOMContentLoaded", _ => {
   printLog("%c" + copyright, copyright_style);
