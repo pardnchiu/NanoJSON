@@ -63,7 +63,7 @@ const OBJ_CHECKER = {
   [_array]: 1
 }
 
-const defaultCSS = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.5/dist/NanoJSON.css";
+const defaultCSS = "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.6/dist/NanoJSON.css";
 
 let lifecycleAction = {
   beforeRender: "beforeRender",

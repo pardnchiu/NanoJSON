@@ -1,6 +1,6 @@
 function valueInput(node, lifecycle) {
   if (node[_type][_toLowerCase]() === _number) {
-    const regex = /[^\d\-\.]/g;
+    const regex = /^-?\d+(\.\d+)?$/;
     const value = parseFloat(node[_value]);
 
     function newValue(value) {

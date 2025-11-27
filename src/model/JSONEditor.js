@@ -196,8 +196,9 @@ class JSONEditor {
         if ((type === _object && value != null) || type === _array) {
           node[_children] = this.#jsonToChildren(value, node);
         }
-        else if (value == null) {
-          node[_value] = "";
+        else if (value === null) {
+          node[_type] = _null;
+          node[_value] = null;
         }
         else {
           node[_value] = String(value);

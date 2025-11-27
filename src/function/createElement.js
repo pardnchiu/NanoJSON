@@ -142,10 +142,6 @@ HTMLElement.prototype._ = function (config = {}) {
   let dom = this;
 
   for (const key of Object.keys(config)) {
-    if (key === "dom") {
-      continue;
-    };
-
     dom["on" + key] = e => config[key](e);
   };
 
