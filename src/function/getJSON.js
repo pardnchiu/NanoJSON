@@ -1,45 +1,44 @@
 function getJSON(data) {
-  return new $Promise(async (res, _) => {
+  return new Promise(async (cb, _) => {
     if (data == null) {
-      res({});
+      cb();
       return;
     };
 
-    if (data instanceof $File) {
-      const reader = new $FileReader();
-      reader[_onload] = e => {
+    if (data instanceof File) {
+      const reader = new FileReader();
+      reader.onload = e => {
         try {
-          res($JSON[_parse](e[_target].result));
+          const json = JSON.parse(e[_target].result);
+          cb(json);
         }
         catch (err) {
-          printError(`Failed to parse JSON from file ${data[_name]}: ${err}`);
-          res({});
+          console.error(`Failed to parse JSON from file ${data.name}: ${err}`);
+          cb();
         };
       };
-      reader[_readAsText](data);
+      reader.readAsText(data);
     }
     else if (typeof data === _object) {
-      res(data);
+      cb(data);
     }
     else if (typeof data === _string) {
-      await $fetch(data)
-      [_then](res => res[_text]())
-      [_then](data => {
-        try {
-          res($JSON[_parse](data));
+      try {
+        const result = await fetch(data);
+
+        if (result.ok) {
+          const text = await result.text();
+          const json = JSON.parse(text);
+          cb(json);
         }
-        catch (err) {
-          throw (err);
-        }
-      })
-      [_catch](err => {
-        printError(`Failed to fetch data from ${data}: ${err}`);
-        res({});
-      });
+      } catch (err) {
+        console.error(`Failed to fetch data from ${data}: ${err}`);
+        cb();
+      };
     }
     else {
-      printError(`Invalid data type: ${data} (${typeof data})`);
-      res({});
+      console.error(`Invalid data [_type]: ${data} (${typeof data})`);
+      cb();
     };
   });
 };

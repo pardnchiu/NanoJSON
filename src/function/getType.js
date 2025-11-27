@@ -1,5 +1,6 @@
 function getType(value) {
-  if ($Array[_isArray](value)) {
+  // * use ifelse for better minification
+  if (Array[_isArray](value)) {
     return _array;
   }
   else if (typeof value === _object) {

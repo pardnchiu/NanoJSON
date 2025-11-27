@@ -1,7 +1,9 @@
-function createElement(tag = "", val0, val1) {
-  const cssTag = ((tag[_match](regexCssTag) || [])[0] || "")[_trim]();
-  const cssID = ((tag[_match](regexCssID) || [])[1] || "")[_trim]();
-  const cssClass = (regexCssClass[_test](tag) ? tag[_match](regexCssClass) : [])[_map](e => e[_replace](/^\./, ""));
+// * create Element
+String.prototype._ = function (val0, val1) {
+  const tag = this.toString();
+  const cssTag = ((tag[_match](regexCssTag) || [])[0] || "").trim();
+  const cssID = ((tag[_match](regexCssID) || [])[1] || "").trim();
+  const cssClass = (regexCssClass.test(tag) ? tag[_match](regexCssClass) : []).map(e => e[_replace](/^\./, ""));
 
   if (cssTag[_length] < 1) {
     return;
@@ -9,15 +11,15 @@ function createElement(tag = "", val0, val1) {
 
   let isTemp = tag === _temp;
   let dom = isTemp
-    ? $document[_createDocumentFragment]()
-    : $document[_createElement](cssTag);
+    ? document.createDocumentFragment()
+    : document.createElement(cssTag);
 
   if (cssID[_length] > 0) {
     dom.id = cssID;
   };
 
   for (const e of cssClass) {
-    dom[_classList][_add](e);
+    dom.classList.add(e);
   };
 
   if (val0 == null && val1 != null) {
@@ -31,7 +33,7 @@ function createElement(tag = "", val0, val1) {
     [attributeValue, childrenValue] = [val0, val1];
   }
   else if (val1 == null) {
-    if (typeof val0 === _string || typeof val0 === _number || $Array[_isArray](val0)) {
+    if (typeof val0 === _string || typeof val0 === _number || Array[_isArray](val0)) {
       childrenValue = val0;
     }
     else {
@@ -48,7 +50,7 @@ function createElement(tag = "", val0, val1) {
     };
 
     for (const e in attributeValue) {
-      if (!attributeValue[_hasOwnProperty](e)) {
+      if (!attributeValue.hasOwnProperty(e)) {
         continue;
       };
 
@@ -56,28 +58,28 @@ function createElement(tag = "", val0, val1) {
 
       if ({
         [_value]: 1,
-        [_innerText]: 1,
+        innerText: 1,
         [_innerHTML]: 1,
-        [_textContent]: 1,
-        [_contentEditable]: 1,
+        textContent: 1,
+        contentEditable: 1,
         [_selected]: 1,
-        [_checked]: 1
+        checked: 1
       }[e]) {
         dom[e] = value;
       }
       else if ({
         [_display]: 1,
-        [_color]: 1,
-        [_backgroundColor]: 1,
-        [_background]: 1,
-        [_width]: 1,
-        [_height]: 1,
-        [_float]: 1
+        color: 1,
+        backgroundColor: 1,
+        background: 1,
+        width: 1,
+        height: 1,
+        float: 1
       }[e]) {
-        dom[_style][e] = value;
+        dom.style[e] = value;
       }
       else if (e === _dataset && typeof value === _object) {
-        for (const k of $Object[_keys](value)) {
+        for (const k of Object.keys(value)) {
           dom[_dataset][k] = value[k];
         };
       }
@@ -92,52 +94,60 @@ function createElement(tag = "", val0, val1) {
       return;
     };
 
-    const is_object = typeof childrenValue === _object;
-    const is_array = $Array[_isArray](childrenValue);
-
-    if (is_array) {
+    if (Array[_isArray](childrenValue)) {
       for (let e of childrenValue) {
-        const is_string = typeof e === _string;
-        const is_number = typeof e === _number;
-        const is_element = e instanceof Element;
-
-        if (is_string || is_number) {
+        if (typeof e === _string || typeof e === _number) {
           if (isTemp) {
-            dom[_appendChild]($document[_createTextNode](e))
+            dom[_appendChild](document.createTextNode(e))
           }
           else {
             dom[_innerHTML] += e;
           }
         }
-        else if (is_element) {
+        else if (e instanceof Element) {
           dom[_appendChild](e);
         };
       };
       return;
     }
-    else if (is_object) {
+    else if (typeof childrenValue === _object) {
       return;
     };
 
     const value = childrenValue;
-    const is_img = (cssTag === _img);
-    const is_source = (cssTag === _source);
-    const is_input = (cssTag === _input);
-    const is_textarea = (cssTag === _textarea);
 
-    if (is_img || is_source) {
-      dom[_src] = value;
+    if (cssTag === "img" || cssTag === "source") {
+      dom.src = value;
     }
-    else if (is_textarea || is_input) {
+    else if (cssTag === _textarea || cssTag === "input") {
       dom[_value] = value
     }
     else if (isTemp) {
-      dom[_appendChild]($document[_createTextNode](childrenValue))
+      dom[_appendChild](document.createTextNode(childrenValue))
     }
     else {
       dom[_innerHTML] = value;
     };
   })();
+
+  return dom;
+};
+
+// * add Event
+HTMLElement.prototype._ = function (config = {}) {
+  if (typeof config !== _object) {
+    return;
+  };
+
+  let dom = this;
+
+  for (const key of Object.keys(config)) {
+    if (key === "dom") {
+      continue;
+    };
+
+    dom["on" + key] = e => config[key](e);
+  };
 
   return dom;
 };

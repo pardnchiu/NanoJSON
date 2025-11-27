@@ -1,5 +1,6 @@
 function typeSelect(node, isReadonly) {
-  return createElement(_label, [
+  return _label._([
+    // * icon
     (_ => {
       if (node[_type][_toLowerCase]() === _number) {
         return icon[_number]
@@ -17,24 +18,18 @@ function typeSelect(node, isReadonly) {
         return icon[_string]
       }
     })(),
-    addEvent({
-      [_dom]: createElement(_select, {
-        "disabled": isReadonly ? "" : null,
-      }, [
-        ...types[_map](e => createElement(_option, {
-          [_value]: e,
-          [_selected]: e === node[_type]
-        }, e))
-      ]),
-      [_onchange]: e => {
+    // * select
+    _select._({
+      [_disabled]: isReadonly ? "" : null,
+    }, [
+      ...[_string, _number, _boolean, _array, _object].map(e => _option._({
+        [_value]: e,
+        [_selected]: e === node[_type]
+      }, e))
+    ])._({
+      change: e => {
         node[_type] = e[_target][_value];
-
-        const isObject = {
-          [_object]: 1,
-          [_array]: 1
-        }[e[_target][_value][_toLowerCase]()];
-
-        if (isObject) {
+        if (OBJ_CHECKER[e[_target][_value][_toLowerCase]()]) {
           node[_value] = "";
 
           if (node[_children][_length] === 0) {
@@ -42,18 +37,17 @@ function typeSelect(node, isReadonly) {
           };
         }
         else if (e[_target][_value][_toLowerCase]() === _number) {
-          const value = $parseFloat(node[_value]);
-          node[_value] = $isNaN(value) ? "" : value;
+          const value = parseFloat(node[_value]);
+          node[_value] = isNaN(value) ? "" : value;
         }
         else {
           node[_value] = '';
           node[_children] = [];
         };
 
-        // * 更新畫面並觸發更新
         node.updateChild();
 
-        $document[_getElementById]("value-" + node.id)[_focus]();
+        document.getElementById("value-" + node.id).focus();
       }
     })
   ])

@@ -11,20 +11,20 @@ class JSONEditorNode {
   #lifecycle;
 
   constructor(config = {}) {
-    if (typeof config != "object") {
-      printError(`Failed to load config form editor node.`);
+    if (typeof config != _object) {
+      console.error(`Failed to load config form editor node.`);
       return;
     };
 
     this.id = randomKey();
-    this[_key] = config[_key] ?? this[_key];
+    this.key = config.key ?? this.key;
     this[_type] = config[_type] ?? this[_type];
     this[_value] = config[_value] ?? this[_value];
     this[_parent] = config[_parent] ?? this[_parent];
     this[_children] = config[_children] ?? this[_children];
     this[_collapsed] = config[_collapsed] ?? this[_collapsed];
-    this.#editor = config.editor;
-    this.#lifecycle = config.lifecycle;
+    this.#editor = config[_editor];
+    this.#lifecycle = config[_lifecycle];
   };
 
   render() {
@@ -50,24 +50,23 @@ class JSONEditorNode {
   }
 
   #create() {
-    let newDom = createElement("section.pd-json-editor-child", [
-      createElement("section.pair-wrapper", [
-        createElement(_section + "#" + this.id + ".input-group", [
+    let newDom = "section.pd-json-editor-child"._([
+      "section.pair-wrapper"._([
+        ("section#" + this.id + ".input-group")._([
           // 折疊按鈕
-          collapseButton(this),
+          buttonToCollapseNode(this),
           // 鍵輸入框
-          keyInput(this, this.parent.children.indexOf(this), this.parent.type === _array, this.#editor[_body][_dataset]["readonly"] === "1", this.#lifecycle),
-          createElement("span", ":"),
+          keyInput(this, this[_parent][_children].indexOf(this), this[_parent][_type] === _array, this.#editor[_body][_dataset][_readonly] === "1", this.#lifecycle),
+          "span"._(":"),
           // 類型選擇器
-          typeSelect(this, this.#editor[_body][_dataset]["readonly"] === "1"),
+          typeSelect(this, this.#editor[_body][_dataset][_readonly] === "1"),
           // 值輸入框
           valueInput(this, this.#lifecycle),
           // 移除按鈕
-          addEvent({
-            [_dom]: createElement(_button, icon[_add]),
-            [_onclick]: _ => {
+          _button._(icon.add)._({
+            [_click]: _ => {
               // * 再次確認
-              if (!$confirm(`Remove?`)) {
+              if (!confirm(`Remove?`)) {
                 return;
               };
               this.#remove();
@@ -75,12 +74,12 @@ class JSONEditorNode {
           })
         ]),
         // 子節點按鈕
-        childAddButton(
+        buttonToAddSubNode(
           this,
           // 子節點渲染
           (e, i) => {
             let dom = e.#create();
-            dom[_dataset].last = i === this.children.length - 1 ? 1 : 0;
+            dom[_dataset].last = i === this[_children].length - 1 ? 1 : 0;
             return dom;
           },
           // 按鈕點擊處理
@@ -104,20 +103,20 @@ class JSONEditorNode {
     const childNode = new JSONEditorNode({
       [_parent]: this,
       [_editor]: this.#editor,
-      lifecycle: this.#lifecycle
+      [_lifecycle]: this.#lifecycle
     });
     this[_children][_push](childNode);
 
-    const container = this.#dom.querySelector("section.pd-json-editor-nested-child");
+    const container = this.#dom.querySelector(_section + "." + classNameEditorNestedChild);
     if (container != null) {
-      const button = container.children[container.children.length - 1];
+      const button = container[_children][container[_children].length - 1];
 
-      for (let e of button.parentElement.children) {
-        e.dataset.last = 0;
+      for (let e of button.parentElement[_children]) {
+        e[_dataset].last = 0;
       };
 
       const newNode = childNode.#create();
-      newNode.dataset.last = 1;
+      newNode[_dataset].last = 1;
 
       // * 更新畫面並觸發更新
       container.insertBefore(newNode, button);
@@ -130,20 +129,19 @@ class JSONEditorNode {
       return;
     };
 
-    const index = this[_parent][_children][_indexOf](this);
+    const index = this[_parent][_children].indexOf(this);
 
     if (index === -1) {
       return;
     };
 
     const pre = this.#dom.previousElementSibling;
-    if (this.#dom.dataset.last === "1" && pre != null) {
-      pre.dataset.last = 1
+    if (this.#dom[_dataset].last === "1" && pre != null) {
+      pre[_dataset].last = 1
     }
 
-    // * 更新畫面並觸發更新
-    this[_parent][_children][_splice](index, 1);
-    this.#dom[_remove]();
+    this[_parent][_children].splice(index, 1);
+    this.#dom.remove();
     this.#update();
   };
 
@@ -153,17 +151,17 @@ class JSONEditorNode {
     };
 
     if (this[_type] === _array) {
-      return this[_children][_map](e => e.#json())
+      return this[_children].map(e => e.#json())
     };
 
     if (this[_type] === _object) {
       const obj = {};
 
       for (let e of this[_children]) {
-        if (!e[_key] && this[_parent][_type] !== _array) {
+        if (!e.key && this[_parent][_type] !== _array) {
           continue;
         };
-        obj[e[_key] || $Object[_keys](obj)[_length]] = e.#json();
+        obj[e.key || Object.keys(obj)[_length]] = e.#json();
       };
 
       return obj
@@ -172,10 +170,10 @@ class JSONEditorNode {
     let value = this[_value];
 
     if (this[_type] === _boolean) {
-      value = value[_toLowerCase]() === 'true';
+      value = value[_toLowerCase]() === _true;
     }
     else if (this[_type] === _number) {
-      value = $Number(value);
+      value = Number(value);
     };
 
     return value
