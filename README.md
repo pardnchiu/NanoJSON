@@ -1,60 +1,58 @@
-> [!Note]
-> This content is translated by LLM. Original text can be found [here](README.zh.md)
-
-<img src="https://nanojson.pardn.io/static/image/logo.png" width=80>
+![](./cover.png)
 
 # NanoJSON
 
-> A lightweight JSON editor built with pure JavaScript and native APIs. It features visual editing, dynamic type switching, and file import/export capabilities. Suitable for website embedding and JSON data editing.<br>
+> A Firebase-style JSON editor built with VanillaJS and native APIs, featuring visual editing, dynamic type switching, and file import/export capabilities. Suitable for website embedding and JSON data editing.<br>
 >
-> This project transitioned to MIT license on 2025/07/06, with `.git-crypt` encryption fully removed.
+> This project has been licensed under MIT since 2025/07/06, with complete removal of `.git-crypt` encryption.
 
-![lang](https://img.shields.io/badge/lang-JS-yellow)
 [![license](https://img.shields.io/github/license/pardnchiu/nanojson)](LICENSE)
 [![version](https://img.shields.io/npm/v/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
-[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)<br>
-[![readme](https://img.shields.io/badge/readme-EN-white)](README.md)
-[![readme](https://img.shields.io/badge/readme-ZH-white)](README.zh.md) 
+[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)
 
-## Key Features
+![](./preview.png)
 
-### No Third-Party Dependencies
-Developed using native DOM APIs without any third-party dependencies, making it easy to integrate into any web project.
+## Core Features
+
+### Zero Third-Party Dependencies
+Built entirely on native DOM APIs without any third-party dependencies, easily embeddable in any web project.
 
 ### Visual JSON Editing Experience
-Displays JSON data in a tree structure, supporting folding/unfolding, dynamic node addition/removal, and providing an intuitive editing interface.
+Displays JSON data in a tree structure similar to Firebase, supporting collapse/expand, dynamic node addition/deletion, providing an intuitive and familiar editing interface.
 
-### Comprehensive Type Support
-Supports five JSON data types (`string`, `number`, `boolean`, `array`, `object`) with real-time type switching while maintaining data integrity.
+### Complete Type Support
+Supports 5 standard JSON data types (`string`, `number`, `boolean`, `array`, `object`), allowing real-time type switching while maintaining data integrity.
 
-## Installation
+## Usage
 
-### Install via npm
+### Installation
+
+#### Install via npm
 ```bash
 npm install @pardnchiu/nanojson
 ```
 
-### Include via CDN
+#### Include via CDN
 
-#### UMD Version
+##### UMD Version
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.js"></script>
 ```
 
-#### ES Module Version
+##### ES Module Version
 ```javascript
 import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.esm.js";
 ```
 
-## Initialization
+### Initialization
 ```javascript
 // Basic initialization
 const editor = new JSONEditor({
-  id: "json-editor-container",    // Element ID
-  title: "JSON Editor",           // Editor title
-  description: "Edit your JSON",  // Editor description
-  fill: true,                     // Fill parent container
-  json: {                         // Initial JSON data
+  id: "json-editor-container",     // Element ID
+  title: "JSON Editor",            // Editor title
+  description: "Edit your JSON",   // Editor description
+  fill: true,                      // Fill parent container
+  json: {                          // Initial JSON data
     name: "NanoJSON",
     version: "0.3.4",
     features: ["Lightweight", "Pure JS", "Visual Editing"]
@@ -65,14 +63,14 @@ const editor = new JSONEditor({
 const advancedEditor = new JSONEditor({
   id: "advanced-editor",
   title: "Advanced JSON Editor",
-  description: "Full-featured JSON editor",
-  fill: 1,                        // Fill container (1 = true, 0 = false)
-  button: {                       // Button configuration
-    import: true,                 // File import
-    export: true,                 // File export
-    reset: true                   // Reset editor
+  description: "Full-featured JSON Editor",
+  fill: 1,                         // Fill container (1 = true, 0 = false)
+  button: {                        // Feature button configuration
+    import: true,                  // File import
+    export: true,                  // File export
+    reset: true                    // Reset editor
   },
-  when: {                         // Lifecycle callbacks
+  when: {                          // Lifecycle callbacks
     rendered: () => {
       console.log("Editor rendered");
     },
@@ -85,23 +83,23 @@ const advancedEditor = new JSONEditor({
 // Initialize from file
 const fileEditor = new JSONEditor({
   id: "file-editor",
-  path: "/data/sample.json",      // Load from URL
-  // file: fileInput.files[0],    // Load from file object
+  path: "/data/sample.json",       // Load from URL
+  // file: fileInput.files[0],     // Load from file object
 });
 ```
 
-## Configuration Overview
+## Configuration Options
 ```javascript
 const config = {
   id: "container-id",       // Target container element ID
   title: "",                // Editor title (default: "")
   description: "",          // Editor description (default: "")
-  readonly: 0,              // Read-only mode (default: 0)
   fill: 1,                  // Fill parent container (default: 1)
+  readonly: 0,              // Read-only mode (default: 0)
   json: {},                 // Initial JSON data object
   file: null,               // File object (for file upload)
   path: "",                 // JSON file URL path
-  button: {                 // Button toggles
+  button: {                 // Feature button toggles
     import: true,           // File import button (default: true)
     export: true,           // File export button (default: true)
     reset: true             // Reset button (default: true)
@@ -119,17 +117,17 @@ const config = {
 
 ## Editor Features
 
-### Data Types 
+### Data Types
 
 #### String
 ```javascript
-// Text input editing
+// Text input field editing
 "Hello World"
 ```
 
 #### Number
 ```javascript
-// Numeric input, automatically filters non-numeric characters
+// Number input field, automatically filters non-numeric characters
 42
 3.14159
 -123
@@ -144,7 +142,7 @@ false
 
 #### Array
 ```javascript
-// Supports nested structures, add/remove elements
+// Supports nested structure, add/remove elements
 [
   "item1",
   "item2", 
@@ -158,7 +156,7 @@ false
 
 #### Object
 ```javascript
-// Supports nested structures, add/remove properties
+// Supports nested structure, add/remove properties
 {
   "key1": "value1",
   "key2": 456,
@@ -168,7 +166,7 @@ false
 }
 ```
 
-## Available Functions
+## Available Methods
 
 - **Get JSON Data**
   ```javascript
@@ -204,23 +202,24 @@ false
 
 - **Add Root Node**
   ```javascript
-  editor.insert();  // Add an empty root node
+  editor.insert();  // Add empty root node
   ```
 
 - **Re-render**
   ```javascript
-  editor.render();  // Force re-render the editor
+  editor.render();  // Force re-render editor
   ```
 
-- **Enable Editing Mode**
+- **Edit Mode**
   ```javascript
   editor.enable();
   ```
 
-- **Set Read-Only Mode**
+- **Read-only Mode**
   ```javascript
   editor.disable();
   ```
+
 
 ## Lifecycle
 ```javascript
@@ -233,7 +232,7 @@ const editor = new JSONEditor({
     },
     rendered: () => {
       console.log("Render complete");
-      // Post-initialization handling
+      // Post-initialization processing
     },
     beforeUpdate: () => {
       console.log("About to update content");
@@ -241,7 +240,7 @@ const editor = new JSONEditor({
     },
     updated: () => {
       console.log("Content updated");
-      // Post-update handling, e.g., sync to server
+      // Post-update processing, e.g., sync to server
     },
     beforeDestroy: () => {
       console.log("About to destroy editor");
@@ -256,22 +255,18 @@ const editor = new JSONEditor({
 ### File Handling Mechanism
 
 #### Supported Formats
-- Only `.json` file format supported
+- Only supports `.json` file format
 - Automatically validates JSON syntax correctness
 
-#### Export Functionality
+#### Export Function
 - Automatically formats JSON (4-space indentation)
 - File naming format: `JSONEditor-{timestamp}.json`
 
 ## License
 
-This project is licensed under [MIT](LICENSE).
+This project is licensed under the [MIT](LICENSE) License.
 
-## Star
-
-[![Star](https://api.star-history.com/svg?repos=pardnchiu/NanoJSON&type=Date)](https://www.star-history.com/#pardnchiu/NanoJSON&Date)
-
-## Author
+## Creator
 
 <img src="https://avatars.githubusercontent.com/u/25631760" align="left" width="96" height="96" style="margin-right: 0.5rem;">
 
@@ -282,6 +277,10 @@ This project is licensed under [MIT](LICENSE).
 </a> <a href="https://linkedin.com/in/pardnchiu" target="_blank">
     <img src="https://pardn.io/image/linkedin.svg" width="48" height="48">
 </a>
+
+## Star History
+
+[![Star](https://api.star-history.com/svg?repos=pardnchiu/NanoJSON&type=Date)](https://www.star-history.com/#pardnchiu/NanoJSON&Date)
 
 ***
 

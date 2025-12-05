@@ -1,28 +1,27 @@
-<img src="https://nanojson.pardn.io/static/image/logo.png" width=80>
+![](./cover.png)
 
 # NanoJSON
 
-> 基於純 JavaScript 與原生 APIs 的輕量級 JSON 編輯器，具備可視化編輯、動態類型切換和檔案導入導出功能。適用於網站嵌入與 JSON 資料編輯。<br>
+> 基於純 JavaScript 與原生 APIs 的 Firebase 風格 JSON 編輯器，具備可視化編輯、動態類型切換和檔案導入導出功能。適用於網站嵌入與 JSON 資料編輯。<br>
 >
 > 此專案於 2025/07/06 起改為 MIT 授權，並完整移除 `.git-crypt` 加密。
 
-![lang](https://img.shields.io/badge/lang-JS-yellow)
 [![license](https://img.shields.io/github/license/pardnchiu/nanojson)](LICENSE)
 [![version](https://img.shields.io/npm/v/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
-[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)<br>
-[![readme](https://img.shields.io/badge/readme-EN-white)](README.md)
-[![readme](https://img.shields.io/badge/readme-ZH-white)](README.zh.md) 
+[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)
+
+![](./preview.png)
 
 ## 三大主軸
 
 ### 無需第三方依賴
-基於原生 DOM APIs 開發，無任何第三方依賴，可輕鬆嵌入任何網站專案。
+完全基於原生 DOM APIs 開發，無任何第三方依賴，可輕鬆嵌入任何網站專案。
 
 ### 視覺化 JSON 編輯體驗
-採用樹狀結構顯示 JSON 資料，支援摺疊展開、動態新增刪除節點，提供直觀的編輯介面。
+採用類似 Firebase 控制台的樹狀結構顯示 JSON 資料，支援摺疊展開、動態新增刪除節點，提供直觀且熟悉的編輯介面。
 
 ### 完整類型支援
-支援 5 種 JSON 資料類型（`string`、`number`、`boolean`、`array`、`object`），可即時切換類型並保持資料完整性。
+支援 5 種標準 JSON 資料類型（`string`、`number`、`boolean`、`array`、`object`），可即時切換類型並保持資料完整性。
 
 ## 使用方法
 
@@ -267,10 +266,6 @@ const editor = new JSONEditor({
 
 此專案採用 [MIT](LICENSE) 授權條款。
 
-## 星
-
-[![Star](https://api.star-history.com/svg?repos=pardnchiu/NanoJSON&type=Date)](https://www.star-history.com/#pardnchiu/NanoJSON&Date)
-
 ## 作者
 
 <img src="https://avatars.githubusercontent.com/u/25631760" align="left" width="96" height="96" style="margin-right: 0.5rem;">
@@ -282,6 +277,10 @@ const editor = new JSONEditor({
 </a> <a href="https://linkedin.com/in/pardnchiu" target="_blank">
     <img src="https://pardn.io/image/linkedin.svg" width="48" height="48">
 </a>
+
+## 星
+
+[![Star](https://api.star-history.com/svg?repos=pardnchiu/NanoJSON&type=Date)](https://www.star-history.com/#pardnchiu/NanoJSON&Date)
 
 ***
 
