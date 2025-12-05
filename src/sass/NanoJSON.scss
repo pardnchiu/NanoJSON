@@ -262,6 +262,7 @@
           z-index: 0;
           padding: 0 $_8;
           line-height: $_32;
+          width: 100%;
           min-height: $_32;
           max-width: $_480;
           font-size: $_14;
@@ -295,6 +296,7 @@
           caret-color: #7F7FFA;
           background-color: transparent;
           resize: none;
+          text-align: left;
           font-size: $_14;
           border-radius: $_4;
           border: 1px solid #00000000;

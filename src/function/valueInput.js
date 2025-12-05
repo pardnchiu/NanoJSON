@@ -4,7 +4,7 @@ function valueInput(node, lifecycle) {
     const value = parseFloat(node[_value]);
 
     function newValue(value) {
-      return isNaN(value) ? "" : String(value)[_replace](/\s/g, "")[_replace](regex, "");
+      return isNaN(value) && value !== "-" && value !== "." ? "" : String(value)[_replace](/\s/g, "");
     };
 
     return _label._([
