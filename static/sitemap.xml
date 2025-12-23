@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+    <url>
+        <loc>https://nanojson.pardn.io/</loc>
+        <lastmod>2025-12-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nanojson.pardn.io/index.html?lang=zh"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nanojson.pardn.io/index.html?lang=en"/>
+    </url>
+
+    <url>
+        <loc>https://nanojson.pardn.io/page/live.html</loc>
+        <lastmod>2025-12-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nanojson.pardn.io/page/live.html?lang=zh"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nanojson.pardn.io/page/live.html?lang=en"/>
+    </url>
+
+    <url>
+        <loc>https://nanojson.pardn.io/page/agreement.html</loc>
+        <lastmod>2025-12-23</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <xhtml:link rel="alternate" hreflang="zh" href="https://nanojson.pardn.io/page/agreement.html?lang=zh"/>
+        <xhtml:link rel="alternate" hreflang="en" href="https://nanojson.pardn.io/page/agreement.html?lang=en"/>
+    </url>
+</urlset>
