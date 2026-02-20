@@ -11,8 +11,7 @@ node_modules
 terser.cache.json
 
 # 忽略其他
-.reset.sh
-.memo.md
+v*.md
 
 # 保留編譯後的 dist
 !dist/

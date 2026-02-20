@@ -7,39 +7,43 @@ class JSONEditor {
   #lifecycle;
   #isInit = false;
   #type = _object;
+  #config = {};
 
   get type() {
     return this.#type;
-  };
+  }
 
   constructor(config = {}) {
     if (typeof config != _object) {
       console.error(`Failed to load config.`);
       return;
-    };
+    }
 
     let css = config.css;
     if (css == null || typeof css !== _string || css.length < 1) {
       css = defaultCSS;
-    };
+    }
 
     loadCSS(css);
 
-    this.#init(config);
+    this.#config = config ?? {};
+    this.#init();
   }
 
-  async #init(config = {}) {
+  async #init() {
     this[_editor] = "section"._();
 
-    const when = config.when ?? {};
-    const title = config[_title] ?? "";
-    const description = config.description ?? "";
-    const fill = Boolean(config.fill == null ? 1 : config.fill) ? 1 : 0;
-    const readonly = config[_readonly] ?? false;
+    const when = this.#config.when ?? {};
+    const title = this.#config[_title] ?? "";
+    const description = this.#config.description ?? "";
+    const fill = Boolean(this.#config.fill == null ? 1 : this.#config.fill) ? 1 : 0;
+    const readonly = this.#config[_readonly] ?? false;
+    // const collapsed = this.#config.collapsed ?? true;
 
-    let button = config[_button] != null && typeof config[_button] === _object
-      ? config[_button]
-      : { [_import]: 1, [_export]: 1, [_reset]: 1 };
+    let button =
+      this.#config[_button] != null && typeof this.#config[_button] === _object
+        ? this.#config[_button]
+        : { [_import]: 1, [_export]: 1, [_reset]: 1 };
     button[_reset] = button[_reset] ?? 1;
     button[_import] = button[_import] ?? 1;
     button[_export] = button[_export] ?? 1;
@@ -53,77 +57,102 @@ class JSONEditor {
       destroyed: when[lifecycleAction.destroyed],
     });
 
-    let json = await getJSON(config.file ?? config.json ?? config.path) ?? {};
+    let json = (await getJSON(this.#config.file ?? this.#config.json ?? this.#config.path)) ?? {};
     this[_children] = this.#jsonToChildren(json);
 
     let dom = _temp._([
       Math.max(title[_length], description[_length]) > 0
         ? "header"._([
-          title[_length] > 0
-            ? "strong"._(title)
-            : null,
-          description[_length] > 0
-            ? "p"._(description)
-            : null
-        ])
+            title[_length] > 0 ? "strong"._(title) : null,
+            description[_length] > 0 ? "p"._(description) : null,
+          ])
         : null,
       this[_editor],
       "footer"._([
-        _button._({
-          [_title]: "Add"
-        }, icon.add)._({
-          [_click]: e => this.insert()
-        }),
-        Boolean(button[_import]) ? _button._({
-          [_title]: "Open"
-        }, icon.folder)._({
-          [_click]: e => e[_target][_nextElementSibling][_click]()
-        }) : null,
-        Boolean(button[_import]) ? "input"._({
-          [_type]: "file",
-          accept: ".json",
-          [_display]: "none"
-        })._({
-          change: e => this[_import](e[_target].files[0])
-        }) : null,
-        Boolean(button[_export]) ? _button._({
-          [_title]: "Download"
-        }, icon[_download])._({
-          [_click]: e => {
-            if (!confirm(e[_target][_title] + "?")) {
-              return;
-            };
-            this[_export]()
-          }
-        }) : null,
-        Boolean(button[_reset]) ? _button._({
-          [_title]: "Reset"
-        }, icon.clear)._({
-          [_click]: e => {
-            if (!confirm(e[_target][_title] + "?")) {
-              return;
-            };
-            this[_import]({});
-          }
-        }) : null,
-      ])
+        _button
+          ._(
+            {
+              [_title]: "Add",
+            },
+            icon.add,
+          )
+          ._({
+            [_click]: (e) => this.insert(),
+          }),
+        Boolean(button[_import])
+          ? _button
+              ._(
+                {
+                  [_title]: "Open",
+                },
+                icon.folder,
+              )
+              ._({
+                [_click]: (e) => e[_target][_nextElementSibling][_click](),
+              })
+          : null,
+        Boolean(button[_import])
+          ? "input"
+              ._({
+                [_type]: "file",
+                accept: ".json",
+                [_display]: "none",
+              })
+              ._({
+                change: (e) => this[_import](e[_target].files[0]),
+              })
+          : null,
+        Boolean(button[_export])
+          ? _button
+              ._(
+                {
+                  [_title]: "Download",
+                },
+                icon[_download],
+              )
+              ._({
+                [_click]: (e) => {
+                  if (!confirm(e[_target][_title] + "?")) {
+                    return;
+                  }
+                  this[_export]();
+                },
+              })
+          : null,
+        Boolean(button[_reset])
+          ? _button
+              ._(
+                {
+                  [_title]: "Reset",
+                },
+                icon.clear,
+              )
+              ._({
+                [_click]: (e) => {
+                  if (!confirm(e[_target][_title] + "?")) {
+                    return;
+                  }
+                  this[_import]({});
+                },
+              })
+          : null,
+      ]),
     ]);
 
-    if (config.id == null) {
+    if (this.#config.id == null) {
       this[_body] = (_section + "." + classNameEditor)._();
-      this[_body][_appendChild](dom)
-    }
-    else {
-      this[_body] = document.getElementById(config.id);
-      this[_body].classList.add(classNameEditor)
+      this[_body][_appendChild](dom);
+    } else {
+      this[_body] = document.getElementById(this.#config.id);
+      this[_body].classList.add(classNameEditor);
       this[_body].replaceChildren(...dom[_children]);
-    };
+    }
 
     this[_body][_dataset].fill = fill;
 
     if (this[_children][_length] < 1) {
       this.insert();
-    };
+    }
 
     this.#lifecycle[_render](async () => {
       this[_render]();
@@ -137,7 +166,7 @@ class JSONEditor {
 
       this.#isInit = true;
     });
-  };
+  }
 
   enable() {
     this[_body][_dataset][_readonly] = 0;
@@ -155,7 +184,7 @@ class JSONEditor {
 
   #create(childNode) {
     return childNode.render();
-  };
+  }
 
   #jsonToChildren(data, parent = null) {
     const result = [];
@@ -167,21 +196,21 @@ class JSONEditor {
           [_type]: type,
           [_parent]: parent ?? this,
           [_editor]: this,
-          [_lifecycle]: this.#lifecycle
+          [_lifecycle]: this.#lifecycle,
+          [_collapsed]: this.#config.collapsed == null ? true : Boolean(this.#config.collapsed),
+          confirmKeyRemove: this.#config.confirmKeyRemove == null ? true : Boolean(this.#config.confirmKeyRemove),
         });
 
         // * 子物件的 type 為開頭大寫;
         if ((type === _object && e != null) || type === _array) {
           node[_children] = this.#jsonToChildren(e, node);
-        }
-        else {
+        } else {
           node[_value] = String(e);
-        };
+        }
 
         result[_push](node);
-      };
-    }
-    else {
+      }
+    } else {
       for (const [key, value] of Object.entries(data)) {
         const type = getType(value);
         const node = new JSONEditorNode({
@@ -189,47 +218,51 @@ class JSONEditor {
           [_type]: type,
           [_parent]: parent ?? this,
           [_editor]: this,
-          [_lifecycle]: this.#lifecycle
+          [_lifecycle]: this.#lifecycle,
+          [_collapsed]: this.#config.collapsed == null ? true : Boolean(this.#config.collapsed),
+          confirmKeyRemove: this.#config.confirmKeyRemove == null ? true : Boolean(this.#config.confirmKeyRemove),
         });
 
         // * 子物件的 type 為開頭大寫;
         if ((type === _object && value != null) || type === _array) {
           node[_children] = this.#jsonToChildren(value, node);
-        }
-        else if (value === null) {
+        } else if (value === null) {
           node[_type] = _null;
           node[_value] = null;
-        }
-        else {
+        } else {
           node[_value] = String(value);
-        };
+        }
 
         result[_push](node);
       }
     }
     return result;
-  };
+  }
 
   render(isUpdate = false) {
-    let temp = _temp._(this[_children].map(e => this.#create(e)))
+    let temp = _temp._(this[_children].map((e) => this.#create(e)));
 
     this[_editor].replaceChildren(...temp[_children]);
 
     if (!this.#isInit || !isUpdate) {
       return;
-    };
+    }
 
     this.#lifecycle[_update](() => void 0);
-  };
+  }
 
   insert() {
-    this[_children][_push](new JSONEditorNode({
-      [_parent]: this,
-      [_editor]: this,
-      [_lifecycle]: this.#lifecycle
-    }));
-    this[_render]()
-  };
+    this[_children][_push](
+      new JSONEditorNode({
+        [_parent]: this,
+        [_editor]: this,
+        [_lifecycle]: this.#lifecycle,
+        [_collapsed]: this.#config.collapsed == null ? true : Boolean(this.#config.collapsed),
+        confirmKeyRemove: this.#config.confirmKeyRemove == null ? true : Boolean(this.#config.confirmKeyRemove),
+      }),
+    );
+    this[_render]();
+  }
 
   get json() {
     const result = {};
@@ -237,22 +270,21 @@ class JSONEditor {
     for (let e of this[_children]) {
       if (e.key) {
         result[e.key || 0] = e.json;
-      };
-    };
+      }
+    }
 
     return JSON.stringify(result, null, 4);
-  };
+  }
 
   async import(file) {
-
-    let json = await getJSON(file) ?? {};
+    let json = (await getJSON(file)) ?? {};
     this[_children] = this.#jsonToChildren(json);
     this[_render](true);
-  };
+  }
 
   reset() {
     this[_import]({});
-  };
+  }
 
   export() {
     const result = {};
@@ -261,21 +293,21 @@ class JSONEditor {
       if (e.key || this[_children][_length] === 1) {
         result[e.key || 0] = e.json;
       }
-    };
+    }
 
     const blob = new Blob([JSON.stringify(result, null, 4)], {
-      [_type]: 'application/json'
+      [_type]: "application/json",
     });
     const url = URL.createObjectURL(blob);
     const a = "a"._({
       href: url,
-      [_download]: `NanoJSON-${Date.now()}.json`
+      [_download]: `NanoJSON-${Date.now()}.json`,
     });
     document[_body][_appendChild](a);
     a[_click]();
     document[_body].removeChild(a);
     URL.revokeObjectURL(url);
-  };
-};
+  }
+}
 
 window.JSONEditor = JSONEditor;

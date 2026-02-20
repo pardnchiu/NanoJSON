@@ -1,5 +1,4 @@
 class JSONEditorNode {
-
   key = "";
   type = "string";
   value = "";
@@ -9,12 +8,13 @@ class JSONEditorNode {
   #dom;
   #editor;
   #lifecycle;
+  #confirmKeyRemove = true;
 
   constructor(config = {}) {
     if (typeof config != _object) {
       console.error(`Failed to load config form editor node.`);
       return;
-    };
+    }
 
     this.id = randomKey();
     this.key = config.key ?? this.key;
@@ -25,28 +25,29 @@ class JSONEditorNode {
     this[_collapsed] = config[_collapsed] ?? this[_collapsed];
     this.#editor = config[_editor];
     this.#lifecycle = config[_lifecycle];
-  };
+    this.#confirmKeyRemove = config.confirmKeyRemove;
+  }
 
   render() {
     return this.#create();
-  };
+  }
   addChild() {
     this.#add();
-  };
+  }
   updateChild() {
     this.#create();
     this.#update();
-  };
+  }
   setCollapsed() {
     this[_collapsed] = !this[_collapsed];
     this.#create();
-  };
+  }
   get json() {
     return this.#json();
-  };
+  }
 
   #update() {
-    this.#lifecycle[_update](_ => void 0);
+    this.#lifecycle[_update]((_) => void 0);
   }
 
   #create() {
@@ -56,7 +57,13 @@ class JSONEditorNode {
           // 折疊按鈕
           buttonToCollapseNode(this),
           // 鍵輸入框
-          keyInput(this, this[_parent][_children].indexOf(this), this[_parent][_type] === _array, this.#editor[_body][_dataset][_readonly] === "1", this.#lifecycle),
+          keyInput(
+            this,
+            this[_parent][_children].indexOf(this),
+            this[_parent][_type] === _array,
+            this.#editor[_body][_dataset][_readonly] === "1",
+            this.#lifecycle,
+          ),
           "span"._(":"),
           // 類型選擇器
           typeSelect(this, this.#editor[_body][_dataset][_readonly] === "1"),
@@ -64,14 +71,16 @@ class JSONEditorNode {
           valueInput(this, this.#lifecycle),
           // 移除按鈕
           _button._(icon.add)._({
-            [_click]: _ => {
+            [_click]: (_) => {
               // * 再次確認
-              if (!confirm(`Remove?`)) {
-                return;
-              };
+              if (this.#confirmKeyRemove) {
+                if (!confirm(`Remove?`)) {
+                  return;
+                }
+              }
               this.#remove();
-            }
-          })
+            },
+          }),
         ]),
         // 子節點按鈕
         buttonToAddSubNode(
@@ -85,25 +94,25 @@ class JSONEditorNode {
           // 按鈕點擊處理
           () => {
             this.#add();
-          }
-        )
-      ])
+          },
+        ),
+      ]),
     ]);
 
     if (this.#dom) {
       this.#dom.parentElement.replaceChild(newDom, this.#dom);
-    };
+    }
 
     this.#dom = newDom;
 
     return this.#dom;
-  };
+  }
 
   #add() {
     const childNode = new JSONEditorNode({
       [_parent]: this,
       [_editor]: this.#editor,
-      [_lifecycle]: this.#lifecycle
+      [_lifecycle]: this.#lifecycle,
     });
     this[_children][_push](childNode);
 
@@ -113,46 +122,46 @@ class JSONEditorNode {
 
       for (let e of button.parentElement[_children]) {
         e[_dataset].last = 0;
-      };
+      }
 
       const newNode = childNode.#create();
       newNode[_dataset].last = 1;
 
       // * 更新畫面並觸發更新
       container.insertBefore(newNode, button);
-    };
+    }
     this.#update();
-  };
+  }
 
   #remove() {
     if (!this[_parent]) {
       return;
-    };
+    }
 
     const index = this[_parent][_children].indexOf(this);
 
     if (index === -1) {
       return;
-    };
+    }
 
     const pre = this.#dom.previousElementSibling;
     if (this.#dom[_dataset].last === "1" && pre != null) {
-      pre[_dataset].last = 1
+      pre[_dataset].last = 1;
     }
 
     this[_parent][_children].splice(index, 1);
     this.#dom.remove();
     this.#update();
-  };
+  }
 
   #json() {
     if (!this[_parent]) {
-      return
-    };
+      return;
+    }
 
     if (this[_type] === _array) {
-      return this[_children].map(e => e.#json())
-    };
+      return this[_children].map((e) => e.#json());
+    }
 
     if (this[_type] === _object) {
       const obj = {};
@@ -160,22 +169,21 @@ class JSONEditorNode {
       for (let e of this[_children]) {
         if (!e.key && this[_parent][_type] !== _array) {
           continue;
-        };
+        }
         obj[e.key || Object.keys(obj)[_length]] = e.#json();
-      };
+      }
 
-      return obj
-    };
+      return obj;
+    }
 
     let value = this[_value];
 
     if (this[_type] === _boolean) {
       value = value[_toLowerCase]() === _true;
-    }
-    else if (this[_type] === _number) {
+    } else if (this[_type] === _number) {
       value = Number(value);
-    };
+    }
 
-    return value
-  };
-};
+    return value;
+  }
+}

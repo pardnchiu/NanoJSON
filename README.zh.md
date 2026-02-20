@@ -1,292 +1,77 @@
-![](./cover.png)
+> [!NOTE]
+> 此 README 由 [SKILL](https://github.com/pardnchiu/skill-readme-generate) 生成，英文版請參閱 [這裡](./README.md)。
+
+![cover](./cover.png)
 
 # NanoJSON
 
-[![license](https://img.shields.io/github/license/pardnchiu/nanojson)](LICENSE)
-[![version](https://img.shields.io/npm/v/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
-[![jsdelivr](https://img.shields.io/jsdelivr/npm/hm/@pardnchiu/nanojson)](https://www.jsdelivr.com/package/npm/@pardnchiu/nanojson)
+[![npm](https://img.shields.io/npm/v/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
+[![downloads](https://img.shields.io/npm/dm/@pardnchiu/nanojson)](https://www.npmjs.com/package/@pardnchiu/nanojson)
+[![license](https://img.shields.io/github/license/pardnchiu/NanoJSON)](LICENSE)
 
-> 基於純 JavaScript 與原生 APIs 的 Firebase 風格 JSON 編輯器，具備可視化編輯、動態類型切換和檔案導入導出功能。適用於網站嵌入與 JSON 資料編輯。
+> 以純 JavaScript 和原生 DOM API 打造的輕量 JSON 視覺編輯器，無需任何第三方依賴即可嵌入任何網頁。
 
 ## 目錄
 
-- [三大核心特色](#三大核心特色)
-  - [無需第三方依賴](#無需第三方依賴)
-  - [視覺化 JSON 編輯體驗](#視覺化-json-編輯體驗)
-  - [完整類型支援](#完整類型支援)
-- [使用方法](#使用方法)
-  - [安裝](#安裝)
-  - [初始化](#初始化)
-- [配置介紹](#配置介紹)
-- [編輯器功能](#編輯器功能)
-  - [資料類型](#資料類型)
-- [可用函式](#可用函式)
-- [生命週期](#生命週期)
-  - [檔案處理機制](#檔案處理機制)
-- [補充](#補充)
-- [授權條款](#授權條款)
-- [作者](#作者)
-- [星](#星)
+- [功能特點](#功能特點)
+- [架構](#架構)
+- [檔案結構](#檔案結構)
+- [授權](#授權)
+- [Author](#author)
+- [Stars](#stars)
 
-## 三大核心特色
+## 功能特點
 
-### 無需第三方依賴
-完全基於原生 DOM APIs 開發，無任何第三方依賴，可輕鬆嵌入任何網站專案。
+> `npm i @pardnchiu/nanojson` · [完整文件](./doc.zh.md)
 
-### 視覺化 JSON 編輯體驗
-採用類似 Firebase 控制台的樹狀結構顯示 JSON 資料，支援摺疊展開、動態新增刪除節點，提供直觀且熟悉的編輯介面。
+### 零依賴嵌入式設計
 
-### 完整類型支援
-支援 5 種標準 JSON 資料類型（`string`、`number`、`boolean`、`array`、`object`），可即時切換類型並保持資料完整性。
+NanoJSON 完全基於原生瀏覽器 API 構建，無任何執行期依賴。透過 `id` 設定即可掛載至頁面上任意已存在的 DOM 元素，CSS 樣式也以動態載入方式注入，整合流程僅需一個 script 標籤或一行 npm 安裝指令。
 
-## 使用方法
+### 動態型別切換與結構化視覺編輯
 
-### 安裝
+每個節點均支援在 string、number、boolean、array、object 五種型別之間即時切換，切換過程中保留既有資料結構。樹狀介面以可折疊的巢狀方式呈現層級 JSON，初始展開狀態（`collapsed`）與移除確認行為（`confirmKeyRemove`）皆可透過設定靈活控制。
 
-#### 透過 npm 安裝
-```bash
-npm install @pardnchiu/nanojson
+### 完整生命週期控制與彈性資料匯入
+
+提供 beforeRender、rendered、beforeUpdate、updated、beforeDestroy、destroyed 六個生命週期鉤子，各事件均支援回傳 `false` 取消操作，更新事件並附有 300ms Debounce 機制以避免頻繁觸發。`import()` 方法接受物件、File 物件、URL 字串三種格式，`export()` 則一鍵下載格式化 JSON 檔案。
+
+## 架構
+
+```mermaid
+graph LR
+    U[Developer] -->|config| JE[JSONEditor]
+    JE -->|jsonToChildren| JEN[JSONEditorNode]
+    JEN -->|nested| JEN
+    JE -->|hooks| LC[Lifecycle]
+    LC -->|debounce 300ms| U
 ```
 
-#### 透過 CDN 引入
+## 檔案結構
 
-##### UMD 版本
-```html
-<script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.js"></script>
+```
+NanoJSON/
+├── dist/
+│   ├── NanoJSON.js           # UMD 壓縮版本
+│   ├── NanoJSON.esm.js       # ES Module 版本
+│   ├── NanoJSON.debug.js     # 除錯用未壓縮版本
+│   └── NanoJSON.css          # 樣式表
+├── src/
+│   ├── model/
+│   │   ├── JSONEditor.js     # 主要編輯器類別
+│   │   ├── JSONEditorNode.js # 節點模型類別
+│   │   └── Lifecycle.js      # 生命週期管理
+│   └── function/             # DOM 工具與元件函式
+├── page/
+│   └── live.html             # 線上展示頁面
+└── package.json
 ```
 
-##### ES Module 版本
-```javascript
-import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@[VERSION]/dist/NanoJSON.esm.js";
-```
+## 授權
 
-### 初始化
-```javascript
-// 基本初始化
-const editor = new JSONEditor({
-  id: "json-editor-container",    // 元素 ID
-  title: "JSON 編輯器",           // 編輯器標題
-  description: "編輯您的 JSON",    // 編輯器描述
-  fill: true,                     // 填滿父容器
-  json: {                         // 初始 JSON 資料
-    name: "NanoJSON",
-    version: "0.3.4",
-    features: ["輕量級", "純 JS", "視覺化編輯"]
-  }
-});
+本專案採用 [MIT LICENSE](LICENSE)。
 
-// 進階配置
-const advancedEditor = new JSONEditor({
-  id: "advanced-editor",
-  title: "進階 JSON 編輯器",
-  description: "全功能 JSON 編輯器",
-  fill: 1,                        // 填滿容器 (1 = true, 0 = false)
-  button: {                       // 功能按鈕配置
-    import: true,                 // 檔案導入
-    export: true,                 // 檔案導出
-    reset: true                   // 重置編輯器
-  },
-  when: {                         // 生命週期回調
-    rendered: () => {
-      console.log("編輯器已渲染");
-    },
-    updated: () => {
-      console.log("編輯器內容已更新");
-    }
-  }
-});
-
-// 從檔案初始化
-const fileEditor = new JSONEditor({
-  id: "file-editor",
-  path: "/data/sample.json",      // 從 URL 加載
-  // file: fileInput.files[0],    // 從檔案物件加載
-});
-```
-
-## 配置介紹
-```javascript
-const config = {
-  id: "container-id",       // 目標容器元素 ID
-  title: "",                // 編輯器標題 (預設: "")
-  description: "",          // 編輯器描述 (預設: "")
-  fill: 1,                  // 填滿父容器 (預設: 1)
-  readonly: 0,              // 只讀模式（預設: 0)）
-  json: {},                 // 初始 JSON 資料物件
-  file: null,               // 檔案物件 (用於檔案上傳)
-  path: "",                 // JSON 檔案 URL 路徑
-  button: {                 // 功能按鈕開關
-    import: true,           // 檔案導入按鈕 (預設: true)
-    export: true,           // 檔案導出按鈕 (預設: true)
-    reset: true             // 重置按鈕 (預設: true)
-  },
-  when: {                   // 生命週期事件
-    beforeRender: null,     // 渲染前
-    rendered: null,         // 渲染後
-    beforeUpdate: null,     // 更新前
-    updated: null,          // 更新後
-    beforeDestroy: null,    // 銷毀前
-    destroyed: null         // 銷毀後
-  }
-};
-```
-
-## 編輯器功能
-
-### 資料類型 
-
-#### String 字串
-```javascript
-// 文本輸入框編輯
-"Hello World"
-```
-
-#### Number 數字
-```javascript
-// 數字輸入框，自動過濾非數字字符
-42
-3.14159
--123
-.123
-```
-
-#### Boolean 布林值
-```javascript
-// 下拉選擇
-true
-false
-```
-
-#### Array 陣列
-```javascript
-// 支援嵌套結構，新增/刪除元素
-[
-  "item1",
-  "item2", 
- 123,
- true,
- {
-   "nested": "object"
- }
-]
-```
-
-#### Object 物件
-```javascript
-// 支援嵌套結構，新增/刪除屬性
-{
-  "key1": "value1",
-  "key2": 456,
-  "nested": {
-    "deep": "value"
-  }
-}
-```
-
-## 可用函式
-
-- **獲取 JSON 資料**
-  ```javascript
-  const jsonString = editor.json;  // 獲取格式化 JSON 字串
-  console.log(jsonString);
-  ```
-
-- **匯入資料**
-  ```javascript
-  // 從物件匯入
-  await editor.import({
-    name: "新資料",
-    version: "1.0.0"
-  });
-  
-  // 從檔案匯入
-  const fileInput = document.querySelector('input[type="file"]');
-  await editor.import(fileInput.files[0]);
-  
-  // 從 URL 匯入
-  await editor.import('/path/to/data.json');
-  ```
-
-- **匯出檔案**
-  ```javascript
-  editor.export();  // 自動下載 JSON 檔案
-  ```
-
-- **重置編輯器**
-  ```javascript
-  editor.reset();   // 清除所有內容
-  ```
-
-- **新增根節點**
-  ```javascript
-  editor.insert();  // 新增空的根節點
-  ```
-
-- **重新渲染**
-  ```javascript
-  editor.render();  // 強制重新渲染編輯器
-  ```
-
-- **編輯模式**
-  ```javascript
-  editor.enable();
-  ```
-
-- **只讀模式**
-  ```javascript
-  editor.disable();
-  ```
-
-
-## 生命週期
-```javascript
-const editor = new JSONEditor({
-  id: "editor",
-  when: {
-    beforeRender: () => {
-      console.log("即將渲染");
-      // 返回 false 可阻止渲染
-    },
-    rendered: () => {
-      console.log("渲染完成");
-      // 初始化後處理
-    },
-    beforeUpdate: () => {
-      console.log("即將更新內容");
-      // 返回 false 可阻止更新
-    },
-    updated: () => {
-      console.log("內容已更新");
-      // 更新後處理，例如同步到伺服器
-    },
-    beforeDestroy: () => {
-      console.log("即將銷毀編輯器");
-    },
-    destroyed: () => {
-      console.log("編輯器已銷毀");
-    }
-  }
-});
-```
-
-### 檔案處理機制
-
-#### 支援格式
-- 僅支援 `.json` 檔案格式
-- 自動驗證 JSON 語法正確性
-
-#### 匯出功能
-- 自動格式化 JSON（4 空格縮排）
-- 檔案命名格式：`JSONEditor-{timestamp}.json`
-
-## 補充
-- 此專案於 2025/07/06 起改為 MIT 授權，並完整移除 `.git-crypt` 加密。
-
-## 授權條款
-
-此專案採用 [MIT](LICENSE) 授權條款。
-
-## 作者
+## Author
 
 <img src="https://avatars.githubusercontent.com/u/25631760" align="left" width="96" height="96" style="margin-right: 0.5rem;">
 
@@ -298,10 +83,10 @@ const editor = new JSONEditor({
 <img src="https://pardn.io/image/linkedin.svg" width="48" height="48">
 </a>
 
-## 星
+## Stars
 
 [![Star](https://api.star-history.com/svg?repos=pardnchiu/NanoJSON&type=Date)](https://www.star-history.com/#pardnchiu/NanoJSON&Date)
 
 ***
 
-©️ 2025 [邱敬幃 Pardn Chiu](https://pardn.io)
+©️ 2025 [邱敬幃 Pardn Chiu](https://linkedin.com/in/pardnchiu)
