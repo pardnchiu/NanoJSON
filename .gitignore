@@ -18,3 +18,4 @@ v*.md
 dist/NanoJSON.debug.js
 
 docker-compose.yml
+wiki-worker/

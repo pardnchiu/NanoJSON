@@ -5,7 +5,7 @@
 
 <p align="center">
 <picture>
-<img src="./cover.png" alt="NanoJSON">
+<img src="./doc/cover.png" alt="NanoJSON">
 </picture>
 </p>
 
@@ -26,6 +26,7 @@
 ## Table of Contents
 
 - [Features](#features)
+- [Preview](#preview)
 - [Architecture](#architecture)
 - [License](#license)
 - [Author](#author)
@@ -38,6 +39,12 @@
 - **Per-node dynamic type switching** — Every node can switch live between string / number / boolean / object / array / null and re-render instantly.
 - **Full lifecycle hooks** — Six hooks (beforeRender / rendered / beforeUpdate / updated / beforeDestroy / destroyed) with a 300ms debounce on updates.
 - **Flexible data import/export** — Accepts a JavaScript object, a File object, or a URL string as the data source, plus one-click download of the current JSON.
+
+## Preview
+
+<p align="center">
+<img src="./doc/preview.png" alt="NanoJSON editor preview">
+</p>
 
 ## Architecture
 

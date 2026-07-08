@@ -5,7 +5,7 @@
 
 <p align="center">
 <picture>
-<img src="../cover.png" alt="NanoJSON">
+<img src="./cover.png" alt="NanoJSON">
 </picture>
 </p>
 
@@ -26,6 +26,7 @@
 ## 目錄
 
 - [功能特點](#功能特點)
+- [預覽](#預覽)
 - [架構](#架構)
 - [授權](#授權)
 - [Author](#author)
@@ -38,6 +39,12 @@
 - **逐節點動態型別切換** — 每個節點可在 string / number / boolean / object / array / null 間即時切換並重繪。
 - **完整生命週期鉤子** — 提供 beforeRender / rendered / beforeUpdate / updated / beforeDestroy / destroyed 六個掛鉤，更新並帶 300ms 防抖。
 - **彈性資料匯入匯出** — 支援 JavaScript 物件、File 物件、URL 字串三種資料來源，並可一鍵下載目前 JSON。
+
+## 預覽
+
+<p align="center">
+<img src="./preview.png" alt="NanoJSON 編輯器預覽">
+</p>
 
 ## 架構
 
