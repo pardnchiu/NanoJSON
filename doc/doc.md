@@ -1,6 +1,6 @@
 # NanoJSON - Documentation
 
-> Back to [README](./README.md)
+> Back to [README](../README.md)
 
 ## Prerequisites
 
@@ -219,4 +219,4 @@ Nodes are managed internally by `JSONEditor` and rarely need direct access. The 
 
 ***
 
-©️ 2025 [邱敬幃 Pardn Chiu](https://linkedin.com/in/pardnchiu)
+©️ 2025 [邱敬幃 Pardn Chiu](https://www.linkedin.com/in/pardnchiu)
