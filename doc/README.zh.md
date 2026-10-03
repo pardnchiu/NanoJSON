@@ -4,12 +4,6 @@
 ***
 
 <p align="center">
-<picture>
-<img src="./cover.png" alt="NanoJSON">
-</picture>
-</p>
-
-<p align="center">
 <strong>A LIGHTWEIGHT VISUAL JSON EDITOR BUILT WITH PURE JAVASCRIPT</strong>
 </p>
 
@@ -21,12 +15,11 @@
 
 ***
 
-> Pure JavaScript 函式庫，具備零依賴視覺化樹狀編輯、逐節點動態型別切換與完整生命週期鉤子
+> 純 JavaScript JSON 編輯器函式庫，具備零依賴樹狀編輯、逐節點型別切換與可取消的生命週期鉤子
 
 ## 目錄
 
 - [功能特點](#功能特點)
-- [預覽](#預覽)
 - [架構](#架構)
 - [授權](#授權)
 - [Author](#author)
@@ -35,16 +28,11 @@
 
 > `npm install @pardnchiu/nanojson` · [完整文件](./doc.zh.md)
 
-- **零依賴視覺化編輯** — 純 JavaScript 與原生 DOM API 實作樹狀 JSON 編輯器，無需任何前端框架。
-- **逐節點動態型別切換** — 每個節點可在 string / number / boolean / object / array / null 間即時切換並重繪。
-- **完整生命週期鉤子** — 提供 beforeRender / rendered / beforeUpdate / updated / beforeDestroy / destroyed 六個掛鉤，更新並帶 300ms 防抖。
-- **彈性資料匯入匯出** — 支援 JavaScript 物件、File 物件、URL 字串三種資料來源，並可一鍵下載目前 JSON。
-
-## 預覽
-
-<p align="center">
-<img src="./preview.png" alt="NanoJSON 編輯器預覽">
-</p>
+- **零依賴視覺化樹狀編輯** — 以純 JavaScript 與原生 DOM API 建構的 JSON 樹狀編輯器，不需任何前端框架即可嵌入頁面。
+- **逐節點型別切換** — 每個節點可即時在 string／number／boolean／object／array 間切換，只重建該節點的子樹而非整棵樹。
+- **可取消的生命週期鉤子** — `before*` 鉤子回傳 `false` 即可攔截渲染或更新，連續輸入以 300ms 防抖合併為單次更新。
+- **三種資料來源與內建檔案操作** — 初始資料可為 JavaScript 物件、File 物件或 URL，並內建開啟、下載與重置按鈕。
+- **執行期唯讀切換** — 以 `enable()`／`disable()` 隨時切換唯讀狀態，唯讀時節點仍可展開與收合。
 
 ## 架構
 
@@ -52,11 +40,13 @@
 
 ```mermaid
 graph TB
-    A[JSON 輸入] --> B[JSONEditor]
-    B --> C[JSONEditorNode 樹]
-    C --> D[DOM 渲染函式]
-    B --> E[Lifecycle 鉤子]
-    B --> F[匯入 / 匯出]
+    A[資料來源：物件 / File / URL] --> B[getJSON]
+    B --> C[JSONEditor]
+    C --> D[JSONEditorNode 樹]
+    D --> E[DOM 渲染函式]
+    C --> F[Lifecycle 鉤子]
+    D --> F
+    C --> G[json / export 輸出]
 ```
 
 ## 授權
@@ -65,12 +55,11 @@ graph TB
 
 ## Author
 
-<img src="https://github.com/pardnchiu.png" align="left" width="96" height="96" style="margin-right: 0.5rem;">
+Just [open an issue](https://github.com/pardnchiu/nanojson/issues/new) to share an idea.
 
-<h4 style="padding-top: 0">邱敬幃 Pardn Chiu</h4>
-
-<a href="mailto:hi@pardn.io">hi@pardn.io</a><br>
-<a href="https://www.linkedin.com/in/pardnchiu">https://www.linkedin.com/in/pardnchiu</a>
+<a href="https://github.com/pardnchiu/nanojson/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=pardnchiu/nanojson&cache_bust=2026-10-04" alt="nanojson contributors" />
+</a>
 
 ***
 

@@ -4,12 +4,6 @@
 ***
 
 <p align="center">
-<picture>
-<img src="./doc/cover.png" alt="NanoJSON">
-</picture>
-</p>
-
-<p align="center">
 <strong>A LIGHTWEIGHT VISUAL JSON EDITOR BUILT WITH PURE JAVASCRIPT</strong>
 </p>
 
@@ -21,12 +15,11 @@
 
 ***
 
-> A pure JavaScript library with zero-dependency visual tree editing, per-node dynamic type switching, and full lifecycle hooks
+> A pure JavaScript JSON editor library with zero-dependency tree editing, per-node type switching, and cancelable lifecycle hooks
 
 ## Table of Contents
 
 - [Features](#features)
-- [Preview](#preview)
 - [Architecture](#architecture)
 - [License](#license)
 - [Author](#author)
@@ -35,16 +28,11 @@
 
 > `npm install @pardnchiu/nanojson` · [Documentation](./doc/doc.md)
 
-- **Zero-dependency visual editing** — A tree-based JSON editor built with pure JavaScript and native DOM APIs, no frontend framework required.
-- **Per-node dynamic type switching** — Every node can switch live between string / number / boolean / object / array / null and re-render instantly.
-- **Full lifecycle hooks** — Six hooks (beforeRender / rendered / beforeUpdate / updated / beforeDestroy / destroyed) with a 300ms debounce on updates.
-- **Flexible data import/export** — Accepts a JavaScript object, a File object, or a URL string as the data source, plus one-click download of the current JSON.
-
-## Preview
-
-<p align="center">
-<img src="./doc/preview.png" alt="NanoJSON editor preview">
-</p>
+- **Zero-dependency tree editing** — A visual JSON tree editor built on pure JavaScript and native DOM APIs that embeds into any page without a frontend framework.
+- **Per-node type switching** — Each node switches live between string / number / boolean / object / array, rebuilding only its own subtree instead of the whole tree.
+- **Cancelable lifecycle hooks** — Returning `false` from a `before*` hook blocks the render or update, and continuous input collapses into a single update through a 300ms debounce.
+- **Three data sources, built-in file actions** — Initial data comes from a JavaScript object, a File object, or a URL, with built-in Open, Download, and Reset buttons.
+- **Runtime read-only toggle** — `enable()` / `disable()` switch read-only mode at any time, and nodes still expand and collapse while read-only.
 
 ## Architecture
 
@@ -52,11 +40,13 @@
 
 ```mermaid
 graph TB
-    A[JSON Input] --> B[JSONEditor]
-    B --> C[JSONEditorNode Tree]
-    C --> D[DOM Renderers]
-    B --> E[Lifecycle Hooks]
-    B --> F[Import / Export]
+    A[Source: Object / File / URL] --> B[getJSON]
+    B --> C[JSONEditor]
+    C --> D[JSONEditorNode Tree]
+    D --> E[DOM Renderers]
+    C --> F[Lifecycle Hooks]
+    D --> F
+    C --> G[json / export Output]
 ```
 
 ## License
@@ -65,12 +55,11 @@ This project is licensed under the [MIT LICENSE](LICENSE).
 
 ## Author
 
-<img src="https://github.com/pardnchiu.png" align="left" width="96" height="96" style="margin-right: 0.5rem;">
+Just [open an issue](https://github.com/pardnchiu/nanojson/issues/new) to share an idea.
 
-<h4 style="padding-top: 0">邱敬幃 Pardn Chiu</h4>
-
-<a href="mailto:hi@pardn.io">hi@pardn.io</a><br>
-<a href="https://www.linkedin.com/in/pardnchiu">https://www.linkedin.com/in/pardnchiu</a>
+<a href="https://github.com/pardnchiu/nanojson/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=pardnchiu/nanojson&cache_bust=2026-10-04" alt="nanojson contributors" />
+</a>
 
 ***
 

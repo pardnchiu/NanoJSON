@@ -1,11 +1,12 @@
-# NanoJSON - Documentation
+# nanojson - Documentation
 
 > Back to [README](../README.md)
 
 ## Prerequisites
 
-- Modern browser (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
-- Node.js 18+ (development build only; no runtime dependency)
+- A browser with ES2022 support (class private fields `#field`), such as Chrome 90+, Firefox 90+, Safari 15+, Edge 90+
+- Browser only: depends on `window`, `document`, `FileReader`, `fetch`, and `confirm()`; Node.js and SSR are not supported
+- Node.js 18+ (only for building from source)
 
 ## Installation
 
@@ -18,204 +19,270 @@ npm install @pardnchiu/nanojson
 ### CDN (UMD)
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson/dist/NanoJSON.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.2.1/dist/NanoJSON.js" defer></script>
 ```
+
+Access it through the global `window.JSONEditor` after loading.
 
 ### ES Module
 
 ```javascript
-import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson/dist/NanoJSON.esm.js";
+import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.2.1/dist/NanoJSON.esm.js";
 ```
 
-> CSS injection is automatic on initialization. To use a custom stylesheet, pass a `css` path in the config to override the default CDN URL.
+### Build from Source
+
+```bash
+git clone https://github.com/pardnchiu/nanojson.git
+cd nanojson
+npm install
+npm run build:once
+```
+
+This produces `dist/NanoJSON.js` (UMD), `dist/NanoJSON.esm.js` (ESM), and `dist/NanoJSON.debug.js` (unminified). `npm run sass:library` compiles the styles from `src/sass/` into `dist/NanoJSON.css`.
 
 ## Usage
 
-### Basic
-
-Prepare a mount point in HTML and initialize the editor with an `id`:
+### Basic: Mount into an Existing Element
 
 ```html
-<div id="editor"></div>
+<div id="editor" style="position: relative; height: 480px"></div>
 
+<script src="https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.2.1/dist/NanoJSON.js"></script>
 <script>
-  const editor = new JSONEditor({ id: "editor" });
+  const editor = new JSONEditor({
+    id: "editor",
+    json: { name: "NanoJSON", version: "1.2.1" },
+  });
 </script>
 ```
 
-### Loading Initial Data
+`fill` defaults to `true`, so the editor is absolutely positioned to fill its container; give the container positioning and a height. Set `fill: false` to lay it out by content height instead.
 
-Three data source formats are supported: JavaScript object, File object, and URL string.
+Styles are injected automatically on construction from `https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.1.7/dist/NanoJSON.css` by default; pass `css` to use another version or a custom stylesheet.
+
+### Basic: Without an `id`
+
+Without `id`, the editor creates a new `<section class="pd-json-editor">` but does not attach it to the page. `editor.body` is assigned only after data loading, so attach it inside a hook:
 
 ```javascript
-// From an object
 const editor = new JSONEditor({
-  id: "editor",
-  json: { name: "NanoJSON", version: "1.1.7" },
-});
-
-// From a URL
-const editor = new JSONEditor({
-  id: "editor",
-  file: "https://example.com/data.json",
+  json: { name: "NanoJSON" },
+  fill: false,
+  when: {
+    rendered: () => document.querySelector("#host").appendChild(editor.body),
+  },
 });
 ```
 
-### Advanced: Full Config with Lifecycle Hooks
+### Advanced: Load from a URL with Error Handling
+
+`getJSON()` never resolves on a non-2xx HTTP status, so initialization stalls at loading and no hook fires. In production, fetch the data yourself, check the status, and pass an object:
 
 ```javascript
+async function mountFromURL(url) {
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), 10_000);
+
+  try {
+    const res = await fetch(url, { signal: controller.signal });
+    if (!res.ok) {
+      throw new Error(`HTTP ${res.status}`);
+    }
+    const data = await res.json();
+
+    // A root-level array cannot be written back as an array, so wrap it
+    const json = Array.isArray(data) ? { items: data } : data;
+
+    return new JSONEditor({ id: "editor", json });
+  } catch (err) {
+    console.error(`Failed to load: ${err.message}`);
+    return new JSONEditor({ id: "editor", json: {} });
+  } finally {
+    clearTimeout(timer);
+  }
+}
+
+mountFromURL("https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.2.1/package.json");
+```
+
+### Advanced: Validate and Sync with Hooks
+
+A `before*` hook must return `false` **synchronously** to cancel; a returned Promise (such as from an `async` function) always lets the action through.
+
+```javascript
+const STORAGE_KEY = "nanojson-draft";
+
+function loadDraft() {
+  try {
+    return JSON.parse(localStorage.getItem(STORAGE_KEY) ?? "{}");
+  } catch {
+    return {};
+  }
+}
+
 const editor = new JSONEditor({
   id: "editor",
-  title: "Config Editor",
-  description: "Edit application settings",
-  fill: true,
-  readonly: false,
-  collapsed: true,
-  confirmKeyRemove: true,
-  css: "/path/to/custom.css",   // optional; omit to use CDN default
-  json: { theme: "dark", lang: "en" },
-  button: {
-    import: true,
-    export: true,
-    reset: true,
-  },
+  title: "Draft",
+  json: loadDraft(),
+  confirmKeyRemove: false,
+  button: { import: true, export: true, reset: false },
   when: {
-    beforeRender: () => {
-      console.log("About to render");
-      // Return false to cancel rendering
-    },
-    rendered: () => {
-      console.log("Render complete");
-    },
     beforeUpdate: () => {
-      console.log("About to update");
-      // Return false to cancel this update (fires after 300ms debounce)
+      // Skip this sync while any root node has an empty key
+      return editor.children.every((node) => node.key !== "");
     },
     updated: () => {
-      const json = editor.json;
-      console.log("Data updated:", json);
-    },
-    beforeDestroy: () => {
-      console.log("About to destroy");
-    },
-    destroyed: () => {
-      console.log("Destroyed");
+      try {
+        localStorage.setItem(STORAGE_KEY, editor.json);
+      } catch (err) {
+        console.error(`Failed to save: ${err.message}`);
+      }
     },
   },
 });
 ```
 
-### Dynamic Operations
+Continuous input fires `beforeUpdate` / `updated` only once, 300ms after input stops.
+
+### Advanced: Programmatic Control
 
 ```javascript
-// Get current JSON string (indented)
-const jsonString = editor.json;
+const editor = new JSONEditor({
+  id: "editor",
+  readonly: true,
+  json: { mode: "view" },
+  when: {
+    rendered: async () => {
+      await editor.import({ mode: "edit", tags: ["json"] });
 
-// Programmatically import new data
-await editor.import({ key: "value" });
-await editor.import(fileObject);        // File object
-await editor.import("https://...");    // URL string
+      // Value fields re-rendered by import() lack disabled, so reapply read-only
+      editor.disable();
 
-// Download current JSON as a file (with confirmation dialog)
-editor.export();
-
-// Reset to an empty object
-editor.reset();
-
-// Toggle read-only mode
-editor.disable();   // enable read-only
-editor.enable();    // disable read-only (restore editing)
+      document.querySelector("#unlock").onclick = () => editor.enable();
+      document.querySelector("#save").onclick = () => editor.export();
+    },
+  },
+});
 ```
+
+### Known Limitations
+
+| Case | Actual Behavior | Recommendation |
+|---|---|---|
+| Root-level array (e.g. `[1, 2]`) | `editor.json` returns `"{}"`; `export()` writes `{"0": ...}` only for a single element | Wrap it in an object first, e.g. `{ items: [...] }` |
+| Object value of `null` (e.g. `{"a": null}`) | The initial render throws `ReferenceError: _null is not defined` and `rendered` never fires | Convert to an empty string or drop the field before passing it in |
+| Array item of `null` (e.g. `[null]`) | Becomes a string node containing `"null"` | Same as above |
+| `when.beforeDestroy` / `when.destroyed` | No public API currently triggers them | Do not rely on these hooks |
+| Global side effect | The library defines a `_` method on `String.prototype` as its DOM builder | Avoid other code on the page using the same property |
 
 ## API Reference
 
-### JSONEditor
+### Exports
 
-#### Constructor
+| Build | How to Get It |
+|---|---|
+| UMD (`dist/NanoJSON.js`) | Global `window.JSONEditor` |
+| ES Module (`dist/NanoJSON.esm.js`) | `import { JSONEditor } from ".../NanoJSON.esm.js"` |
 
-```javascript
-new JSONEditor(config)
-```
+`JSONEditorNode` and `Lifecycle` are not exported; nodes are reachable only through `editor.children`.
 
-| Parameter | Type | Required | Default | Description |
-|-----------|------|----------|---------|-------------|
-| `id` | `string` | No | — | Target DOM element id to mount into; omit to create a new `<section>` |
-| `title` | `string` | No | `""` | Editor title rendered in `<header>` |
-| `description` | `string` | No | `""` | Editor description rendered in `<header>` |
-| `fill` | `boolean` | No | `true` | Whether to set `data-fill="1"` to expand to fill the container |
-| `readonly` | `boolean` | No | `false` | Whether to start in read-only mode |
-| `collapsed` | `boolean` | No | `true` | Initial collapsed state of all nodes |
-| `confirmKeyRemove` | `boolean` | No | `true` | Whether to show a confirmation dialog before removing a node |
-| `css` | `string` | No | CDN URL | Custom CSS path to override the default injected stylesheet |
-| `json` | `object` | No | `{}` | Initial JSON data as a JavaScript object |
-| `file` | `File \| string` | No | — | Initial data source (File object or URL string); alternative to `json` |
-| `path` | `string` | No | — | Alias for `file` when passing a URL string |
-| `button.import` | `boolean` | No | `true` | Show the import button |
-| `button.export` | `boolean` | No | `true` | Show the export button |
-| `button.reset` | `boolean` | No | `true` | Show the reset button |
-| `when.beforeRender` | `() => boolean?` | No | — | Hook before rendering; return `false` to cancel |
-| `when.rendered` | `() => void` | No | — | Hook after rendering completes |
-| `when.beforeUpdate` | `() => boolean?` | No | — | Hook before update (300ms debounce); return `false` to cancel |
-| `when.updated` | `() => void` | No | — | Hook after update completes |
-| `when.beforeDestroy` | `() => boolean?` | No | — | Hook before destroy; return `false` to cancel |
-| `when.destroyed` | `() => void` | No | — | Hook after destroy completes |
+### `new JSONEditor(config)`
 
-#### Instance Properties and Methods
+When `config` is not an object, it logs `Failed to load config.` and returns an unusable instance.
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `id` | `string` | — | Id of the mount element, whose content is replaced; omit to create an unattached `<section>` |
+| `title` | `string` | `""` | Title rendered in `<header>` |
+| `description` | `string` | `""` | Description; no `<header>` is rendered when both `title` and `description` are empty |
+| `fill` | `boolean` | `true` | Sets `data-fill`; `true` absolutely positions the editor to fill its container |
+| `readonly` | `boolean` | `false` | Start in read-only mode |
+| `collapsed` | `boolean` | `true` | Initial collapsed state of nodes created from initial data, `import()`, and `insert()` |
+| `confirmKeyRemove` | `boolean` | `true` | Whether to show `confirm()` before removing a node; same scope as `collapsed` |
+| `css` | `string` | v1.1.7 CDN stylesheet | Custom stylesheet path; the default is used for an empty or non-string value |
+| `file` | `File \| string` | — | Initial data source |
+| `json` | `object` | — | Initial data |
+| `path` | `string` | — | URL source; the first non-`null` of `file ?? json ?? path` is used, falling back to `{}` |
+| `button.import` | `boolean` | `true` | Show the Open button |
+| `button.export` | `boolean` | `true` | Show the Download button |
+| `button.reset` | `boolean` | `true` | Show the Reset button |
+| `when` | `object` | `{}` | Lifecycle hooks, see below |
+
+Children added manually inside a node (the add-child button, or the child auto-added when switching to `object` / `array`) do not receive `collapsed` or `confirmKeyRemove`: they always start expanded and are removed without confirmation.
+
+### Instance Properties
+
+`body`, `editor`, and `children` are assigned after data loading and are not available when the constructor returns.
 
 | Member | Type | Description |
-|--------|------|-------------|
-| `json` | `getter → string` | Get current full JSON (4-space indentation) |
-| `type` | `getter → string` | Root node type (`"object"` or `"array"`) |
-| `children` | `JSONEditorNode[]` | Array of top-level child nodes |
-| `body` | `HTMLElement` | Editor root DOM element |
-| `editor` | `HTMLElement` | Node container DOM element (`<section>`) |
-| `import(data)` | `async method` | Import new data (Object / File / URL) and re-render |
-| `export()` | `method` | Download formatted JSON; filename includes a timestamp |
-| `reset()` | `method` | Clear and reset to an empty object |
-| `enable()` | `method` | Disable read-only mode; restore all input controls |
-| `disable()` | `method` | Enable read-only mode; disable all input controls |
-| `render(isUpdate?)` | `method` | Re-render all nodes; triggers `updated` hook when `isUpdate=true` |
-| `insert()` | `method` | Append an empty node at the root level |
+|---|---|---|
+| `json` | `getter → string` | Serializes the current data with 4-space indentation, skipping keyless root nodes |
+| `type` | `getter → string` | Root type, always `"object"` |
+| `children` | `JSONEditorNode[]` | Root-level nodes |
+| `body` | `HTMLElement` | Editor root element (with the `pd-json-editor` class) |
+| `editor` | `HTMLElement` | Node container `<section>` |
 
----
+### Instance Methods
 
-### JSONEditorNode
+| Method | Returns | Description |
+|---|---|---|
+| `import(data)` | `Promise<void>` | Replaces the data from an object, `File`, or URL string and re-renders; fires the update hooks once the initial render has completed |
+| `export()` | `void` | Downloads `NanoJSON-{timestamp}.json`; a single root node is written even without a key |
+| `reset()` | `void` | Equivalent to `import({})`; leaves no nodes |
+| `enable()` | `void` | Leaves read-only mode |
+| `disable()` | `void` | Enters read-only mode; collapse buttons are unaffected |
+| `render(isUpdate = false)` | `void` | Re-renders all root nodes; fires the update hooks when `isUpdate` is `true` and the initial render has completed |
+| `insert()` | `void` | Appends an empty root-level string node without firing the update hooks |
 
-Nodes are managed internally by `JSONEditor` and rarely need direct access. The following public members are available for read operations.
-
-#### Properties
+### `JSONEditorNode`
 
 | Property | Type | Description |
-|----------|------|-------------|
-| `key` | `string` | Node key name (set for object children; empty for array children) |
-| `type` | `string` | Node value type: `string` / `number` / `boolean` / `object` / `array` / `null` |
-| `value` | `string` | Raw node value (valid for non-container types) |
-| `parent` | `JSONEditor \| JSONEditorNode` | Reference to parent node |
-| `children` | `JSONEditorNode[]` | Child node array (valid for `object` and `array` types) |
+|---|---|---|
+| `id` | `string` | Random 64-character string used in DOM ids such as `key-{id}` and `value-{id}` |
+| `key` | `string` | Key name; `""` for array items |
+| `type` | `string` | `"string"` / `"number"` / `"boolean"` / `"object"` / `"array"`; `"null"` comes only from import |
+| `value` | `string` | Raw value (non-container types) |
+| `parent` | `JSONEditor \| JSONEditorNode` | Parent node |
+| `children` | `JSONEditorNode[]` | Child nodes |
 | `collapsed` | `boolean` | Current collapsed state |
-
-#### Methods
+| `json` | `getter` | Recursively returns this node's JavaScript value; `number` goes through `Number()`, `boolean` compares against `"true"` |
 
 | Method | Description |
-|--------|-------------|
-| `render()` | Render and return the DOM element for this node |
-| `addChild()` | Append a new child node and update the DOM |
-| `updateChild()` | Rebuild the DOM and trigger the lifecycle update |
-| `setCollapsed()` | Toggle collapsed state and re-render |
-| `json` (getter) | Return the corresponding JavaScript value for this node (recursive) |
+|---|---|
+| `render()` | Creates and returns this node's DOM |
+| `addChild()` | Appends an empty child and fires the update hooks |
+| `updateChild()` | Rebuilds this node's DOM and fires the update hooks |
+| `setCollapsed()` | Toggles the collapsed state and rebuilds the DOM without firing the update hooks |
 
----
+### Lifecycle Hooks (`when`)
 
-### Supported JSON Types
+| Hook | Fires | Return `false` to Cancel |
+|---|---|---|
+| `beforeRender` | Before the initial render | Yes |
+| `rendered` | After the initial render | No |
+| `beforeUpdate` | After the 300ms debounce, before an update | Yes |
+| `updated` | After an update | No |
+| `beforeDestroy` | Before destroy (currently never fired) | Yes |
+| `destroyed` | After destroy (currently never fired) | No |
 
-| Type | JavaScript Value | Description |
-|------|-----------------|-------------|
-| `string` | `String` | Text value; supports multi-line input |
-| `number` | `Number` | Numeric value; automatically converted to JavaScript Number |
-| `boolean` | `Boolean` | `true` / `false` via dropdown selection |
-| `object` | `Object` | Key-value container; supports unlimited nesting |
-| `array` | `Array` | Index container; child nodes display numeric indices |
-| `null` | `null` | Null value; rendered as `null` |
+Operations that fire the update hooks: editing a key or value, switching a type, adding or removing a child, and `import()` / `reset()` after the initial render.
+
+### Type Derivation and Switching
+
+| Imported Value | Derived Type |
+|---|---|
+| Array | `array` |
+| Object | `object` |
+| `boolean` | `boolean` |
+| `number` | `number` |
+| Anything else | `string` |
+
+| Switch To | Effect on the Existing Value |
+|---|---|
+| `object` / `array` | Clears `value`; adds one child when there are none |
+| `number` | Runs `parseFloat` on the existing string and clears it on failure; keeps `children` |
+| `string` / `boolean` | Clears both `value` and `children` |
 
 ***
 
