@@ -1,0 +1,96 @@
+{
+  "home_title": {
+    "en": "Zero-Dependency JSON Editor in Vanilla JavaScript | NanoJSON",
+    "zh": "JavaScript JSON Editor：樹狀 JSON 編輯、型別切換｜NanoJSON"
+  },
+  "descriptions": {
+    "en": {
+      "home": "NanoJSON is a zero-dependency JSON editor in vanilla JavaScript by Pardn Chiu: view and edit JSON as a tree, switch node types, and hook into updates.",
+      "getting-started": "Install NanoJSON from npm or a CDN, mount a JSONEditor into the page, and attach a detached editor once its body is ready.",
+      "core-concepts": "How JSONEditor initializes and mounts, how JSONEditorNode renders its own subtree, and which nodes inherit collapsed and confirmKeyRemove.",
+      "core-concepts-type-system": "How NanoJSON derives node types, edits and serializes each type, changes values on a type switch, and handles null inside objects and arrays.",
+      "core-concepts-serialization": "How NanoJSON turns its node tree into JSON, and why editor.json and editor.export() return different results for array data.",
+      "core-concepts-data-loading": "Load NanoJSON data from an object, a File, or a URL; config precedence, import() and reset(), the footer buttons, and failure behavior.",
+      "core-concepts-readonly": "How the readonly config, enable(), and disable() toggle disabled across the NanoJSON editor DOM, and when to call disable() again.",
+      "lifecycle-hooks": "The six NanoJSON lifecycle hooks, which ones can cancel by returning false, the 300ms update debounce, and why destroy hooks never fire.",
+      "architecture": "A one-diagram overview of how JSONEditor, JSONEditorNode, Lifecycle, and the DOM render helpers fit together in NanoJSON.",
+      "api-reference": "Every NanoJSON JSONEditor constructor option: mount target, header, fill, readonly, collapse, data source, buttons, CSS, and when hooks.",
+      "api-reference-instance": "Properties and methods of a NanoJSON JSONEditor instance: json, type, children, body, import(), export(), reset(), render(), insert().",
+      "api-reference-node": "Public fields and methods of NanoJSON's JSONEditorNode: id, key, type, value, children, collapsed, addChild(), setCollapsed(), json."
+    },
+    "zh": {
+      "home": "NanoJSON 是邱敬幃以 JavaScript 開發的零依賴 JSON Editor：以樹狀介面檢視與 JSON 編輯，支援節點型別切換、唯讀模式與生命週期鉤子。",
+      "getting-started": "從 npm 或 CDN 安裝 NanoJSON、掛載 JSONEditor，以及在 body 就緒後掛上未指定 id 的編輯器。",
+      "core-concepts": "JSONEditor 如何初始化與掛載、JSONEditorNode 如何局部渲染子樹，以及哪些節點會繼承 collapsed 設定。",
+      "core-concepts-type-system": "NanoJSON 如何推導節點型別、各型別的輸入與輸出、切換型別時值的變化，以及 null 的邊界情況。",
+      "core-concepts-serialization": "NanoJSON 如何將節點樹輸出成 JSON，以及 editor.json 與 export() 對陣列資料結果不同的原因。",
+      "core-concepts-data-loading": "從物件、File 或 URL 載入 NanoJSON 資料：設定優先序、import() 與 reset()、頁尾按鈕與失敗行為。",
+      "core-concepts-readonly": "readonly 設定與 enable()、disable() 如何切換 NanoJSON 編輯器的 disabled，以及何時需重新呼叫。",
+      "lifecycle-hooks": "NanoJSON 六個生命週期鉤子、哪些可回傳 false 取消、300ms 更新防抖，以及 destroy 鉤子為何不會觸發。",
+      "architecture": "以一張圖概覽 NanoJSON 的 JSONEditor、JSONEditorNode、Lifecycle 與 DOM 渲染函式如何組合。",
+      "api-reference": "NanoJSON JSONEditor constructor 全部設定：掛載目標、標題、填滿、唯讀、折疊、資料來源、按鈕、CSS 與鉤子。",
+      "api-reference-instance": "JSONEditor 實例的屬性與方法：json、children、body、import()、export()、reset() 等。",
+      "api-reference-node": "NanoJSON JSONEditorNode 的公開欄位與方法：key、type、value、children、collapsed、addChild()。"
+    }
+  },
+  "keywords": {
+    "en": {
+      "home": "nanojson, json editor, vanilla javascript, zero dependency, json tree, json viewer",
+      "getting-started": "nanojson, install, npm, cdn, getting started",
+      "core-concepts": "nanojson, jsoneditor, jsoneditornode, node tree, render",
+      "core-concepts-type-system": "nanojson, json types, type switching, getType, null",
+      "core-concepts-serialization": "nanojson, serialization, editor.json, export, json array",
+      "core-concepts-data-loading": "nanojson, import json, file, url, reset",
+      "core-concepts-readonly": "nanojson, readonly, enable, disable",
+      "lifecycle-hooks": "nanojson, lifecycle hooks, beforeRender, beforeUpdate, debounce",
+      "architecture": "nanojson, architecture, module overview",
+      "api-reference": "nanojson, api reference, constructor, config",
+      "api-reference-instance": "nanojson, api reference, jsoneditor methods",
+      "api-reference-node": "nanojson, api reference, jsoneditornode"
+    },
+    "zh": {
+      "home": "nanojson, json editor, JSON 編輯, json viewer, javascript, 邱敬幃, Pardn Chiu, pardnchiu"
+    }
+  },
+  "brand_keywords": [
+    "邱敬幃",
+    "Pardn Chiu",
+    "pardnchiu"
+  ],
+  "person": {
+    "id": "https://pardn.io/#pardnchiu",
+    "name": "Pardn Chiu",
+    "alt_names": [
+      "邱敬幃",
+      "Chiu Ching-Wei",
+      "pardnchiu"
+    ],
+    "same_as": [
+      "https://pardn.io/",
+      "https://www.linkedin.com/in/pardnchiu",
+      "https://github.com/pardnchiu",
+      "https://dev.to/pardnchiu",
+      "https://x.com/pardnchiu"
+    ]
+  },
+  "organization": {
+    "id": "https://pardn.io/#organization",
+    "url": "https://pardn.io/",
+    "name": "Pardn Co., Ltd",
+    "name_zh": "帕登國際有限公司",
+    "same_as": [
+      "https://github.com/pardnio"
+    ]
+  },
+  "tagline": "Taiwan · Infrastructure Engineering",
+  "og_image": "https://nanojson.pardn.io/assets/cover.png",
+  "favicon": "/favicon.png",
+  "x_default": "en",
+  "ai_usage": {
+    "train": "y",
+    "input": "y",
+    "search": "y"
+  },
+  "programming_language": "JavaScript",
+  "license_url": "https://opensource.org/licenses/MIT"
+}

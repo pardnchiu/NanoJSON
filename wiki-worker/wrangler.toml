@@ -1,0 +1,12 @@
+name = "nanojson-wiki"
+account_id = "dd3e921a46bf2af8b740e6527c4f0a05"
+main = "worker.js"
+compatibility_date = "2024-09-23"
+
+[assets]
+directory = "./public"
+binding = "ASSETS"
+run_worker_first = true
+
+[observability]
+enabled = false
