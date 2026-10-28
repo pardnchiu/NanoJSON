@@ -15,7 +15,7 @@
 
 ***
 
-> 純 JavaScript JSON 編輯器函式庫，具備零依賴樹狀編輯、逐節點型別切換與可取消的生命週期鉤子
+> 零依賴的純 JavaScript 視覺化 JSON 編輯器，支援樹狀編輯、逐節點型別切換與生命週期鉤子
 
 ## 目錄
 
@@ -55,10 +55,10 @@ graph TB
 
 ## Author
 
-Just [open an issue](https://github.com/pardnchiu/nanojson/issues/new) to share an idea.
+Just [open an issue](https://github.com/pardnchiu/NanoJSON/issues/new) to share an idea.
 
-<a href="https://github.com/pardnchiu/nanojson/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=pardnchiu/nanojson&cache_bust=2026-10-04" alt="nanojson contributors" />
+<a href="https://github.com/pardnchiu/NanoJSON/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=pardnchiu/NanoJSON&cache_bust=2026-10-04" alt="nanojson contributors" />
 </a>
 
 ***

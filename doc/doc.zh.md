@@ -33,7 +33,7 @@ import { JSONEditor } from "https://cdn.jsdelivr.net/npm/@pardnchiu/nanojson@1.2
 ### 從原始碼建置
 
 ```bash
-git clone https://github.com/pardnchiu/nanojson.git
+git clone https://github.com/pardnchiu/NanoJSON.git
 cd nanojson
 npm install
 npm run build:once

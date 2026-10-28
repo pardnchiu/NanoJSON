@@ -1,7 +1,7 @@
 {
   "name": "@pardnchiu/nanojson",
-  "version": "1.2.1",
-  "description": "A pure JavaScript library with zero-dependency visual tree editing, per-node dynamic type switching, and full lifecycle hooks.",
+  "version": "1.2.2",
+  "description": "A zero-dependency vanilla JavaScript visual JSON editor with tree editing, per-node type switching, and lifecycle hooks.",
   "main": "dist/NanoJSON.js",
   "module": "dist/NanoJSON.esm.js",
   "types": "src/interface.ts",
@@ -33,7 +33,7 @@
     "json-editor",
     "javascript-library",
     "pure-javascript",
-    "native-api",
+    "Pardn Chiu",
     "vanilla-js",
     "邱敬幃",
     "pardnchiu"

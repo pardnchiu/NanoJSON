@@ -15,7 +15,7 @@
 
 ***
 
-> A pure JavaScript JSON editor library with zero-dependency tree editing, per-node type switching, and cancelable lifecycle hooks
+> A zero-dependency vanilla JavaScript visual JSON editor with tree editing, per-node type switching, and lifecycle hooks
 
 ## Table of Contents
 
@@ -55,10 +55,10 @@ This project is licensed under the [MIT LICENSE](LICENSE).
 
 ## Author
 
-Just [open an issue](https://github.com/pardnchiu/nanojson/issues/new) to share an idea.
+Just [open an issue](https://github.com/pardnchiu/NanoJSON/issues/new) to share an idea.
 
-<a href="https://github.com/pardnchiu/nanojson/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=pardnchiu/nanojson&cache_bust=2026-10-04" alt="nanojson contributors" />
+<a href="https://github.com/pardnchiu/NanoJSON/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=pardnchiu/NanoJSON&cache_bust=2026-10-04" alt="nanojson contributors" />
 </a>
 
 ***

@@ -15,7 +15,7 @@
 
 ***
 
-> A pure JavaScript JSON editor library with zero-dependency tree editing, per-node type switching, and cancelable lifecycle hooks
+> A zero-dependency vanilla JavaScript visual JSON editor with tree editing, per-node type switching, and lifecycle hooks
 
 ## Table of Contents
 
